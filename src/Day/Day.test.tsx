@@ -59,4 +59,11 @@ describe('@mantine/dates/Day', () => {
     rerender(<Day {...defaultProps} weekend />);
     expect(screen.getByRole('button')).toHaveAttribute('data-weekend');
   });
+
+  it('sets data-outside attribute when outside prop is set', () => {
+    const { rerender } = render(<Day {...defaultProps} />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('data-outside');
+    rerender(<Day {...defaultProps} outside />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-outside');
+  });
 });

@@ -21,12 +21,16 @@ export default createStyles((theme, { radius }: DayStylesParams) => ({
     '&:active': theme.activeStyles,
 
     '&[data-disabled]': {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[4],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
       pointerEvents: 'none',
     },
 
     '&[data-weekend]': {
       color: theme.colors.red[theme.fn.primaryShade()],
+    },
+
+    '&[data-outside]': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
     },
   },
 }));
