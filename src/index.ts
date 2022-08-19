@@ -1,1 +1,1 @@
-export { TestComponent } from './TestComponent/TestComponent';
+export { Day } from './Day/Day';
