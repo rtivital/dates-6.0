@@ -4,10 +4,17 @@ import {
   DefaultProps,
   useComponentDefaultProps,
   MantineNumberSize,
+  Selectors,
 } from '@mantine/core';
-import useStyles from './Day.styles';
+import useStyles, { DayStylesParams } from './Day.styles';
 
-export interface DayProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export type DayStylesNames = Selectors<typeof useStyles>;
+
+export interface DayProps
+  extends DefaultProps<DayStylesNames, DayStylesParams>,
+    React.ComponentPropsWithoutRef<'button'> {
+  __staticSelector?: string;
+
   /** Date that should be displayed */
   date: Date;
 
@@ -20,13 +27,22 @@ const defaultProps: Partial<DayProps> = {
 };
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
-  const { className, date, radius, disabled, ...others } = useComponentDefaultProps(
-    'Day',
-    defaultProps,
-    props
-  );
+  const {
+    className,
+    date,
+    radius,
+    disabled,
+    styles,
+    classNames,
+    unstyled,
+    __staticSelector,
+    ...others
+  } = useComponentDefaultProps('Day', defaultProps, props);
 
-  const { classes, cx } = useStyles({ radius });
+  const { classes, cx } = useStyles(
+    { radius },
+    { classNames, styles, unstyled, name: ['Day', __staticSelector] }
+  );
 
   return (
     <UnstyledButton

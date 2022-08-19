@@ -32,4 +32,14 @@ describe('@mantine/dates/Day', () => {
     expect(screen.getByRole('button')).toHaveAttribute('disabled');
     expect(screen.getByRole('button')).toHaveAttribute('data-disabled');
   });
+
+  it('has correct default __staticSelector', () => {
+    render(<Day {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveClass('mantine-Day-day');
+  });
+
+  it('supports __staticSelector', () => {
+    render(<Day {...defaultProps} __staticSelector="Month" />);
+    expect(screen.getByRole('button')).toHaveClass('mantine-Day-day', 'mantine-Month-day');
+  });
 });
