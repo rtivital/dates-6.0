@@ -42,4 +42,14 @@ describe('@mantine/dates/Day', () => {
     render(<Day {...defaultProps} __staticSelector="Month" />);
     expect(screen.getByRole('button')).toHaveClass('mantine-Day-day', 'mantine-Month-day');
   });
+
+  it('supports styles api (styles)', () => {
+    render(<Day {...defaultProps} styles={{ day: { borderColor: '#CECECE' } }} />);
+    expect(screen.getByRole('button')).toHaveStyle({ borderColor: '#CECECE' });
+  });
+
+  it('supports styles api (classNames)', () => {
+    render(<Day {...defaultProps} classNames={{ day: 'test-day-class' }} />);
+    expect(screen.getByRole('button')).toHaveClass('test-day-class');
+  });
 });
