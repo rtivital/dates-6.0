@@ -10,8 +10,12 @@ function validateDataAttribute(attribute: string) {
   it(`sets data-${attribute} attribute when ${attribute} prop is set`, () => {
     const { rerender } = render(<Day {...defaultProps} />);
     expect(screen.getByRole('button')).not.toHaveAttribute(`data-${attribute}`);
+
     rerender(<Day {...defaultProps} {...{ [attribute]: true }} />);
     expect(screen.getByRole('button')).toHaveAttribute(`data-${attribute}`);
+
+    rerender(<Day {...defaultProps} {...{ [attribute]: true }} disabled />);
+    expect(screen.getByRole('button')).not.toHaveAttribute(`data-${attribute}`);
   });
 }
 

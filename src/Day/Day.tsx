@@ -63,9 +63,9 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       className={cx(classes.day, className)}
       disabled={disabled}
       data-disabled={disabled || undefined}
-      data-weekend={weekend || undefined}
-      data-outside={outside || undefined}
-      data-selected={selected || undefined}
+      data-weekend={(!disabled && weekend) || undefined}
+      data-outside={(!disabled && outside) || undefined}
+      data-selected={(!disabled && selected) || undefined}
       {...others}
     >
       {date.getDate()}
