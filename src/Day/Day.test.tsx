@@ -6,7 +6,20 @@ const defaultProps: DayProps = {
   date: new Date(2022, 1, 3),
 };
 
+function validateDataAttribute(attribute: string) {
+  it(`sets data-${attribute} attribute when ${attribute} prop is set`, () => {
+    const { rerender } = render(<Day {...defaultProps} />);
+    expect(screen.getByRole('button')).not.toHaveAttribute(`data-${attribute}`);
+    rerender(<Day {...defaultProps} {...{ [attribute]: true }} />);
+    expect(screen.getByRole('button')).toHaveAttribute(`data-${attribute}`);
+  });
+}
+
 describe('@mantine/dates/Day', () => {
+  validateDataAttribute('weekend');
+  validateDataAttribute('outside');
+  validateDataAttribute('selected');
+
   it('renders given date value', () => {
     render(<Day {...defaultProps} />);
     expect(screen.getByRole('button')).toHaveTextContent(defaultProps.date.getDate().toString());
@@ -51,19 +64,5 @@ describe('@mantine/dates/Day', () => {
   it('supports styles api (classNames)', () => {
     render(<Day {...defaultProps} classNames={{ day: 'test-day-class' }} />);
     expect(screen.getByRole('button')).toHaveClass('test-day-class');
-  });
-
-  it('sets data-weekend attribute when weekend prop is set', () => {
-    const { rerender } = render(<Day {...defaultProps} />);
-    expect(screen.getByRole('button')).not.toHaveAttribute('data-weekend');
-    rerender(<Day {...defaultProps} weekend />);
-    expect(screen.getByRole('button')).toHaveAttribute('data-weekend');
-  });
-
-  it('sets data-outside attribute when outside prop is set', () => {
-    const { rerender } = render(<Day {...defaultProps} />);
-    expect(screen.getByRole('button')).not.toHaveAttribute('data-outside');
-    rerender(<Day {...defaultProps} outside />);
-    expect(screen.getByRole('button')).toHaveAttribute('data-outside');
   });
 });

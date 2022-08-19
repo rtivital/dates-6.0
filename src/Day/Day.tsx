@@ -26,6 +26,9 @@ export interface DayProps
 
   /** Determines whether the day is outside of current month */
   outside?: boolean;
+
+  /** Determines whether the day is selected */
+  selected?: boolean;
 }
 
 const defaultProps: Partial<DayProps> = {
@@ -44,6 +47,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     __staticSelector,
     weekend,
     outside,
+    selected,
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
@@ -61,6 +65,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       data-disabled={disabled || undefined}
       data-weekend={weekend || undefined}
       data-outside={outside || undefined}
+      data-selected={selected || undefined}
       {...others}
     >
       {date.getDate()}
