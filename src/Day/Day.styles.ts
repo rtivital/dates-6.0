@@ -12,11 +12,17 @@ export default createStyles((theme, { radius }: DayStylesParams) => ({
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
+    userSelect: 'none',
     borderRadius: theme.fn.radius(radius),
     ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     }),
 
     '&:active': theme.activeStyles,
+
+    '&[data-disabled]': {
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[4],
+      pointerEvents: 'none',
+    },
   },
 }));

@@ -15,10 +15,12 @@ export interface DayProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   radius?: MantineNumberSize;
 }
 
-const defaultProps: Partial<DayProps> = {};
+const defaultProps: Partial<DayProps> = {
+  tabIndex: -1,
+};
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
-  const { className, date, radius, ...others } = useComponentDefaultProps(
+  const { className, date, radius, disabled, ...others } = useComponentDefaultProps(
     'Day',
     defaultProps,
     props
@@ -27,7 +29,14 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
   const { classes, cx } = useStyles({ radius });
 
   return (
-    <UnstyledButton type="button" ref={ref} className={cx(classes.day, className)} {...others}>
+    <UnstyledButton
+      type="button"
+      ref={ref}
+      className={cx(classes.day, className)}
+      data-disabled={disabled || undefined}
+      disabled={disabled}
+      {...others}
+    >
       {date.getDate()}
     </UnstyledButton>
   );

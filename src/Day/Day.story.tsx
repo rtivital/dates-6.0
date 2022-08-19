@@ -7,6 +7,7 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <Day date={new Date()} />
+      <Day date={new Date()} disabled />
     </div>
   );
 }
