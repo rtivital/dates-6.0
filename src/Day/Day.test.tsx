@@ -12,6 +12,16 @@ describe('@mantine/dates/Day', () => {
     expect(screen.getByRole('button')).toHaveTextContent(defaultProps.date.getDate().toString());
   });
 
+  it('has -1 tabIndex by default', () => {
+    render(<Day {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('allows to customize tabIndex', () => {
+    render(<Day {...defaultProps} tabIndex={0} />);
+    expect(screen.getByRole('button')).toHaveAttribute('tabindex', '0');
+  });
+
   it('supports radius prop', () => {
     render(<Day {...defaultProps} radius={45} />);
     expect(screen.getByRole('button')).toHaveStyle({ borderRadius: '45px' });
