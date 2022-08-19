@@ -52,4 +52,11 @@ describe('@mantine/dates/Day', () => {
     render(<Day {...defaultProps} classNames={{ day: 'test-day-class' }} />);
     expect(screen.getByRole('button')).toHaveClass('test-day-class');
   });
+
+  it('sets data-weekend attribute when weekend prop is set', () => {
+    const { rerender } = render(<Day {...defaultProps} />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('data-weekend');
+    rerender(<Day {...defaultProps} weekend />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-weekend');
+  });
 });

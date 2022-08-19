@@ -24,5 +24,9 @@ export default createStyles((theme, { radius }: DayStylesParams) => ({
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[4],
       pointerEvents: 'none',
     },
+
+    '&[data-weekend]': {
+      color: theme.colors.red[theme.fn.primaryShade()],
+    },
   },
 }));

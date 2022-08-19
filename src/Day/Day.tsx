@@ -20,6 +20,9 @@ export interface DayProps
 
   /** Key of theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Determines whether the day should be considered to be a weekend */
+  weekend?: boolean;
 }
 
 const defaultProps: Partial<DayProps> = {
@@ -36,6 +39,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     classNames,
     unstyled,
     __staticSelector,
+    weekend,
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
@@ -49,8 +53,9 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       type="button"
       ref={ref}
       className={cx(classes.day, className)}
-      data-disabled={disabled || undefined}
       disabled={disabled}
+      data-disabled={disabled || undefined}
+      data-weekend={weekend || undefined}
       {...others}
     >
       {date.getDate()}
