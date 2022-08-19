@@ -11,6 +11,7 @@ export function Usage() {
       <Day date={new Date()} outside />
       <Day date={new Date()} selected />
       <Day date={new Date()} disabled />
+      <Day date={new Date()} renderDay={(date) => date.getFullYear()} />
     </div>
   );
 }

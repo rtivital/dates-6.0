@@ -69,4 +69,9 @@ describe('@mantine/dates/Day', () => {
     render(<Day {...defaultProps} classNames={{ day: 'test-day-class' }} />);
     expect(screen.getByRole('button')).toHaveClass('test-day-class');
   });
+
+  it('allows to customize day rendering with renderDay function', () => {
+    render(<Day {...defaultProps} renderDay={(date) => date.getFullYear()} />);
+    expect(screen.getByRole('button')).toHaveTextContent('2022');
+  });
 });

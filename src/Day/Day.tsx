@@ -29,6 +29,9 @@ export interface DayProps
 
   /** Determines whether the day is selected */
   selected?: boolean;
+
+  /** Controls day value rendering */
+  renderDay?(date: Date): React.ReactNode;
 }
 
 const defaultProps: Partial<DayProps> = {
@@ -48,6 +51,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     weekend,
     outside,
     selected,
+    renderDay,
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
@@ -68,7 +72,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       data-selected={(!disabled && selected) || undefined}
       {...others}
     >
-      {date.getDate()}
+      {renderDay?.(date) || date.getDate()}
     </UnstyledButton>
   );
 });
