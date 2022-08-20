@@ -6,6 +6,7 @@ export interface DayStylesParams {
 
 export default createStyles((theme, { radius }: DayStylesParams) => {
   const colors = theme.fn.variant({ variant: 'filled' });
+  const lightColors = theme.fn.variant({ variant: 'light' });
   return {
     day: {
       width: 30,
@@ -33,6 +34,22 @@ export default createStyles((theme, { radius }: DayStylesParams) => {
 
       '&[data-outside]': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+      },
+
+      '&[data-in-range]': {
+        backgroundColor: lightColors.background,
+        borderRadius: 0,
+        ...theme.fn.hover({ backgroundColor: lightColors.hover }),
+      },
+
+      '&[data-first-in-range]': {
+        borderTopLeftRadius: theme.radius.sm,
+        borderBottomLeftRadius: theme.radius.sm,
+      },
+
+      '&[data-last-in-range]': {
+        borderTopRightRadius: theme.radius.sm,
+        borderBottomRightRadius: theme.radius.sm,
       },
 
       '&[data-selected]': {

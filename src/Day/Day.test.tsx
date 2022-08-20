@@ -1,4 +1,5 @@
 import React from 'react';
+import lodash from 'lodash';
 import { render, screen } from '@testing-library/react';
 import { Day, DayProps } from './Day';
 
@@ -6,16 +7,17 @@ const defaultProps: DayProps = {
   date: new Date(2022, 1, 3),
 };
 
-function validateDataAttribute(attribute: string) {
-  it(`sets data-${attribute} attribute when ${attribute} prop is set`, () => {
+function validateDataAttribute(prop: string) {
+  const attr = `data-${lodash.kebabCase(prop)}`;
+  it(`sets ${attr} prop when ${prop} prop is set`, () => {
     const { rerender } = render(<Day {...defaultProps} />);
-    expect(screen.getByRole('button')).not.toHaveAttribute(`data-${attribute}`);
+    expect(screen.getByRole('button')).not.toHaveAttribute(attr);
 
-    rerender(<Day {...defaultProps} {...{ [attribute]: true }} />);
-    expect(screen.getByRole('button')).toHaveAttribute(`data-${attribute}`);
+    rerender(<Day {...defaultProps} {...{ [prop]: true }} />);
+    expect(screen.getByRole('button')).toHaveAttribute(attr);
 
-    rerender(<Day {...defaultProps} {...{ [attribute]: true }} disabled />);
-    expect(screen.getByRole('button')).not.toHaveAttribute(`data-${attribute}`);
+    rerender(<Day {...defaultProps} {...{ [prop]: true }} disabled />);
+    expect(screen.getByRole('button')).not.toHaveAttribute(attr);
   });
 }
 
@@ -23,6 +25,9 @@ describe('@mantine/dates/Day', () => {
   validateDataAttribute('weekend');
   validateDataAttribute('outside');
   validateDataAttribute('selected');
+  validateDataAttribute('inRange');
+  validateDataAttribute('firstInRange');
+  validateDataAttribute('lastInRange');
 
   it('renders given date value', () => {
     render(<Day {...defaultProps} />);

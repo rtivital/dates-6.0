@@ -30,6 +30,15 @@ export interface DayProps
   /** Determines whether the day is selected */
   selected?: boolean;
 
+  /** Determines whether day is selected in range */
+  inRange?: boolean;
+
+  /** Determines whether day is first in range selection */
+  firstInRange?: boolean;
+
+  /** Determines whether day is last in range selection */
+  lastInRange?: boolean;
+
   /** Controls day value rendering */
   renderDay?(date: Date): React.ReactNode;
 }
@@ -52,6 +61,9 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     outside,
     selected,
     renderDay,
+    inRange,
+    firstInRange,
+    lastInRange,
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
@@ -70,6 +82,9 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       data-weekend={(!disabled && weekend) || undefined}
       data-outside={(!disabled && outside) || undefined}
       data-selected={(!disabled && selected) || undefined}
+      data-in-range={(inRange && !disabled) || undefined}
+      data-first-in-range={(firstInRange && !disabled) || undefined}
+      data-last-in-range={(lastInRange && !disabled) || undefined}
       {...others}
     >
       {renderDay?.(date) || date.getDate()}
