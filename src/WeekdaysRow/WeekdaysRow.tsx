@@ -18,7 +18,7 @@ export interface WeekdaysRowProps
   /** dayjs format to get weekday name, defaults to "dd" */
   format?: string;
 
-  /** Determines cell type that will be used to render weekdays, defaults to th */
+  /** Choose cell type that will be used to render weekdays, defaults to th */
   cellComponent?: 'td' | 'th';
 }
 
