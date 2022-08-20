@@ -91,3 +91,5 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     </UnstyledButton>
   );
 });
+
+Day.displayName = '@mantine/dates/Day';

@@ -1,1 +1,1 @@
-export { Day } from './Day/Day';
+export * from './Day';
