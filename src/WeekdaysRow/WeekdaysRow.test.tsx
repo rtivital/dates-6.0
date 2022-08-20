@@ -1,5 +1,6 @@
 import 'dayjs/locale/ru';
 import React from 'react';
+import { MantineProvider } from '@mantine/core';
 import { render, screen } from '@testing-library/react';
 import { WeekdaysRow, WeekdaysRowProps } from './WeekdaysRow';
 
@@ -75,5 +76,15 @@ describe('@mantine/dates/WeekdaysRow', () => {
     );
     expect(screen.getAllByRole('columnheader')[0]).toHaveClass('test-weekday-class');
     expect(screen.getByRole('row')).toHaveClass('test-weekdays-row-class');
+  });
+
+  it('supports theme.datesLocale', () => {
+    render(
+      <MantineProvider theme={{ datesLocale: 'ru' }}>
+        <Wrapper />
+      </MantineProvider>
+    );
+
+    expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
   });
 });

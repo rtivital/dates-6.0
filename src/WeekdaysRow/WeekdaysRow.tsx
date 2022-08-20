@@ -11,7 +11,7 @@ export interface WeekdaysRowProps
     React.ComponentPropsWithoutRef<'tr'> {
   __staticSelector?: string;
 
-  /** dayjs locale, defaults to en */
+  /** dayjs locale, defaults to theme.datesLocale */
   locale?: string;
 
   /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
@@ -25,7 +25,6 @@ export interface WeekdaysRowProps
 }
 
 const defaultProps: Partial<WeekdaysRowProps> = {
-  locale: 'en',
   format: 'dd',
   cellComponent: 'th',
   firstDayOfWeek: 1,
@@ -45,14 +44,18 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
     ...others
   } = useComponentDefaultProps('WeekdaysRow', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, {
+  const { classes, cx, theme } = useStyles(null, {
     classNames,
     styles,
     unstyled,
     name: ['WeekdaysRow', __staticSelector],
   });
 
-  const weekdays = getWeekdayNames({ locale, format, firstDayOfWeek }).map((weekday, index) => (
+  const weekdays = getWeekdayNames({
+    locale: locale || theme.datesLocale,
+    format,
+    firstDayOfWeek,
+  }).map((weekday, index) => (
     <CellComponent key={index} className={classes.weekday}>
       {weekday}
     </CellComponent>
