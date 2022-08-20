@@ -9,6 +9,8 @@ export type WeekdaysRowStylesNames = Selectors<typeof useStyles>;
 export interface WeekdaysRowProps
   extends DefaultProps<WeekdaysRowStylesNames>,
     React.ComponentPropsWithoutRef<'tr'> {
+  __staticSelector?: string;
+
   /** dayjs locale, defaults to en */
   locale?: string;
 
@@ -36,10 +38,20 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
     firstDayOfWeek,
     format,
     cellComponent: CellComponent,
+    __staticSelector,
+    classNames,
+    styles,
+    unstyled,
     ...others
   } = useComponentDefaultProps('WeekdaysRow', defaultProps, props);
 
-  const { classes, cx } = useStyles(null);
+  const { classes, cx } = useStyles(null, {
+    classNames,
+    styles,
+    unstyled,
+    name: ['WeekdaysRow', __staticSelector],
+  });
+
   const weekdays = getWeekdayNames({ locale, format, firstDayOfWeek }).map((weekday, index) => (
     <CellComponent key={index} className={classes.weekday}>
       {weekday}
