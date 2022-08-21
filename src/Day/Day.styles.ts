@@ -9,8 +9,8 @@ export default createStyles((theme, { radius }: DayStylesParams) => {
   const lightColors = theme.fn.variant({ variant: 'light' });
   return {
     day: {
-      width: 30,
-      height: 30,
+      width: 36,
+      height: 36,
       fontSize: theme.fontSizes.sm,
       display: 'inline-flex',
       justifyContent: 'center',

@@ -5,6 +5,7 @@ import type { FirstDayOfWeek } from '../types';
 import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
 import { Day, DayStylesNames } from '../Day';
 import { getMonthDays } from './get-month-days/get-month-days';
+import { isSameMonth } from './is-same-month/is-same-month';
 import useStyles from './Month.styles';
 
 export type MonthStylesNames =
@@ -19,8 +20,11 @@ export interface MonthSettings {
   /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
   firstDayOfWeek?: FirstDayOfWeek;
 
-  /** dayjs format for weekdays names */
+  /** dayjs format for weekdays names, defaults to "dd" */
   weekdayFormat?: string;
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to [0, 6] (Sunday and Saturday) */
+  weekendDays?: number[];
 }
 
 export interface MonthProps
@@ -33,7 +37,9 @@ export interface MonthProps
   month: Date;
 }
 
-const defaultProps: Partial<MonthProps> = {};
+const defaultProps: Partial<MonthProps> = {
+  weekendDays: [0, 6],
+};
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const {
@@ -46,6 +52,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     firstDayOfWeek,
     weekdayFormat,
     month,
+    weekendDays,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -66,7 +73,12 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const rows = getMonthDays(month, firstDayOfWeek).map((row, rowIndex) => {
     const cells = row.map((date) => (
       <td key={date.toString()} className={classes.monthCell}>
-        <Day {...stylesApiProps} date={date} />
+        <Day
+          {...stylesApiProps}
+          date={date}
+          weekend={weekendDays.includes(date.getDay())}
+          outside={!isSameMonth(date, month)}
+        />
       </td>
     ));
 
