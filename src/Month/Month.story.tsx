@@ -18,6 +18,10 @@ export function Usage() {
   return <Wrapper />;
 }
 
+export function CustomWeekendDays() {
+  return <Wrapper weekendDays={[3, 4]} />;
+}
+
 export function Selected() {
   return (
     <Wrapper
