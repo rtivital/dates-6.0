@@ -79,4 +79,10 @@ describe('@mantine/dates/Day', () => {
     render(<Day {...defaultProps} renderDay={(date) => date.getFullYear()} />);
     expect(screen.getByRole('button')).toHaveTextContent('2022');
   });
+
+  it('does not add data-selected attribute when outside prop is true', () => {
+    render(<Day {...defaultProps} selected outside />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-outside');
+    expect(screen.getByRole('button')).not.toHaveAttribute('data-selected');
+  });
 });
