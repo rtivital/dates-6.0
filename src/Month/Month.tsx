@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, Box, useComponentDefaultProps } from '@mantine/core';
 import type { FirstDayOfWeek } from '../types';
 import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
-import { Day, DayStylesNames } from '../Day';
+import { Day, DayStylesNames, DayProps } from '../Day';
 import { getMonthDays } from './get-month-days/get-month-days';
 import { isSameMonth } from './is-same-month/is-same-month';
 import useStyles from './Month.styles';
@@ -25,6 +25,9 @@ export interface MonthSettings {
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to [0, 6] (Sunday and Saturday) */
   weekendDays?: number[];
+
+  /** Adds props to Day component based on date */
+  getDayProps?(date: Date): Partial<DayProps>;
 }
 
 export interface MonthProps
@@ -53,6 +56,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     weekdayFormat,
     month,
     weekendDays,
+    getDayProps,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -78,6 +82,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
           date={date}
           weekend={weekendDays.includes(date.getDay())}
           outside={!isSameMonth(date, month)}
+          {...getDayProps?.(date)}
         />
       </td>
     ));
