@@ -71,7 +71,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     classNames,
     styles,
     unstyled,
-    __staticSelector,
+    __staticSelector: __staticSelector || 'Month',
   };
 
   const rows = getMonthDays(month, firstDayOfWeek).map((row, rowIndex) => {

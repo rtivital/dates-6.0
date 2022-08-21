@@ -66,4 +66,18 @@ describe('@mantine/core/Month', () => {
     expect(days[9]).toHaveAttribute('data-weekend');
     expect(days[10]).toHaveAttribute('data-weekend');
   });
+
+  it('has correct default __staticSelector', () => {
+    const { container } = render(<Month {...defaultProps} />);
+    expect(container.querySelector('table')).toHaveClass('mantine-Month-month');
+    expect(container.querySelector('thead tr')).toHaveClass('mantine-Month-weekdaysRow');
+    expect(container.querySelector('tbody tr td button')).toHaveClass('mantine-Month-day');
+  });
+
+  it('supports __staticSelector', () => {
+    const { container } = render(<Month {...defaultProps} __staticSelector="Calendar" />);
+    expect(container.querySelector('table')).toHaveClass('mantine-Calendar-month');
+    expect(container.querySelector('thead tr')).toHaveClass('mantine-Calendar-weekdaysRow');
+    expect(container.querySelector('tbody tr td button')).toHaveClass('mantine-Calendar-day');
+  });
 });
