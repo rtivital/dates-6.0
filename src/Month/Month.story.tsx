@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useState } from 'react';
 import { Code } from '@mantine/core';
 import { Month, MonthProps } from './Month';
 
@@ -23,9 +23,17 @@ export function CustomWeekendDays() {
 }
 
 export function Selected() {
+  const [selected, setSelected] = useState<Date>(null);
   return (
     <Wrapper
-      getDayProps={(date) => ({ selected: dayjs(date).isSame(new Date(2022, 3, 12), 'date') })}
+      getDayProps={(date) => ({
+        selected: dayjs(date).isSame(selected, 'date'),
+        onClick: () => setSelected(date),
+      })}
     />
   );
+}
+
+export function CustomFirstDayOfWeek() {
+  return <Wrapper firstDayOfWeek={6} />;
 }

@@ -1,3 +1,4 @@
+import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Month, MonthProps } from './Month';
@@ -5,6 +6,10 @@ import { Month, MonthProps } from './Month';
 const defaultProps: MonthProps = {
   month: new Date(2022, 3, 2),
 };
+
+function expectWeekdaysNames(names: string[]) {
+  expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);
+}
 
 describe('@mantine/core/Month', () => {
   it('renders correct days', () => {
@@ -25,6 +30,24 @@ describe('@mantine/core/Month', () => {
     // Last days of April 2022 (with outside dates)
     expect(days[33].textContent).toBe('30');
     expect(days[34].textContent).toBe('1');
+  });
+
+  it('renders correct days when firstDayOfWeek is set', () => {
+    render(<Month {...defaultProps} firstDayOfWeek={6} />);
+
+    const days = screen.getAllByRole('button');
+    expect(days).toHaveLength(42);
+
+    expect(days[0].textContent).toBe('26');
+    expect(days[1].textContent).toBe('27');
+    expect(days[2].textContent).toBe('28');
+    expect(days[3].textContent).toBe('29');
+    expect(days[4].textContent).toBe('30');
+    expect(days[5].textContent).toBe('31');
+    expect(days[6].textContent).toBe('1');
+
+    expect(days[40].textContent).toBe('5');
+    expect(days[41].textContent).toBe('6');
   });
 
   it('detects outside days correctly', () => {
@@ -111,5 +134,31 @@ describe('@mantine/core/Month', () => {
     expect(container.querySelector('table')).toHaveClass('test-month');
     expect(container.querySelector('thead tr')).toHaveClass('test-weekdays');
     expect(container.querySelector('tbody tr td button')).toHaveClass('test-day');
+  });
+
+  it('supports localization', () => {
+    render(<Month {...defaultProps} locale="ru" />);
+    expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+  });
+
+  it('supports changing weekday format', () => {
+    render(<Month {...defaultProps} weekdayFormat="dddd" />);
+    expectWeekdaysNames([
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ]);
+  });
+
+  it('reorders weekdays names depending on firstDayOfWeek', () => {
+    const { rerender } = render(<Month {...defaultProps} firstDayOfWeek={4} />);
+    expectWeekdaysNames(['Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We']);
+
+    rerender(<Month {...defaultProps} firstDayOfWeek={6} />);
+    expectWeekdaysNames(['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr']);
   });
 });

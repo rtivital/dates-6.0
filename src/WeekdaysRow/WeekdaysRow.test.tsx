@@ -31,6 +31,19 @@ describe('@mantine/dates/WeekdaysRow', () => {
     expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
   });
 
+  it('supports changing format', () => {
+    render(<Wrapper format="dddd" />);
+    expectWeekdaysNames([
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ]);
+  });
+
   it('supports changing first day of week', () => {
     const { rerender } = render(<Wrapper firstDayOfWeek={0} />);
     expectWeekdaysNames(['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']);
