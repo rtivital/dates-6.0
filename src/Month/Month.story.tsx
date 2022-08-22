@@ -37,3 +37,7 @@ export function Selected() {
 export function CustomFirstDayOfWeek() {
   return <Wrapper firstDayOfWeek={6} />;
 }
+
+export function ExcludeDate() {
+  return <Wrapper excludeDate={(date) => date.getDay() === 0} />;
+}

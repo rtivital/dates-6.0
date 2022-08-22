@@ -28,6 +28,9 @@ export interface MonthSettings {
 
   /** Adds props to Day component based on date */
   getDayProps?(date: Date): Partial<DayProps>;
+
+  /** Callback function to determine whether the day should be disabled */
+  excludeDate?(date: Date): boolean;
 }
 
 export interface MonthProps
@@ -57,6 +60,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     month,
     weekendDays,
     getDayProps,
+    excludeDate,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -82,6 +86,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
           date={date}
           weekend={weekendDays.includes(date.getDay())}
           outside={!isSameMonth(date, month)}
+          disabled={excludeDate?.(date)}
           {...getDayProps?.(date)}
         />
       </td>

@@ -185,4 +185,13 @@ describe('@mantine/core/Month', () => {
     await userEvent.click(days[0]);
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('adds disabled prop to Day components based on excludeDate callback', () => {
+    render(<Month {...defaultProps} excludeDate={(date) => date.getDay() === 0} />);
+    const days = screen.getAllByRole('button');
+
+    expect(days[5]).not.toHaveAttribute('data-disabled');
+    expect(days[6]).toHaveAttribute('data-disabled');
+    expect(days[13]).toHaveAttribute('data-disabled');
+  });
 });
