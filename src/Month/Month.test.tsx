@@ -194,4 +194,29 @@ describe('@mantine/core/Month', () => {
     expect(days[6]).toHaveAttribute('data-disabled');
     expect(days[13]).toHaveAttribute('data-disabled');
   });
+
+  it('supports minDate', () => {
+    render(<Month {...defaultProps} minDate={new Date(2022, 3, 10)} />);
+    const days = screen.getAllByRole('button');
+
+    expect(days[0]).toHaveAttribute('data-disabled');
+    expect(days[1]).toHaveAttribute('data-disabled');
+    expect(days[12]).toHaveAttribute('data-disabled');
+    expect(days[13]).not.toHaveAttribute('data-disabled');
+    expect(days[14]).not.toHaveAttribute('data-disabled');
+    expect(days[34]).not.toHaveAttribute('data-disabled');
+  });
+
+  it('supports maxDate', () => {
+    render(<Month {...defaultProps} maxDate={new Date(2022, 3, 22)} />);
+    const days = screen.getAllByRole('button');
+
+    expect(days[34]).toHaveAttribute('data-disabled');
+    expect(days[33]).toHaveAttribute('data-disabled');
+    expect(days[32]).toHaveAttribute('data-disabled');
+    expect(days[26]).toHaveAttribute('data-disabled');
+    expect(days[25]).not.toHaveAttribute('data-disabled');
+    expect(days[24]).not.toHaveAttribute('data-disabled');
+    expect(days[23]).not.toHaveAttribute('data-disabled');
+  });
 });

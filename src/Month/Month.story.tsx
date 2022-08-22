@@ -41,3 +41,7 @@ export function CustomFirstDayOfWeek() {
 export function ExcludeDate() {
   return <Wrapper excludeDate={(date) => date.getDay() === 0} />;
 }
+
+export function MinMaxDate() {
+  return <Wrapper minDate={new Date(2022, 3, 10)} maxDate={new Date(2022, 3, 22)} />;
+}

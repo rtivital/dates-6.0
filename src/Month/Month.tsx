@@ -6,6 +6,8 @@ import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
 import { Day, DayStylesNames, DayProps } from '../Day';
 import { getMonthDays } from './get-month-days/get-month-days';
 import { isSameMonth } from './is-same-month/is-same-month';
+import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
+import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
 import useStyles from './Month.styles';
 
 export type MonthStylesNames =
@@ -31,6 +33,12 @@ export interface MonthSettings {
 
   /** Callback function to determine whether the day should be disabled */
   excludeDate?(date: Date): boolean;
+
+  /** Minimum possible date */
+  minDate?: Date;
+
+  /** Maximum possible date */
+  maxDate?: Date;
 }
 
 export interface MonthProps
@@ -61,6 +69,8 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     weekendDays,
     getDayProps,
     excludeDate,
+    minDate,
+    maxDate,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -86,7 +96,9 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
           date={date}
           weekend={weekendDays.includes(date.getDay())}
           outside={!isSameMonth(date, month)}
-          disabled={excludeDate?.(date)}
+          disabled={
+            excludeDate?.(date) || !isBeforeMaxDate(date, maxDate) || !isAfterMinDate(date, minDate)
+          }
           {...getDayProps?.(date)}
         />
       </td>
