@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 import dayjs from 'dayjs';
 import React from 'react';
+import { MantineProvider } from '@mantine/core';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Month, MonthProps } from './Month';
@@ -140,6 +141,16 @@ describe('@mantine/core/Month', () => {
 
   it('supports localization', () => {
     render(<Month {...defaultProps} locale="ru" />);
+    expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+  });
+
+  it('supports theme.datesLocale', () => {
+    render(
+      <MantineProvider theme={{ datesLocale: 'ru' }}>
+        <Month {...defaultProps} />
+      </MantineProvider>
+    );
+
     expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
   });
 
