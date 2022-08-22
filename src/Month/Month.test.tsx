@@ -80,4 +80,36 @@ describe('@mantine/core/Month', () => {
     expect(container.querySelector('thead tr')).toHaveClass('mantine-Calendar-weekdaysRow');
     expect(container.querySelector('tbody tr td button')).toHaveClass('mantine-Calendar-day');
   });
+
+  it('supports styles api (styles)', () => {
+    const { container } = render(
+      <Month
+        {...defaultProps}
+        styles={{
+          day: { borderColor: '#CECECE' },
+          month: { borderColor: '#EFC65E' },
+          weekdaysRow: { borderColor: '#FF4534' },
+        }}
+      />
+    );
+    expect(container.querySelector('table')).toHaveStyle({ borderColor: '#EFC65E' });
+    expect(container.querySelector('thead tr')).toHaveStyle({ borderColor: '#FF4534' });
+    expect(container.querySelector('tbody tr td button')).toHaveStyle({ borderColor: '#CECECE' });
+  });
+
+  it('supports styles api (classNames)', () => {
+    const { container } = render(
+      <Month
+        {...defaultProps}
+        classNames={{
+          day: 'test-day',
+          month: 'test-month',
+          weekdaysRow: 'test-weekdays',
+        }}
+      />
+    );
+    expect(container.querySelector('table')).toHaveClass('test-month');
+    expect(container.querySelector('thead tr')).toHaveClass('test-weekdays');
+    expect(container.querySelector('tbody tr td button')).toHaveClass('test-day');
+  });
 });
