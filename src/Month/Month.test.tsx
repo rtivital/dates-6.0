@@ -1,5 +1,7 @@
 import 'dayjs/locale/ru';
+import dayjs from 'dayjs';
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Month, MonthProps } from './Month';
 
@@ -160,5 +162,27 @@ describe('@mantine/core/Month', () => {
 
     rerender(<Month {...defaultProps} firstDayOfWeek={6} />);
     expectWeekdaysNames(['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr']);
+  });
+
+  it('supports getDayProps', async () => {
+    const spy = jest.fn();
+    render(
+      <Month
+        {...defaultProps}
+        getDayProps={(date) => ({
+          selected: dayjs(date).isSame(new Date(2022, 3, 15)),
+          onClick: spy,
+        })}
+      />
+    );
+
+    const days = screen.getAllByRole('button');
+
+    expect(days[18]).toHaveAttribute('data-selected');
+    expect(days[0]).not.toHaveAttribute('data-selected');
+    expect(days[1]).not.toHaveAttribute('data-selected');
+
+    await userEvent.click(days[0]);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
