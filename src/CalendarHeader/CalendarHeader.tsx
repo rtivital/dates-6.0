@@ -40,9 +40,18 @@ export interface CalendarHeaderProps
 
   /** Label displayed between next and previous buttons */
   label: React.ReactNode;
+
+  /** Determines whether next control should be visible */
+  hasNext?: boolean;
+
+  /** Determines whether previous control should be visible */
+  hasPrevious?: boolean;
 }
 
-const defaultProps: Partial<CalendarHeaderProps> = {};
+const defaultProps: Partial<CalendarHeaderProps> = {
+  hasNext: true,
+  hasPrevious: true,
+};
 
 export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((props, ref) => {
   const {
@@ -58,6 +67,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     classNames,
     styles,
     unstyled,
+    hasNext,
+    hasPrevious,
     __staticSelector,
     __preventFocus,
     ...others
@@ -83,6 +94,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         onClick={onPrevious}
         unstyled={unstyled}
         onMouseDown={preventFocus}
+        disabled={!hasPrevious}
+        data-disabled={!hasPrevious || undefined}
       >
         {previousIcon || (
           <Chevron
@@ -109,6 +122,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         onClick={onNext}
         unstyled={unstyled}
         onMouseDown={preventFocus}
+        disabled={!hasNext}
+        data-disabled={!hasNext || undefined}
       >
         {nextIcon || (
           <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />

@@ -20,6 +20,16 @@ export default createStyles((theme) => ({
     }),
 
     '&:active': theme.activeStyles,
+
+    '&[data-disabled]': {
+      opacity: 0.2,
+      cursor: 'not-allowed',
+      ...theme.fn.hover({ backgroundColor: 'transparent' }),
+
+      '&:active': {
+        transform: 'none',
+      },
+    },
   },
 
   calendarHeaderLevel: {

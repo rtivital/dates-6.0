@@ -120,4 +120,24 @@ describe('@mantine/dates/CalendarHeader', () => {
     await userEvent.click(screen.getByLabelText('prev'));
     expect(document.body).toHaveFocus();
   });
+
+  it('supports hasNext prop', () => {
+    const { rerender } = render(<CalendarHeader {...defaultProps} hasNext />);
+    expect(screen.getByLabelText('next')).not.toHaveAttribute('data-disabled');
+    expect(screen.getByLabelText('next')).not.toHaveAttribute('disabled');
+
+    rerender(<CalendarHeader {...defaultProps} hasNext={false} />);
+    expect(screen.getByLabelText('next')).toHaveAttribute('data-disabled');
+    expect(screen.getByLabelText('next')).toHaveAttribute('disabled');
+  });
+
+  it('supports hasPrevious prop', () => {
+    const { rerender } = render(<CalendarHeader {...defaultProps} hasPrevious />);
+    expect(screen.getByLabelText('prev')).not.toHaveAttribute('data-disabled');
+    expect(screen.getByLabelText('prev')).not.toHaveAttribute('disabled');
+
+    rerender(<CalendarHeader {...defaultProps} hasPrevious={false} />);
+    expect(screen.getByLabelText('prev')).toHaveAttribute('data-disabled');
+    expect(screen.getByLabelText('prev')).toHaveAttribute('disabled');
+  });
 });
