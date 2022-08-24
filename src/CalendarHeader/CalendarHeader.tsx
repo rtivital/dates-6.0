@@ -41,16 +41,20 @@ export interface CalendarHeaderProps
   /** Label displayed between next and previous buttons */
   label: React.ReactNode;
 
-  /** Determines whether next control should be visible */
+  /** Determines whether next control should be visible, defaults to true */
   hasNext?: boolean;
 
-  /** Determines whether previous control should be visible */
+  /** Determines whether previous control should be visible, defaults to true */
   hasPrevious?: boolean;
+
+  /** Determines whether next level button should be enabled, defaults to true */
+  hasNextLevel?: boolean;
 }
 
 const defaultProps: Partial<CalendarHeaderProps> = {
   hasNext: true,
   hasPrevious: true,
+  hasNextLevel: true,
 };
 
 export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((props, ref) => {
@@ -69,6 +73,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     unstyled,
     hasNext,
     hasPrevious,
+    hasNextLevel,
     __staticSelector,
     __preventFocus,
     ...others
@@ -107,10 +112,13 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
       </UnstyledButton>
 
       <UnstyledButton
+        component={hasNextLevel ? 'button' : 'div'}
         className={classes.calendarHeaderLevel}
-        onClick={onLevelChange}
+        onClick={hasNextLevel ? onLevelChange : undefined}
         unstyled={unstyled}
-        onMouseDown={preventFocus}
+        onMouseDown={hasNextLevel ? preventFocus : undefined}
+        disabled={!hasNextLevel}
+        data-static={!hasNextLevel || undefined}
       >
         {label}
       </UnstyledButton>

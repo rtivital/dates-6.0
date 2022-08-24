@@ -14,6 +14,7 @@ export default createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    userSelect: 'none',
 
     ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
@@ -37,6 +38,7 @@ export default createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    userSelect: 'none',
     flex: 1,
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
@@ -46,5 +48,15 @@ export default createStyles((theme) => ({
     }),
 
     '&:active': theme.activeStyles,
+
+    '&[data-static]': {
+      cursor: 'default',
+      userSelect: 'unset',
+      ...theme.fn.hover({ backgroundColor: 'transparent' }),
+
+      '&:active': {
+        transform: 'none',
+      },
+    },
   },
 }));

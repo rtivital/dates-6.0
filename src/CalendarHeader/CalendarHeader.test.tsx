@@ -140,4 +140,36 @@ describe('@mantine/dates/CalendarHeader', () => {
     expect(screen.getByLabelText('prev')).toHaveAttribute('data-disabled');
     expect(screen.getByLabelText('prev')).toHaveAttribute('disabled');
   });
+
+  it('supports hasNextLevel prop', () => {
+    const { rerender } = render(
+      <CalendarHeader {...defaultProps} label="test-level" hasNextLevel />
+    );
+    expect(screen.getByText('test-level')).not.toHaveAttribute('data-static');
+
+    rerender(<CalendarHeader {...defaultProps} label="test-level" hasNextLevel={false} />);
+    expect(screen.getByText('test-level')).toHaveAttribute('data-static');
+  });
+
+  it('does not call onLevelChange when level is clicked and hasNextLevel is false', async () => {
+    const spy = jest.fn();
+    const { rerender } = render(
+      <CalendarHeader {...defaultProps} label="test-level" hasNextLevel onLevelChange={spy} />
+    );
+
+    await userEvent.click(screen.getByText('test-level'));
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    rerender(
+      <CalendarHeader
+        {...defaultProps}
+        label="test-level"
+        hasNextLevel={false}
+        onLevelChange={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByText('test-level'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });
