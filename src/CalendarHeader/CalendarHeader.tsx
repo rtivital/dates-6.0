@@ -19,13 +19,27 @@ export interface CalendarHeaderProps
 
   /** aria-label for previous button */
   previousLabel?: string;
+
+  /** Called when next button is clicked */
+  onNext?(): void;
+
+  /** Called when previous button is clicked */
+  onPrevious?(): void;
 }
 
 const defaultProps: Partial<CalendarHeaderProps> = {};
 
 export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((props, ref) => {
-  const { className, nextIcon, previousIcon, nextLabel, previousLabel, ...others } =
-    useComponentDefaultProps('CalendarHeader', defaultProps, props);
+  const {
+    className,
+    nextIcon,
+    previousIcon,
+    nextLabel,
+    previousLabel,
+    onNext,
+    onPrevious,
+    ...others
+  } = useComponentDefaultProps('CalendarHeader', defaultProps, props);
 
   const { classes, cx } = useStyles();
 
@@ -35,6 +49,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         className={classes.calendarHeaderControl}
         data-previous
         aria-label={previousLabel}
+        onClick={onPrevious}
       >
         {previousIcon || (
           <Chevron
@@ -45,7 +60,12 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         )}
       </ActionIcon>
 
-      <ActionIcon className={classes.calendarHeaderControl} data-next aria-label={nextLabel}>
+      <ActionIcon
+        className={classes.calendarHeaderControl}
+        data-next
+        aria-label={nextLabel}
+        onClick={onNext}
+      >
         {nextIcon || (
           <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
         )}
