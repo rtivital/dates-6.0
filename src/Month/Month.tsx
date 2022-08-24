@@ -42,6 +42,9 @@ export interface MonthSettings {
 
   /** Controls day value rendering */
   renderDay?(date: Date): React.ReactNode;
+
+  /** Determines whether outside dates should be hidden, defaults to false */
+  hideOutsideDates?: boolean;
 }
 
 export interface MonthProps
@@ -75,6 +78,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     minDate,
     maxDate,
     renderDay,
+    hideOutsideDates,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -93,21 +97,28 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   };
 
   const rows = getMonthDays(month, firstDayOfWeek).map((row, rowIndex) => {
-    const cells = row.map((date) => (
-      <td key={date.toString()} className={classes.monthCell}>
-        <Day
-          {...stylesApiProps}
-          renderDay={renderDay}
-          date={date}
-          weekend={weekendDays.includes(date.getDay())}
-          outside={!isSameMonth(date, month)}
-          disabled={
-            excludeDate?.(date) || !isBeforeMaxDate(date, maxDate) || !isAfterMinDate(date, minDate)
-          }
-          {...getDayProps?.(date)}
-        />
-      </td>
-    ));
+    const cells = row.map((date) => {
+      const outside = !isSameMonth(date, month);
+
+      return (
+        <td key={date.toString()} className={classes.monthCell}>
+          <Day
+            {...stylesApiProps}
+            renderDay={renderDay}
+            date={date}
+            weekend={weekendDays.includes(date.getDay())}
+            outside={outside}
+            hidden={hideOutsideDates ? outside : false}
+            disabled={
+              excludeDate?.(date) ||
+              !isBeforeMaxDate(date, maxDate) ||
+              !isAfterMinDate(date, minDate)
+            }
+            {...getDayProps?.(date)}
+          />
+        </td>
+      );
+    });
 
     return (
       <tr key={rowIndex} className={classes.monthRow}>

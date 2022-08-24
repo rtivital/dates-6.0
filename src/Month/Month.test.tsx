@@ -239,4 +239,13 @@ describe('@mantine/core/Month', () => {
       expect(day.textContent).toBe('2022');
     });
   });
+
+  it('supports hideOutsideDates', () => {
+    render(<Month {...defaultProps} hideOutsideDates />);
+    const days = screen.getAllByRole('button');
+
+    expect(days).toHaveLength(30);
+    expect(days[0].textContent).toBe('1');
+    expect(days[29].textContent).toBe('30');
+  });
 });

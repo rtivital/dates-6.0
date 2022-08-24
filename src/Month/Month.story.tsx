@@ -60,3 +60,7 @@ export function RenderDay() {
     />
   );
 }
+
+export function HideOutsideDates() {
+  return <Wrapper hideOutsideDates />;
+}
