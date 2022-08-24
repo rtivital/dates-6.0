@@ -45,6 +45,9 @@ export interface MonthSettings {
 
   /** Determines whether outside dates should be hidden, defaults to false */
   hideOutsideDates?: boolean;
+
+  /** Determines whether weekdays row should be hidden, defaults to false */
+  hideWeekdays?: boolean;
 }
 
 export interface MonthProps
@@ -79,6 +82,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     maxDate,
     renderDay,
     hideOutsideDates,
+    hideWeekdays,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -129,14 +133,16 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
 
   return (
     <Box component="table" className={cx(classes.month, className)} ref={ref} {...others}>
-      <thead className={classes.monthThead}>
-        <WeekdaysRow
-          {...stylesApiProps}
-          locale={locale}
-          firstDayOfWeek={firstDayOfWeek}
-          format={weekdayFormat}
-        />
-      </thead>
+      {!hideWeekdays && (
+        <thead className={classes.monthThead}>
+          <WeekdaysRow
+            {...stylesApiProps}
+            locale={locale}
+            firstDayOfWeek={firstDayOfWeek}
+            format={weekdayFormat}
+          />
+        </thead>
+      )}
       <tbody className={classes.monthTbody}>{rows}</tbody>
     </Box>
   );

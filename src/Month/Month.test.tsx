@@ -248,4 +248,9 @@ describe('@mantine/core/Month', () => {
     expect(days[0].textContent).toBe('1');
     expect(days[29].textContent).toBe('30');
   });
+
+  it('supports hideWeekdays', () => {
+    render(<Month {...defaultProps} hideWeekdays />);
+    expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
+  });
 });

@@ -64,3 +64,7 @@ export function RenderDay() {
 export function HideOutsideDates() {
   return <Wrapper hideOutsideDates />;
 }
+
+export function HideWeekdays() {
+  return <Wrapper hideWeekdays />;
+}
