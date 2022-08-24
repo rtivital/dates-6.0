@@ -39,6 +39,9 @@ export interface MonthSettings {
 
   /** Maximum possible date */
   maxDate?: Date;
+
+  /** Controls day value rendering */
+  renderDay?(date: Date): React.ReactNode;
 }
 
 export interface MonthProps
@@ -71,6 +74,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     excludeDate,
     minDate,
     maxDate,
+    renderDay,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -93,6 +97,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
       <td key={date.toString()} className={classes.monthCell}>
         <Day
           {...stylesApiProps}
+          renderDay={renderDay}
           date={date}
           weekend={weekendDays.includes(date.getDay())}
           outside={!isSameMonth(date, month)}

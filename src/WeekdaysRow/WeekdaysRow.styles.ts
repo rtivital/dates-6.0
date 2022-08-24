@@ -7,5 +7,6 @@ export default createStyles((theme) => ({
     fontWeight: 400,
     fontSize: theme.fontSizes.sm,
     textTransform: 'capitalize',
+    paddingBottom: theme.spacing.xs / 2,
   },
 }));

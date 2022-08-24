@@ -230,4 +230,13 @@ describe('@mantine/core/Month', () => {
     expect(days[24]).not.toHaveAttribute('data-disabled');
     expect(days[23]).not.toHaveAttribute('data-disabled');
   });
+
+  it('supports renderDay', () => {
+    render(<Month {...defaultProps} renderDay={(date) => date.getFullYear()} />);
+    const days = screen.getAllByRole('button');
+
+    days.forEach((day) => {
+      expect(day.textContent).toBe('2022');
+    });
+  });
 });

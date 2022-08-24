@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { Code } from '@mantine/core';
+import { Code, Indicator } from '@mantine/core';
 import { Month, MonthProps } from './Month';
 
 export default { title: 'Month' };
@@ -44,4 +44,19 @@ export function ExcludeDate() {
 
 export function MinMaxDate() {
   return <Wrapper minDate={new Date(2022, 3, 10)} maxDate={new Date(2022, 3, 22)} />;
+}
+
+export function RenderDay() {
+  return (
+    <Wrapper
+      renderDay={(date) => {
+        const day = date.getDate();
+        return (
+          <Indicator size={6} color="red" offset={-3} disabled={day !== 16}>
+            <div>{day}</div>
+          </Indicator>
+        );
+      }}
+    />
+  );
 }
