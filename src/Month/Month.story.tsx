@@ -72,3 +72,7 @@ export function HideWeekdays() {
 export function Static() {
   return <Wrapper static />;
 }
+
+export function Unstyled() {
+  return <Wrapper unstyled />;
+}
