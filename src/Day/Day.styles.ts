@@ -2,9 +2,10 @@ import { createStyles, MantineNumberSize } from '@mantine/core';
 
 export interface DayStylesParams {
   radius: MantineNumberSize;
+  isStatic: boolean;
 }
 
-export default createStyles((theme, { radius }: DayStylesParams) => {
+export default createStyles((theme, { radius, isStatic }: DayStylesParams) => {
   const colors = theme.fn.variant({ variant: 'filled' });
   const lightColors = theme.fn.variant({ variant: 'light' });
   return {
@@ -15,13 +16,17 @@ export default createStyles((theme, { radius }: DayStylesParams) => {
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',
-      userSelect: 'none',
+      userSelect: isStatic ? undefined : 'none',
+      cursor: isStatic ? 'default' : 'pointer',
       borderRadius: theme.fn.radius(radius),
-      ...theme.fn.hover({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-      }),
+      ...(isStatic
+        ? null
+        : theme.fn.hover({
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+          })),
 
-      '&:active': theme.activeStyles,
+      '&:active': isStatic ? undefined : theme.activeStyles,
 
       '&[data-disabled]': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
@@ -39,7 +44,7 @@ export default createStyles((theme, { radius }: DayStylesParams) => {
       '&[data-in-range]': {
         backgroundColor: lightColors.background,
         borderRadius: 0,
-        ...theme.fn.hover({ backgroundColor: lightColors.hover }),
+        ...(isStatic ? null : theme.fn.hover({ backgroundColor: lightColors.hover })),
       },
 
       '&[data-first-in-range]': {
@@ -55,7 +60,7 @@ export default createStyles((theme, { radius }: DayStylesParams) => {
       '&[data-selected]': {
         color: colors.color,
         backgroundColor: colors.background,
-        ...theme.fn.hover({ backgroundColor: colors.hover }),
+        ...(isStatic ? null : theme.fn.hover({ backgroundColor: colors.hover })),
       },
 
       '&[data-hidden]': {

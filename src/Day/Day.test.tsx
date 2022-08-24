@@ -100,4 +100,12 @@ describe('@mantine/dates/Day', () => {
     expect(container.querySelector('button')).toHaveAttribute('data-hidden');
     expect(container.querySelector('button')).toHaveStyle({ display: 'none' });
   });
+
+  it('supports static prop', () => {
+    const { container, rerender } = render(<Day {...defaultProps} />);
+    expect((container.firstChild as HTMLElement).tagName).toBe('BUTTON');
+
+    rerender(<Day {...defaultProps} static />);
+    expect((container.firstChild as HTMLElement).tagName).toBe('DIV');
+  });
 });

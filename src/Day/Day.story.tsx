@@ -18,6 +18,23 @@ export function Usage() {
   );
 }
 
+export function Static() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Day date={new Date()} static />
+      <Day date={new Date()} static weekend />
+      <Day date={new Date()} static outside />
+      <Day date={new Date()} static selected />
+      <Day date={new Date()} static disabled />
+      <Day date={new Date()} static firstInRange inRange selected />
+      <Day date={new Date()} static inRange />
+      <Day date={new Date()} static inRange />
+      <Day date={new Date()} static inRange />
+      <Day date={new Date()} static lastInRange inRange selected />
+    </div>
+  );
+}
+
 export function Range() {
   return (
     <div style={{ padding: 40 }}>

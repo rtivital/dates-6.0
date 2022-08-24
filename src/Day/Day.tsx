@@ -12,8 +12,11 @@ export type DayStylesNames = Selectors<typeof useStyles>;
 
 export interface DayProps
   extends DefaultProps<DayStylesNames, DayStylesParams>,
-    React.ComponentPropsWithoutRef<'button'> {
+    Omit<React.ComponentPropsWithoutRef<'button'>, 'type'> {
   __staticSelector?: string;
+
+  /** Determines which element should be used as root, button by default, div if static prop is set */
+  static?: boolean;
 
   /** Date that should be displayed */
   date: Date;
@@ -68,17 +71,19 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     firstInRange,
     lastInRange,
     hidden,
+    static: isStatic,
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { radius },
+    { radius, isStatic },
     { classNames, styles, unstyled, name: ['Day', __staticSelector] }
   );
 
   return (
-    <UnstyledButton
-      type="button"
+    <UnstyledButton<any>
+      component={isStatic ? 'div' : 'button'}
+      type={isStatic ? undefined : 'button'}
       ref={ref}
       className={cx(classes.day, className)}
       disabled={disabled}
