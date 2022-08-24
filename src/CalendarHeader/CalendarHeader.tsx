@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, Selectors, Box, useComponentDefaultProps, ActionIcon } from '@mantine/core';
+import {
+  DefaultProps,
+  Selectors,
+  Box,
+  useComponentDefaultProps,
+  UnstyledButton,
+} from '@mantine/core';
 import { Chevron } from './Chevron';
 import useStyles from './CalendarHeader.styles';
 
@@ -8,6 +14,8 @@ export type CalendarHeaderStylesNames = Selectors<typeof useStyles>;
 export interface CalendarHeaderProps
   extends DefaultProps<CalendarHeaderStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  __staticSelector?: string;
+
   /** Change next icon */
   nextIcon?: React.ReactNode;
 
@@ -25,6 +33,12 @@ export interface CalendarHeaderProps
 
   /** Called when previous button is clicked */
   onPrevious?(): void;
+
+  /** Called when level button is clicked */
+  onLevelChange?(): void;
+
+  /** Label displayed between next and previous buttons */
+  label: React.ReactNode;
 }
 
 const defaultProps: Partial<CalendarHeaderProps> = {};
@@ -38,14 +52,25 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     previousLabel,
     onNext,
     onPrevious,
+    onLevelChange,
+    label,
+    classNames,
+    styles,
+    unstyled,
+    __staticSelector,
     ...others
   } = useComponentDefaultProps('CalendarHeader', defaultProps, props);
 
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles(null, {
+    name: ['CalendarHeader', __staticSelector],
+    classNames,
+    styles,
+    unstyled,
+  });
 
   return (
     <Box className={cx(classes.calendarHeader, className)} ref={ref} {...others}>
-      <ActionIcon
+      <UnstyledButton
         className={classes.calendarHeaderControl}
         data-previous
         aria-label={previousLabel}
@@ -58,9 +83,13 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
             data-previous
           />
         )}
-      </ActionIcon>
+      </UnstyledButton>
 
-      <ActionIcon
+      <UnstyledButton className={classes.calendarHeaderLevel} onClick={onLevelChange}>
+        {label}
+      </UnstyledButton>
+
+      <UnstyledButton
         className={classes.calendarHeaderControl}
         data-next
         aria-label={nextLabel}
@@ -69,7 +98,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         {nextIcon || (
           <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
         )}
-      </ActionIcon>
+      </UnstyledButton>
     </Box>
   );
 });

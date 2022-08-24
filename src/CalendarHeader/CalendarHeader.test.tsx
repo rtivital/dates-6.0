@@ -6,6 +6,7 @@ import { CalendarHeader, CalendarHeaderProps } from './CalendarHeader';
 const defaultProps: CalendarHeaderProps = {
   nextLabel: 'next',
   previousLabel: 'prev',
+  label: '',
 };
 
 describe('@mantine/dates/CalendarHeader', () => {
@@ -50,5 +51,25 @@ describe('@mantine/dates/CalendarHeader', () => {
     await userEvent.click(screen.getByLabelText('prev'));
     expect(onNext).toHaveBeenCalledTimes(1);
     expect(onPrevious).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders given label', () => {
+    render(<CalendarHeader {...defaultProps} label="test-label" />);
+    expect(screen.getByText('test-label')).toBeInTheDocument();
+  });
+
+  it('calls onLevelChange when level control is clicked', async () => {
+    const spy = jest.fn();
+    render(<CalendarHeader {...defaultProps} label="click me" onLevelChange={spy} />);
+
+    await userEvent.click(screen.getByText('click me'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('has correct default __staticSelector', () => {
+    render(<CalendarHeader {...defaultProps} />);
+    expect(screen.getByLabelText('next')).toHaveClass(
+      'mantine-CalendarHeader-calendarHeaderControl'
+    );
   });
 });

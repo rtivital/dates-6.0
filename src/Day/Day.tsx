@@ -83,7 +83,6 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
   return (
     <UnstyledButton<any>
       component={isStatic ? 'div' : 'button'}
-      type={isStatic ? undefined : 'button'}
       ref={ref}
       className={cx(classes.day, className)}
       disabled={disabled}
