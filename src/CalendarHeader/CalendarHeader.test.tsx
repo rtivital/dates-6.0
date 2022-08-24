@@ -17,4 +17,20 @@ describe('@mantine/dates/CalendarHeader', () => {
     expect(container.querySelector('[data-next]').textContent).toBe('test-next-icon');
     expect(container.querySelector('[data-previous]').textContent).toBe('test-previous-icon');
   });
+
+  it('supports nextLabel and previousLabel props', () => {
+    const { container } = render(
+      <CalendarHeader
+        {...defaultProps}
+        nextLabel="test-next-label"
+        previousLabel="test-previous-label"
+      />
+    );
+
+    expect(container.querySelector('[data-next]')).toHaveAttribute('aria-label', 'test-next-label');
+    expect(container.querySelector('[data-previous]')).toHaveAttribute(
+      'aria-label',
+      'test-previous-label'
+    );
+  });
 });

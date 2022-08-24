@@ -13,22 +13,29 @@ export interface CalendarHeaderProps
 
   /** Change previous icon */
   previousIcon?: React.ReactNode;
+
+  /** aria-label for next button */
+  nextLabel?: string;
+
+  /** aria-label for previous button */
+  previousLabel?: string;
 }
 
 const defaultProps: Partial<CalendarHeaderProps> = {};
 
 export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((props, ref) => {
-  const { className, nextIcon, previousIcon, ...others } = useComponentDefaultProps(
-    'CalendarHeader',
-    defaultProps,
-    props
-  );
+  const { className, nextIcon, previousIcon, nextLabel, previousLabel, ...others } =
+    useComponentDefaultProps('CalendarHeader', defaultProps, props);
 
   const { classes, cx } = useStyles();
 
   return (
     <Box className={cx(classes.calendarHeader, className)} ref={ref} {...others}>
-      <ActionIcon className={classes.calendarHeaderControl} data-previous>
+      <ActionIcon
+        className={classes.calendarHeaderControl}
+        data-previous
+        aria-label={previousLabel}
+      >
         {previousIcon || (
           <Chevron
             className={classes.calendarHeaderControlIcon}
@@ -38,7 +45,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         )}
       </ActionIcon>
 
-      <ActionIcon className={classes.calendarHeaderControl} data-next>
+      <ActionIcon className={classes.calendarHeaderControl} data-next aria-label={nextLabel}>
         {nextIcon || (
           <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
         )}
