@@ -95,4 +95,29 @@ describe('@mantine/dates/CalendarHeader', () => {
     );
     expect(screen.getByLabelText('next')).toHaveClass('test-control');
   });
+
+  it('handles focus as usual when __preventFocus is set to false', async () => {
+    render(<CalendarHeader {...defaultProps} __preventFocus={false} label="test-label" />);
+    await userEvent.click(screen.getByLabelText('next'));
+    expect(screen.getByLabelText('next')).toHaveFocus();
+
+    await userEvent.click(screen.getByText('test-label'));
+    expect(screen.getByText('test-label')).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('prev'));
+    expect(screen.getByLabelText('prev')).toHaveFocus();
+  });
+
+  it('does not focus controls on click when __preventFocus is set to true', async () => {
+    render(<CalendarHeader {...defaultProps} __preventFocus label="test-label" />);
+
+    await userEvent.click(screen.getByLabelText('next'));
+    expect(document.body).toHaveFocus();
+
+    await userEvent.click(screen.getByText('test-label'));
+    expect(document.body).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('prev'));
+    expect(document.body).toHaveFocus();
+  });
 });

@@ -15,6 +15,7 @@ export interface CalendarHeaderProps
   extends DefaultProps<CalendarHeaderStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   __staticSelector?: string;
+  __preventFocus?: boolean;
 
   /** Change next icon */
   nextIcon?: React.ReactNode;
@@ -58,6 +59,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     styles,
     unstyled,
     __staticSelector,
+    __preventFocus,
     ...others
   } = useComponentDefaultProps('CalendarHeader', defaultProps, props);
 
@@ -68,6 +70,10 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     unstyled,
   });
 
+  const preventFocus = __preventFocus
+    ? (event: React.MouseEvent<HTMLElement>) => event.preventDefault()
+    : undefined;
+
   return (
     <Box className={cx(classes.calendarHeader, className)} ref={ref} {...others}>
       <UnstyledButton
@@ -76,6 +82,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         aria-label={previousLabel}
         onClick={onPrevious}
         unstyled={unstyled}
+        onMouseDown={preventFocus}
       >
         {previousIcon || (
           <Chevron
@@ -90,6 +97,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         className={classes.calendarHeaderLevel}
         onClick={onLevelChange}
         unstyled={unstyled}
+        onMouseDown={preventFocus}
       >
         {label}
       </UnstyledButton>
@@ -100,6 +108,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         aria-label={nextLabel}
         onClick={onNext}
         unstyled={unstyled}
+        onMouseDown={preventFocus}
       >
         {nextIcon || (
           <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
