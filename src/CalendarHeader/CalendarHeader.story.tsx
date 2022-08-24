@@ -10,3 +10,11 @@ export function Usage() {
     </div>
   );
 }
+
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40, width: 300 }}>
+      <CalendarHeader label="March 2022" unstyled />
+    </div>
+  );
+}

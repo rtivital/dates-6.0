@@ -75,6 +75,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         data-previous
         aria-label={previousLabel}
         onClick={onPrevious}
+        unstyled={unstyled}
       >
         {previousIcon || (
           <Chevron
@@ -85,7 +86,11 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         )}
       </UnstyledButton>
 
-      <UnstyledButton className={classes.calendarHeaderLevel} onClick={onLevelChange}>
+      <UnstyledButton
+        className={classes.calendarHeaderLevel}
+        onClick={onLevelChange}
+        unstyled={unstyled}
+      >
         {label}
       </UnstyledButton>
 
@@ -94,6 +99,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         data-next
         aria-label={nextLabel}
         onClick={onNext}
+        unstyled={unstyled}
       >
         {nextIcon || (
           <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />

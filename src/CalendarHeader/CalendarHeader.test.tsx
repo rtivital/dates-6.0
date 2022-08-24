@@ -72,4 +72,27 @@ describe('@mantine/dates/CalendarHeader', () => {
       'mantine-CalendarHeader-calendarHeaderControl'
     );
   });
+
+  it('supports custom __staticSelector', () => {
+    render(<CalendarHeader {...defaultProps} __staticSelector="Calendar" />);
+    expect(screen.getByLabelText('next')).toHaveClass('mantine-Calendar-calendarHeaderControl');
+  });
+
+  it('supports styles api (styles)', () => {
+    render(
+      <CalendarHeader
+        {...defaultProps}
+        styles={{ calendarHeaderControl: { borderColor: '#CECECE' } }}
+      />
+    );
+
+    expect(screen.getByLabelText('next')).toHaveStyle({ borderColor: '#CECECE' });
+  });
+
+  it('supports styles api (classNames)', () => {
+    render(
+      <CalendarHeader {...defaultProps} classNames={{ calendarHeaderControl: 'test-control' }} />
+    );
+    expect(screen.getByLabelText('next')).toHaveClass('test-control');
+  });
 });
