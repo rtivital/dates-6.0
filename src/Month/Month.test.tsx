@@ -288,4 +288,12 @@ describe('@mantine/core/Month', () => {
     expect(days[0]).toHaveAttribute('aria-label', '28/03/2022');
     expect(days[4]).toHaveAttribute('aria-label', '01/04/2022');
   });
+
+  it('supports static prop', () => {
+    const { container, rerender } = render(<Month {...defaultProps} />);
+    expect((container.querySelector('td').firstChild as HTMLElement).tagName).toBe('BUTTON');
+
+    rerender(<Month {...defaultProps} static />);
+    expect((container.querySelector('td').firstChild as HTMLElement).tagName).toBe('DIV');
+  });
 });

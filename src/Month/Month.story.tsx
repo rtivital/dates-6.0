@@ -68,3 +68,7 @@ export function HideOutsideDates() {
 export function HideWeekdays() {
   return <Wrapper hideWeekdays />;
 }
+
+export function Static() {
+  return <Wrapper static />;
+}

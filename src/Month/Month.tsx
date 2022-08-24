@@ -62,6 +62,9 @@ export interface MonthProps
 
   /** Month to display */
   month: Date;
+
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  static?: boolean;
 }
 
 const defaultProps: Partial<MonthProps> = {
@@ -88,6 +91,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     hideOutsideDates,
     hideWeekdays,
     getDayAriaLabel,
+    static: isStatic,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -124,6 +128,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             outside={outside}
             hidden={hideOutsideDates ? outside : false}
             aria-label={ariaLabel}
+            static={isStatic}
             disabled={
               excludeDate?.(date) ||
               !isBeforeMaxDate(date, maxDate) ||
