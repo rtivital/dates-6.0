@@ -253,4 +253,39 @@ describe('@mantine/core/Month', () => {
     render(<Month {...defaultProps} hideWeekdays />);
     expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
   });
+
+  it('sets correct default aria-label on days without getDayAriaLabel', () => {
+    render(<Month {...defaultProps} />);
+    const days = screen.getAllByRole('button');
+    expect(days[0]).toHaveAttribute('aria-label', '28 March 2022');
+    expect(days[4]).toHaveAttribute('aria-label', '1 April 2022');
+  });
+
+  it('supports default days aria-label localization with locale prop', () => {
+    render(<Month {...defaultProps} locale="ru" />);
+    const days = screen.getAllByRole('button');
+    expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
+    expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
+  });
+
+  it('supports default days aria-label localization with theme.datesLocale', () => {
+    render(
+      <MantineProvider theme={{ datesLocale: 'ru' }}>
+        <Month {...defaultProps} />
+      </MantineProvider>
+    );
+    const days = screen.getAllByRole('button');
+    expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
+    expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
+  });
+
+  it('allows changing days aria-label with getDayAriaLabel prop', () => {
+    render(
+      <Month {...defaultProps} getDayAriaLabel={(date) => dayjs(date).format('DD/MM/YYYY')} />
+    );
+
+    const days = screen.getAllByRole('button');
+    expect(days[0]).toHaveAttribute('aria-label', '28/03/2022');
+    expect(days[4]).toHaveAttribute('aria-label', '01/04/2022');
+  });
 });

@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
+import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, Box, useComponentDefaultProps } from '@mantine/core';
 import type { FirstDayOfWeek } from '../types';
@@ -48,6 +49,9 @@ export interface MonthSettings {
 
   /** Determines whether weekdays row should be hidden, defaults to false */
   hideWeekdays?: boolean;
+
+  /** Assigns aria-label to days based on date */
+  getDayAriaLabel?(date: Date): string;
 }
 
 export interface MonthProps
@@ -83,10 +87,11 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     renderDay,
     hideOutsideDates,
     hideWeekdays,
+    getDayAriaLabel,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, {
+  const { classes, cx, theme } = useStyles(null, {
     classNames,
     styles,
     unstyled,
@@ -103,6 +108,11 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const rows = getMonthDays(month, firstDayOfWeek).map((row, rowIndex) => {
     const cells = row.map((date) => {
       const outside = !isSameMonth(date, month);
+      const ariaLabel =
+        getDayAriaLabel?.(date) ||
+        dayjs(date)
+          .locale(locale || theme.datesLocale)
+          .format('D MMMM YYYY');
 
       return (
         <td key={date.toString()} className={classes.monthCell}>
@@ -113,6 +123,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             weekend={weekendDays.includes(date.getDay())}
             outside={outside}
             hidden={hideOutsideDates ? outside : false}
+            aria-label={ariaLabel}
             disabled={
               excludeDate?.(date) ||
               !isBeforeMaxDate(date, maxDate) ||
