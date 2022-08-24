@@ -30,6 +30,9 @@ export interface DayProps
   /** Determines whether the day is selected */
   selected?: boolean;
 
+  /** Determines whether the day should not de displayed */
+  hidden?: boolean;
+
   /** Determines whether day is selected in range */
   inRange?: boolean;
 
@@ -64,6 +67,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
     inRange,
     firstInRange,
     lastInRange,
+    hidden,
     ...others
   } = useComponentDefaultProps('Day', defaultProps, props);
 
@@ -78,6 +82,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       ref={ref}
       className={cx(classes.day, className)}
       disabled={disabled}
+      data-hidden={hidden || undefined}
       data-disabled={disabled || undefined}
       data-weekend={(!disabled && !outside && weekend) || undefined}
       data-outside={(!disabled && outside) || undefined}

@@ -57,6 +57,10 @@ export default createStyles((theme, { radius }: DayStylesParams) => {
         backgroundColor: colors.background,
         ...theme.fn.hover({ backgroundColor: colors.hover }),
       },
+
+      '&[data-hidden]': {
+        display: 'none',
+      },
     },
   };
 });

@@ -91,4 +91,13 @@ describe('@mantine/dates/Day', () => {
     expect(screen.getByRole('button')).toHaveAttribute('data-outside');
     expect(screen.getByRole('button')).not.toHaveAttribute('data-weekend');
   });
+
+  it('adds data-hidden attribute when hidden prop is set', () => {
+    const { rerender, container } = render(<Day {...defaultProps} />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('data-hidden');
+
+    rerender(<Day {...defaultProps} hidden />);
+    expect(container.querySelector('button')).toHaveAttribute('data-hidden');
+    expect(container.querySelector('button')).toHaveStyle({ display: 'none' });
+  });
 });
