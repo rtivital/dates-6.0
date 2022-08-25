@@ -55,7 +55,7 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
   });
 
   const weekdays = getWeekdayNames({
-    locale: locale || ctx.locale,
+    locale: ctx.getLocale(locale),
     format: weekdayFormat,
     firstDayOfWeek,
   }).map((weekday, index) => (
