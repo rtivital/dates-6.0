@@ -28,7 +28,6 @@ export interface WeekdaysRowProps
 const defaultProps: Partial<WeekdaysRowProps> = {
   weekdayFormat: 'dd',
   cellComponent: 'th',
-  firstDayOfWeek: 1,
 };
 
 export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((props, ref) => {
@@ -57,7 +56,7 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
   const weekdays = getWeekdayNames({
     locale: ctx.getLocale(locale),
     format: weekdayFormat,
-    firstDayOfWeek,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   }).map((weekday, index) => (
     <CellComponent key={index} className={classes.weekday}>
       {weekday}

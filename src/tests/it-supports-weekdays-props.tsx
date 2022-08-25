@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { screen, render } from '@testing-library/react';
+import { DatesProvider } from '../DatesProvider';
 
 export function expectWeekdaysNames(names: string[]) {
   expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);
@@ -26,6 +27,16 @@ export function itSupportsWeekdaysProps(
     expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
   });
 
+  it('supports weekdays names localization with DatesProvider', () => {
+    render(
+      <DatesProvider settings={{ locale: 'ru' }}>
+        <Component {...requiredProps} />
+      </DatesProvider>
+    );
+
+    expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+  });
+
   it('supports changing weekday format', () => {
     render(<Component {...requiredProps} weekdayFormat="dddd" />);
     expectWeekdaysNames([
@@ -45,5 +56,15 @@ export function itSupportsWeekdaysProps(
 
     rerender(<Component {...requiredProps} firstDayOfWeek={6} />);
     expectWeekdaysNames(['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr']);
+  });
+
+  it('changes weekdays order based on firstDayOfWeek defined on DatesProvider', () => {
+    render(
+      <DatesProvider settings={{ firstDayOfWeek: 4 }}>
+        <Component {...requiredProps} />
+      </DatesProvider>
+    );
+
+    expectWeekdaysNames(['Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We']);
   });
 }

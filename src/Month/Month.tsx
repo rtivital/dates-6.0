@@ -98,7 +98,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
 
   const ctx = useDatesContext();
 
-  const { classes, cx, theme } = useStyles(null, {
+  const { classes, cx } = useStyles(null, {
     classNames,
     styles,
     unstyled,

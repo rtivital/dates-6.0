@@ -2,8 +2,7 @@ import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { WeekdaysRow, WeekdaysRowProps } from './WeekdaysRow';
-import { DatesProvider } from '../DatesProvider';
-import { itSupportsWeekdaysProps, expectWeekdaysNames } from '../tests';
+import { itSupportsWeekdaysProps } from '../tests';
 
 const defaultProps: WeekdaysRowProps = {};
 
@@ -18,7 +17,7 @@ function Wrapper(props: Partial<WeekdaysRowProps>) {
 }
 
 describe('@mantine/dates/WeekdaysRow', () => {
-  itSupportsWeekdaysProps(Wrapper);
+  itSupportsWeekdaysProps(Wrapper, defaultProps);
 
   it('supports changing cell component', () => {
     render(<Wrapper cellComponent="td" />);
@@ -57,15 +56,5 @@ describe('@mantine/dates/WeekdaysRow', () => {
     );
     expect(screen.getAllByRole('columnheader')[0]).toHaveClass('test-weekday-class');
     expect(screen.getByRole('row')).toHaveClass('test-weekdays-row-class');
-  });
-
-  it('supports localization with DatesProvider', () => {
-    render(
-      <DatesProvider settings={{ locale: 'ru' }}>
-        <Wrapper />
-      </DatesProvider>
-    );
-
-    expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
   });
 });
