@@ -6,14 +6,14 @@ export function expectWeekdaysNames(names: string[]) {
   expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);
 }
 
-interface ComponentProps {
+export interface WeekdaysTestProps {
   locale?: string;
   weekdayFormat?: string;
   firstDayOfWeek?: number;
 }
 
 export function itSupportsWeekdaysProps(
-  Component: React.FC<ComponentProps>,
+  Component: React.FC<WeekdaysTestProps>,
   requiredProps?: Record<string, any>
 ) {
   it('renders weekdays names with en locale by default', () => {
