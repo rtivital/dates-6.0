@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsMonthProps } from '../tests';
+import { itSupportsMonthProps } from '../__tests__';
 import { Month, MonthProps } from './Month';
 
 const defaultProps: MonthProps = {
