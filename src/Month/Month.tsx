@@ -155,7 +155,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             {...stylesApiProps}
             locale={locale}
             firstDayOfWeek={firstDayOfWeek}
-            format={weekdayFormat}
+            weekdayFormat={weekdayFormat}
           />
         </thead>
       )}

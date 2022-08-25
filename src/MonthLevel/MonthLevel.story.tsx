@@ -27,5 +27,5 @@ export function Locale() {
 }
 
 export function RenderMonthLabel() {
-  return <Wrapper renderMonthLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`} />;
+  return <Wrapper monthLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`} />;
 }

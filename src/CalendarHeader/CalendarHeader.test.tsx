@@ -172,4 +172,12 @@ describe('@mantine/dates/CalendarHeader', () => {
     await userEvent.click(screen.getByText('test-level'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('supports levelControlAriaLabel', () => {
+    render(
+      <CalendarHeader {...defaultProps} label="test-label" levelControlAriaLabel="Change month" />
+    );
+
+    expect(screen.getByText('test-label')).toHaveAttribute('aria-label', 'Change month');
+  });
 });

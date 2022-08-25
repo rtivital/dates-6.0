@@ -22,11 +22,11 @@ export interface MonthLevelProps
   /** Month that is currently displayed */
   month: Date;
 
-  /** dayjs label format to display month label, defaults to "MMMM YYYY" */
-  monthLabelFormat?: string;
+  /** dayjs label format to display month label or a function that returns month label based on month value, defaults to "MMMM YYYY" */
+  monthLabelFormat?: string | ((month: Date) => React.ReactNode);
 
-  /** Customize month label rendering, replaces monthLabelFormat */
-  renderMonthLabel?(month: Date): React.ReactNode;
+  /** aria-label for change level control */
+  levelControlAriaLabel?: string;
 }
 
 const defaultProps: Partial<MonthLevelProps> = {
@@ -66,7 +66,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     // Other props
     className,
     monthLabelFormat,
-    renderMonthLabel,
+    levelControlAriaLabel,
     ...others
   } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 
@@ -76,10 +76,11 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     <Box className={cx(classes.MonthLevel, className)} ref={ref} {...others}>
       <CalendarHeader
         label={
-          renderMonthLabel?.(month) ||
-          dayjs(month)
-            .locale(locale || theme.datesLocale)
-            .format(monthLabelFormat)
+          typeof monthLabelFormat === 'function'
+            ? monthLabelFormat(month)
+            : dayjs(month)
+                .locale(locale || theme.datesLocale)
+                .format(monthLabelFormat)
         }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}
@@ -93,6 +94,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         hasNext={hasNext}
         hasPrevious={hasPrevious}
         hasNextLevel={hasNextLevel}
+        levelControlAriaLabel={levelControlAriaLabel}
       />
 
       <Month

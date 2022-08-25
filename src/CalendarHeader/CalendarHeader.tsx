@@ -53,6 +53,9 @@ export interface CalendarHeaderProps
 
   /** Label displayed between next and previous buttons */
   label: React.ReactNode;
+
+  /** aria-label for level control */
+  levelControlAriaLabel?: string;
 }
 
 const defaultProps: Partial<CalendarHeaderProps> = {
@@ -78,6 +81,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     hasNext,
     hasPrevious,
     hasNextLevel,
+    levelControlAriaLabel,
     __staticSelector,
     __preventFocus,
     ...others
@@ -123,6 +127,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         onMouseDown={hasNextLevel ? preventFocus : undefined}
         disabled={!hasNextLevel}
         data-static={!hasNextLevel || undefined}
+        aria-label={levelControlAriaLabel}
       >
         {label}
       </UnstyledButton>

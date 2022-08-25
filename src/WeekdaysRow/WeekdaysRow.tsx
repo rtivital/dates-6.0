@@ -18,14 +18,14 @@ export interface WeekdaysRowProps
   firstDayOfWeek?: FirstDayOfWeek;
 
   /** dayjs format to get weekday name, defaults to "dd" */
-  format?: string;
+  weekdayFormat?: string;
 
   /** Choose cell type that will be used to render weekdays, defaults to th */
   cellComponent?: 'td' | 'th';
 }
 
 const defaultProps: Partial<WeekdaysRowProps> = {
-  format: 'dd',
+  weekdayFormat: 'dd',
   cellComponent: 'th',
   firstDayOfWeek: 1,
 };
@@ -35,7 +35,7 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
     className,
     locale,
     firstDayOfWeek,
-    format,
+    weekdayFormat,
     cellComponent: CellComponent,
     __staticSelector,
     classNames,
@@ -53,7 +53,7 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
 
   const weekdays = getWeekdayNames({
     locale: locale || theme.datesLocale,
-    format,
+    format: weekdayFormat,
     firstDayOfWeek,
   }).map((weekday, index) => (
     <CellComponent key={index} className={classes.weekday}>
