@@ -1,7 +1,7 @@
 import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
-  monthView: {
+  MonthLevel: {
     width: 252,
   },
 

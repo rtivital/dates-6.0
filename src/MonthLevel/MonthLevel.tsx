@@ -3,14 +3,14 @@ import React, { forwardRef } from 'react';
 import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
 import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader';
 import { Month, MonthSettings, MonthStylesNames } from '../Month';
-import useStyles from './MonthView.styles';
+import useStyles from './MonthLevel.styles';
 
-export type MonthViewStylesNames =
+export type MonthLevelStylesNames =
   | Selectors<typeof useStyles>
   | MonthStylesNames
   | CalendarHeaderStylesNames;
 
-export interface MonthViewProps
+export interface MonthLevelProps
   extends DefaultProps,
     MonthSettings,
     React.ComponentPropsWithoutRef<'div'> {
@@ -18,9 +18,9 @@ export interface MonthViewProps
   month: Date;
 }
 
-const defaultProps: Partial<MonthViewProps> = {};
+const defaultProps: Partial<MonthLevelProps> = {};
 
-export const MonthView = forwardRef<HTMLDivElement, MonthViewProps>((props, ref) => {
+export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, ref) => {
   const {
     // Month settings
     month,
@@ -40,12 +40,12 @@ export const MonthView = forwardRef<HTMLDivElement, MonthViewProps>((props, ref)
     // Other props
     className,
     ...others
-  } = useComponentDefaultProps('MonthView', defaultProps, props);
+  } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 
   const { classes, cx } = useStyles();
 
   return (
-    <Box className={cx(classes.monthView, className)} ref={ref} {...others}>
+    <Box className={cx(classes.MonthLevel, className)} ref={ref} {...others}>
       <CalendarHeader label={dayjs(month).format('MMMM YYYY')} className={classes.calendarHeader} />
 
       <Month
