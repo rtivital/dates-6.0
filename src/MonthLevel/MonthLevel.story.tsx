@@ -1,10 +1,11 @@
+import 'dayjs/locale/ru';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { MonthLevel } from './MonthLevel';
+import { MonthLevel, MonthLevelProps } from './MonthLevel';
 
 export default { title: 'MonthLevel' };
 
-export function Usage() {
+function Wrapper(props: Partial<MonthLevelProps>) {
   const [month, setMonth] = useState(new Date(2022, 3, 11));
 
   const onNextMonth = () => setMonth((current) => dayjs(current).add(1, 'month').toDate());
@@ -12,7 +13,19 @@ export function Usage() {
 
   return (
     <div style={{ padding: 40 }}>
-      <MonthLevel month={month} onNext={onNextMonth} onPrevious={onPrevMonth} />
+      <MonthLevel month={month} onNext={onNextMonth} onPrevious={onPrevMonth} {...props} />
     </div>
   );
+}
+
+export function Usage() {
+  return <Wrapper />;
+}
+
+export function Locale() {
+  return <Wrapper locale="ru" />;
+}
+
+export function RenderMonthLabel() {
+  return <Wrapper renderMonthLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`} />;
 }

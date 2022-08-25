@@ -42,6 +42,7 @@ export default createStyles((theme) => ({
     flex: 1,
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
+    textTransform: 'capitalize',
 
     ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],

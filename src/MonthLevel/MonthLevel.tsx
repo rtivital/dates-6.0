@@ -21,9 +21,17 @@ export interface MonthLevelProps
     React.ComponentPropsWithoutRef<'div'> {
   /** Month that is currently displayed */
   month: Date;
+
+  /** dayjs label format to display month label, defaults to "MMMM YYYY" */
+  monthLabelFormat?: string;
+
+  /** Customize month label rendering, replaces monthLabelFormat */
+  renderMonthLabel?(month: Date): React.ReactNode;
 }
 
-const defaultProps: Partial<MonthLevelProps> = {};
+const defaultProps: Partial<MonthLevelProps> = {
+  monthLabelFormat: 'MMMM YYYY',
+};
 
 export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, ref) => {
   const {
@@ -57,15 +65,22 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
 
     // Other props
     className,
+    monthLabelFormat,
+    renderMonthLabel,
     ...others
   } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 
-  const { classes, cx } = useStyles();
+  const { classes, cx, theme } = useStyles();
 
   return (
     <Box className={cx(classes.MonthLevel, className)} ref={ref} {...others}>
       <CalendarHeader
-        label={dayjs(month).format('MMMM YYYY')}
+        label={
+          renderMonthLabel?.(month) ||
+          dayjs(month)
+            .locale(locale || theme.datesLocale)
+            .format(monthLabelFormat)
+        }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}
         nextIcon={nextIcon}
