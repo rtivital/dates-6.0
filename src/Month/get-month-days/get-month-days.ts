@@ -1,8 +1,8 @@
-import { FirstDayOfWeek } from '../../types';
+import { DayOfWeek } from '../../types';
 import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 import { getEndOfWeek } from '../get-end-of-week/get-end-of-week';
 
-export function getMonthDays(month: Date, firstDayOfWeek: FirstDayOfWeek = 1): Date[][] {
+export function getMonthDays(month: Date, firstDayOfWeek: DayOfWeek = 1): Date[][] {
   const currentMonth = month.getMonth();
   const startOfMonth = new Date(month.getFullYear(), currentMonth, 1);
   const endOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);

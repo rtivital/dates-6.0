@@ -1,6 +1,6 @@
-import type { FirstDayOfWeek } from '../../types';
+import type { DayOfWeek } from '../../types';
 
-export function getStartOfWeek(date: Date, firstDayOfWeek: FirstDayOfWeek = 1) {
+export function getStartOfWeek(date: Date, firstDayOfWeek: DayOfWeek = 1) {
   const value = new Date(date);
 
   while (value.getDay() !== firstDayOfWeek) {

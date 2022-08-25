@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, useComponentDefaultProps, Box } from '@mantine/core';
-import type { FirstDayOfWeek } from '../types';
+import type { DayOfWeek } from '../types';
 import { getWeekdayNames } from './get-weekdays-names/get-weekdays-names';
 import useStyles from './WeekdaysRow.styles';
 
@@ -15,7 +15,7 @@ export interface WeekdaysRowProps
   locale?: string;
 
   /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
-  firstDayOfWeek?: FirstDayOfWeek;
+  firstDayOfWeek?: DayOfWeek;
 
   /** dayjs format to get weekday name, defaults to "dd" */
   weekdayFormat?: string;

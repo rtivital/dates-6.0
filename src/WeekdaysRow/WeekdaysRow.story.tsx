@@ -30,7 +30,7 @@ export function Locale() {
   );
 }
 
-export function FirstDayOfWeek() {
+export function DayOfWeek() {
   return (
     <div style={{ padding: 40 }}>
       <Wrapper firstDayOfWeek={0} />

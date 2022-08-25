@@ -2,7 +2,7 @@
 import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, Box, useComponentDefaultProps } from '@mantine/core';
-import type { FirstDayOfWeek } from '../types';
+import type { DayOfWeek } from '../types';
 import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
 import { Day, DayStylesNames, DayProps } from '../Day';
 import { getMonthDays } from './get-month-days/get-month-days';
@@ -21,7 +21,7 @@ export interface MonthSettings {
   locale?: string;
 
   /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
-  firstDayOfWeek?: FirstDayOfWeek;
+  firstDayOfWeek?: DayOfWeek;
 
   /** dayjs format for weekdays names, defaults to "dd" */
   weekdayFormat?: string;

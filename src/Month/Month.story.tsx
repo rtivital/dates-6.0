@@ -34,7 +34,7 @@ export function Selected() {
   );
 }
 
-export function CustomFirstDayOfWeek() {
+export function CustomDayOfWeek() {
   return <Wrapper firstDayOfWeek={6} />;
 }
 

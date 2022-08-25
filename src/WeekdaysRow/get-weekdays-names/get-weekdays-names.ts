@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import type { FirstDayOfWeek } from '../../types';
+import type { DayOfWeek } from '../../types';
 
 interface GetWeekdaysNamesInput {
   locale: string;
   format?: string;
-  firstDayOfWeek?: FirstDayOfWeek;
+  firstDayOfWeek?: DayOfWeek;
 }
 
 export function getWeekdayNames({

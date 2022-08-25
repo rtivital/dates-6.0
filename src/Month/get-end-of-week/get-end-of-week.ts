@@ -1,4 +1,4 @@
-import type { FirstDayOfWeek } from '../../types';
+import type { DayOfWeek } from '../../types';
 
 // 0 – 6
 // 1 – 0
@@ -8,7 +8,7 @@ import type { FirstDayOfWeek } from '../../types';
 // 5 – 4
 // 6 – 5
 
-export function getEndOfWeek(date: Date, firstDayOfWeek: FirstDayOfWeek = 1) {
+export function getEndOfWeek(date: Date, firstDayOfWeek: DayOfWeek = 1) {
   const value = new Date(date);
   const lastDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
 
