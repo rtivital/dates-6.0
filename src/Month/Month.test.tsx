@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { itSupportsMonthProps } from '../tests';
 import { Month, MonthProps } from './Month';
-import { DatesProvider } from '../DatesProvider';
 
 const defaultProps: MonthProps = {
   month: new Date(2022, 3, 2),
@@ -55,17 +54,6 @@ describe('@mantine/core/Month', () => {
     expect(container.querySelector('table')).toHaveClass('test-month');
     expect(container.querySelector('thead tr')).toHaveClass('test-weekdays');
     expect(container.querySelector('tbody tr td button')).toHaveClass('test-day');
-  });
-
-  it('supports default days aria-label localization with DatesProvider', () => {
-    render(
-      <DatesProvider settings={{ locale: 'ru' }}>
-        <Month {...defaultProps} />
-      </DatesProvider>
-    );
-    const days = screen.getAllByRole('button');
-    expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
-    expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
   });
 
   it('supports static prop', () => {

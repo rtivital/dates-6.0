@@ -124,6 +124,20 @@ export function itSupportsMonthProps(
     expect(days[10]).toHaveAttribute('data-weekend');
   });
 
+  it('detects weekends correctly with custom weekendDays value on DatesProvider', () => {
+    render(
+      <DatesProvider settings={{ weekendDays: [3, 4] }}>
+        <Component {...requiredProps} />
+      </DatesProvider>
+    );
+    const days = screen.getAllByRole('button');
+
+    expect(days[7]).not.toHaveAttribute('data-weekend');
+    expect(days[8]).not.toHaveAttribute('data-weekend');
+    expect(days[9]).toHaveAttribute('data-weekend');
+    expect(days[10]).toHaveAttribute('data-weekend');
+  });
+
   it('supports getDayProps', async () => {
     const spy = jest.fn();
     render(
@@ -225,5 +239,16 @@ export function itSupportsMonthProps(
     const days = screen.getAllByRole('button');
     expect(days[0]).toHaveAttribute('aria-label', '28/03/2022');
     expect(days[4]).toHaveAttribute('aria-label', '01/04/2022');
+  });
+
+  it('supports default days aria-label localization with DatesProvider', () => {
+    render(
+      <DatesProvider settings={{ locale: 'ru' }}>
+        <Component {...requiredProps} />
+      </DatesProvider>
+    );
+    const days = screen.getAllByRole('button');
+    expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
+    expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
   });
 }

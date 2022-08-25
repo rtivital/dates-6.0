@@ -27,8 +27,8 @@ export interface MonthSettings {
   /** dayjs format for weekdays names, defaults to "dd" */
   weekdayFormat?: string;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to [0, 6] (Sunday and Saturday) */
-  weekendDays?: number[];
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to value defined in DatesProvider */
+  weekendDays?: DayOfWeek[];
 
   /** Adds props to Day component based on date */
   getDayProps?(date: Date): Partial<DayProps>;
@@ -68,9 +68,7 @@ export interface MonthProps
   static?: boolean;
 }
 
-const defaultProps: Partial<MonthProps> = {
-  weekendDays: [0, 6],
-};
+const defaultProps: Partial<MonthProps> = {};
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const {
@@ -127,7 +125,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             {...stylesApiProps}
             renderDay={renderDay}
             date={date}
-            weekend={weekendDays.includes(date.getDay())}
+            weekend={ctx.getWeekendDays(weekendDays).includes(date.getDay() as DayOfWeek)}
             outside={outside}
             hidden={hideOutsideDates ? outside : false}
             aria-label={ariaLabel}
