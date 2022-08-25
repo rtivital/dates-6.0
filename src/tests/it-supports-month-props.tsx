@@ -4,6 +4,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { itSupportsWeekdaysProps, WeekdaysTestProps } from './it-supports-weekdays-props';
+import { DatesProvider } from '../DatesProvider';
 
 export interface MonthTestProps extends WeekdaysTestProps {
   weekendDays?: number[];
@@ -45,6 +46,28 @@ export function itSupportsMonthProps(
 
   it('renders correct days when firstDayOfWeek is set', () => {
     render(<Component {...requiredProps} firstDayOfWeek={6} />);
+
+    const days = screen.getAllByRole('button');
+    expect(days).toHaveLength(42);
+
+    expect(days[0].textContent).toBe('26');
+    expect(days[1].textContent).toBe('27');
+    expect(days[2].textContent).toBe('28');
+    expect(days[3].textContent).toBe('29');
+    expect(days[4].textContent).toBe('30');
+    expect(days[5].textContent).toBe('31');
+    expect(days[6].textContent).toBe('1');
+
+    expect(days[40].textContent).toBe('5');
+    expect(days[41].textContent).toBe('6');
+  });
+
+  it('renders correct days when firstDayOfWeek is set on DatesProvider', () => {
+    render(
+      <DatesProvider settings={{ firstDayOfWeek: 6 }}>
+        <Component {...requiredProps} />
+      </DatesProvider>
+    );
 
     const days = screen.getAllByRole('button');
     expect(days).toHaveLength(42);

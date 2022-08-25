@@ -112,7 +112,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     __staticSelector: __staticSelector || 'Month',
   };
 
-  const rows = getMonthDays(month, firstDayOfWeek).map((row, rowIndex) => {
+  const rows = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek)).map((row, rowIndex) => {
     const cells = row.map((date) => {
       const outside = !isSameMonth(date, month);
       const ariaLabel =
