@@ -1,7 +1,11 @@
 import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { Box, DefaultProps, useComponentDefaultProps, Selectors } from '@mantine/core';
-import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader';
+import {
+  CalendarHeader,
+  CalendarHeaderStylesNames,
+  CalendarHeaderSettings,
+} from '../CalendarHeader';
 import { Month, MonthSettings, MonthStylesNames } from '../Month';
 import useStyles from './MonthLevel.styles';
 
@@ -13,6 +17,7 @@ export type MonthLevelStylesNames =
 export interface MonthLevelProps
   extends DefaultProps,
     MonthSettings,
+    CalendarHeaderSettings,
     React.ComponentPropsWithoutRef<'div'> {
   /** Month that is currently displayed */
   month: Date;
@@ -37,6 +42,19 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     hideWeekdays,
     getDayAriaLabel,
 
+    // CalendarHeader settings
+    __preventFocus,
+    nextIcon,
+    previousIcon,
+    nextLabel,
+    previousLabel,
+    onNext,
+    onPrevious,
+    onLevelChange,
+    hasNext,
+    hasPrevious,
+    hasNextLevel,
+
     // Other props
     className,
     ...others
@@ -46,7 +64,21 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
 
   return (
     <Box className={cx(classes.MonthLevel, className)} ref={ref} {...others}>
-      <CalendarHeader label={dayjs(month).format('MMMM YYYY')} className={classes.calendarHeader} />
+      <CalendarHeader
+        label={dayjs(month).format('MMMM YYYY')}
+        className={classes.calendarHeader}
+        __preventFocus={__preventFocus}
+        nextIcon={nextIcon}
+        previousIcon={previousIcon}
+        nextLabel={nextLabel}
+        previousLabel={previousLabel}
+        onNext={onNext}
+        onPrevious={onPrevious}
+        onLevelChange={onLevelChange}
+        hasNext={hasNext}
+        hasPrevious={hasPrevious}
+        hasNextLevel={hasNextLevel}
+      />
 
       <Month
         month={month}

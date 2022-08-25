@@ -11,10 +11,7 @@ import useStyles from './CalendarHeader.styles';
 
 export type CalendarHeaderStylesNames = Selectors<typeof useStyles>;
 
-export interface CalendarHeaderProps
-  extends DefaultProps<CalendarHeaderStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
-  __staticSelector?: string;
+export interface CalendarHeaderSettings {
   __preventFocus?: boolean;
 
   /** Change next icon */
@@ -38,9 +35,6 @@ export interface CalendarHeaderProps
   /** Called when level button is clicked */
   onLevelChange?(): void;
 
-  /** Label displayed between next and previous buttons */
-  label: React.ReactNode;
-
   /** Determines whether next control should be visible, defaults to true */
   hasNext?: boolean;
 
@@ -49,6 +43,16 @@ export interface CalendarHeaderProps
 
   /** Determines whether next level button should be enabled, defaults to true */
   hasNextLevel?: boolean;
+}
+
+export interface CalendarHeaderProps
+  extends DefaultProps<CalendarHeaderStylesNames>,
+    CalendarHeaderSettings,
+    React.ComponentPropsWithoutRef<'div'> {
+  __staticSelector?: string;
+
+  /** Label displayed between next and previous buttons */
+  label: React.ReactNode;
 }
 
 const defaultProps: Partial<CalendarHeaderProps> = {
