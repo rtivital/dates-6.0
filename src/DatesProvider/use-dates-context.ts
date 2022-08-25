@@ -6,7 +6,7 @@ export function useDatesContext() {
   const ctx = useContext(DatesProviderContext);
   const getLocale = useCallback((input?: string) => input || ctx.locale, [ctx.locale]);
   const getFirstDayOfWeek = useCallback(
-    (input: DayOfWeek) => (typeof input === 'number' ? input : ctx.firstDayOfWeek),
+    (input?: DayOfWeek) => (typeof input === 'number' ? input : ctx.firstDayOfWeek),
     [ctx.firstDayOfWeek]
   );
 
