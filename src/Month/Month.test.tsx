@@ -1,8 +1,8 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/core';
 import { render, screen } from '@testing-library/react';
 import { itSupportsMonthProps } from '../tests';
 import { Month, MonthProps } from './Month';
+import { DatesProvider } from '../DatesProvider';
 
 const defaultProps: MonthProps = {
   month: new Date(2022, 3, 2),
@@ -57,11 +57,11 @@ describe('@mantine/core/Month', () => {
     expect(container.querySelector('tbody tr td button')).toHaveClass('test-day');
   });
 
-  it('supports default days aria-label localization with theme.datesLocale', () => {
+  it('supports default days aria-label localization with DatesProvider', () => {
     render(
-      <MantineProvider theme={{ datesLocale: 'ru' }}>
+      <DatesProvider settings={{ locale: 'ru' }}>
         <Month {...defaultProps} />
-      </MantineProvider>
+      </DatesProvider>
     );
     const days = screen.getAllByRole('button');
     expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');

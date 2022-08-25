@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, Box, useComponentDefaultProps } from '@mantine/core';
 import type { DayOfWeek } from '../types';
+import { useDatesContext } from '../DatesProvider';
 import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
 import { Day, DayStylesNames, DayProps } from '../Day';
 import { getMonthDays } from './get-month-days/get-month-days';
@@ -17,7 +18,7 @@ export type MonthStylesNames =
   | DayStylesNames;
 
 export interface MonthSettings {
-  /** dayjs locale, defaults to theme.datesLocale */
+  /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 
   /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
@@ -95,6 +96,8 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
+  const ctx = useDatesContext();
+
   const { classes, cx, theme } = useStyles(null, {
     classNames,
     styles,
@@ -115,7 +118,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
       const ariaLabel =
         getDayAriaLabel?.(date) ||
         dayjs(date)
-          .locale(locale || theme.datesLocale)
+          .locale(locale || ctx.locale)
           .format('D MMMM YYYY');
 
       return (

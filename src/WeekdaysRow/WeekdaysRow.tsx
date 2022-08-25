@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, useComponentDefaultProps, Box } from '@mantine/core';
 import type { DayOfWeek } from '../types';
+import { useDatesContext } from '../DatesProvider';
 import { getWeekdayNames } from './get-weekdays-names/get-weekdays-names';
 import useStyles from './WeekdaysRow.styles';
 
@@ -11,7 +12,7 @@ export interface WeekdaysRowProps
     React.ComponentPropsWithoutRef<'tr'> {
   __staticSelector?: string;
 
-  /** dayjs locale, defaults to theme.datesLocale */
+  /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 
   /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
@@ -44,7 +45,9 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
     ...others
   } = useComponentDefaultProps('WeekdaysRow', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(null, {
+  const ctx = useDatesContext();
+
+  const { classes, cx } = useStyles(null, {
     classNames,
     styles,
     unstyled,
@@ -52,7 +55,7 @@ export const WeekdaysRow = forwardRef<HTMLTableRowElement, WeekdaysRowProps>((pr
   });
 
   const weekdays = getWeekdayNames({
-    locale: locale || theme.datesLocale,
+    locale: locale || ctx.locale,
     format: weekdayFormat,
     firstDayOfWeek,
   }).map((weekday, index) => (

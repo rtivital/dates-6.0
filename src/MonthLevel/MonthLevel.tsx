@@ -6,6 +6,7 @@ import {
   CalendarHeaderStylesNames,
   CalendarHeaderSettings,
 } from '../CalendarHeader';
+import { useDatesContext } from '../DatesProvider';
 import { Month, MonthSettings, MonthStylesNames } from '../Month';
 import useStyles from './MonthLevel.styles';
 
@@ -70,7 +71,8 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     ...others
   } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles();
+  const { classes, cx } = useStyles();
+  const ctx = useDatesContext();
 
   return (
     <Box className={cx(classes.MonthLevel, className)} ref={ref} {...others}>
@@ -79,7 +81,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
           typeof monthLabelFormat === 'function'
             ? monthLabelFormat(month)
             : dayjs(month)
-                .locale(locale || theme.datesLocale)
+                .locale(locale || ctx.locale)
                 .format(monthLabelFormat)
         }
         className={classes.calendarHeader}
