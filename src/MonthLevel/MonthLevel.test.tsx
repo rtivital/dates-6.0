@@ -1,13 +1,8 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
 import { MonthLevel, MonthLevelProps } from './MonthLevel';
 import { itSupportsMonthProps, itSupportsHeaderProps } from '../__tests__';
-
-// function expectWeekdaysNames(names: string[]) {
-//   expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);
-// }
 
 function expectLabel(label: string) {
   expect(screen.getByLabelText('level-control')).toHaveTextContent(label);

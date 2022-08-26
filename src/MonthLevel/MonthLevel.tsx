@@ -63,11 +63,11 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     hasNext,
     hasPrevious,
     hasNextLevel,
+    levelControlAriaLabel,
 
     // Other props
     className,
     monthLabelFormat,
-    levelControlAriaLabel,
     ...others
   } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 

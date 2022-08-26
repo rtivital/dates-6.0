@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { itSupportsHeaderProps } from '../__tests__';
 import { CalendarHeader, CalendarHeaderProps } from './CalendarHeader';
 
@@ -54,30 +53,5 @@ describe('@mantine/dates/CalendarHeader', () => {
       <CalendarHeader {...defaultProps} classNames={{ calendarHeaderControl: 'test-control' }} />
     );
     expect(screen.getByLabelText('next')).toHaveClass('test-control');
-  });
-
-  it('handles focus as usual when __preventFocus is set to false', async () => {
-    render(<CalendarHeader {...defaultProps} __preventFocus={false} label="test-label" />);
-    await userEvent.click(screen.getByLabelText('next'));
-    expect(screen.getByLabelText('next')).toHaveFocus();
-
-    await userEvent.click(screen.getByText('test-label'));
-    expect(screen.getByText('test-label')).toHaveFocus();
-
-    await userEvent.click(screen.getByLabelText('prev'));
-    expect(screen.getByLabelText('prev')).toHaveFocus();
-  });
-
-  it('does not focus controls on click when __preventFocus is set to true', async () => {
-    render(<CalendarHeader {...defaultProps} __preventFocus label="test-label" />);
-
-    await userEvent.click(screen.getByLabelText('next'));
-    expect(document.body).toHaveFocus();
-
-    await userEvent.click(screen.getByText('test-label'));
-    expect(document.body).toHaveFocus();
-
-    await userEvent.click(screen.getByLabelText('prev'));
-    expect(document.body).toHaveFocus();
   });
 });

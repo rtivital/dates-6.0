@@ -14,6 +14,7 @@ export interface HeaderTestProps {
   hasNext?: boolean;
   hasPrevious?: boolean;
   hasNextLevel?: boolean;
+  __preventFocus?: boolean;
 }
 
 export function itSupportsHeaderProps(
@@ -124,5 +125,32 @@ export function itSupportsHeaderProps(
 
     await userEvent.click(screen.getByLabelText('test-level'));
     expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('handles focus as usual when __preventFocus is set to false', async () => {
+    render(
+      <Component {...requiredProps} __preventFocus={false} levelControlAriaLabel="test-level" />
+    );
+    await userEvent.click(screen.getByLabelText('next'));
+    expect(screen.getByLabelText('next')).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('test-level'));
+    expect(screen.getByLabelText('test-level')).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('prev'));
+    expect(screen.getByLabelText('prev')).toHaveFocus();
+  });
+
+  it('does not focus controls on click when __preventFocus is set to true', async () => {
+    render(<Component {...requiredProps} __preventFocus levelControlAriaLabel="test-level" />);
+
+    await userEvent.click(screen.getByLabelText('next'));
+    expect(document.body).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('test-level'));
+    expect(document.body).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('prev'));
+    expect(document.body).toHaveFocus();
   });
 }
