@@ -3,10 +3,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 // import userEvent from '@testing-library/user-event';
 import { MonthLevel, MonthLevelProps } from './MonthLevel';
+import { itSupportsMonthProps, itSupportsHeaderProps } from '../__tests__';
 
-function expectWeekdaysNames(names: string[]) {
-  expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);
-}
+// function expectWeekdaysNames(names: string[]) {
+//   expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);
+// }
 
 function expectLabel(label: string) {
   expect(screen.getByLabelText('level-control')).toHaveTextContent(label);
@@ -20,6 +21,9 @@ const defaultProps: MonthLevelProps = {
 };
 
 describe('@mantine/dates/MonthLevel', () => {
+  itSupportsHeaderProps(MonthLevel, defaultProps);
+  itSupportsMonthProps(MonthLevel, defaultProps);
+
   it('renders correct CalendarHeader label', () => {
     render(<MonthLevel {...defaultProps} />);
     expectLabel('April 2022');
@@ -39,19 +43,5 @@ describe('@mantine/dates/MonthLevel', () => {
     );
 
     expectLabel('3/2022');
-  });
-
-  it('supports localization', () => {
-    render(<MonthLevel {...defaultProps} locale="ru" />);
-    expectLabel('апрель 2022');
-    expectWeekdaysNames(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
-  });
-
-  it('supports onNext and onPrevious props', async () => {
-    const onNext = jest.fn();
-    const onPrevious = jest.fn();
-    render(<MonthLevel {...defaultProps} onNext={onNext} onPrevious={onPrevious} />);
-
-    // await userEvent.click()
   });
 });

@@ -18,6 +18,10 @@ export interface MonthTestProps extends WeekdaysTestProps {
   getDayProps?(date: Date): Record<string, any>;
 }
 
+function getDays(container: HTMLElement) {
+  return container.querySelectorAll('table button');
+}
+
 export function itSupportsMonthProps(
   Component: React.FC<MonthTestProps>,
   requiredProps?: Record<string, any>
@@ -25,9 +29,9 @@ export function itSupportsMonthProps(
   itSupportsWeekdaysProps(Component, requiredProps);
 
   it('renders correct days', () => {
-    render(<Component {...requiredProps} />);
+    const { container } = render(<Component {...requiredProps} />);
 
-    const days = screen.getAllByRole('button');
+    const days = getDays(container);
     expect(days).toHaveLength(35);
 
     // first week of April 2022 (with outside dates)
@@ -45,9 +49,9 @@ export function itSupportsMonthProps(
   });
 
   it('renders correct days when firstDayOfWeek is set', () => {
-    render(<Component {...requiredProps} firstDayOfWeek={6} />);
+    const { container } = render(<Component {...requiredProps} firstDayOfWeek={6} />);
 
-    const days = screen.getAllByRole('button');
+    const days = getDays(container);
     expect(days).toHaveLength(42);
 
     expect(days[0].textContent).toBe('26');
@@ -63,13 +67,13 @@ export function itSupportsMonthProps(
   });
 
   it('renders correct days when firstDayOfWeek is set on DatesProvider', () => {
-    render(
+    const { container } = render(
       <DatesProvider settings={{ firstDayOfWeek: 6 }}>
         <Component {...requiredProps} />
       </DatesProvider>
     );
 
-    const days = screen.getAllByRole('button');
+    const days = getDays(container);
     expect(days).toHaveLength(42);
 
     expect(days[0].textContent).toBe('26');
@@ -85,8 +89,8 @@ export function itSupportsMonthProps(
   });
 
   it('detects outside days correctly', () => {
-    render(<Component {...requiredProps} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} />);
+    const days = getDays(container);
 
     // first week of April 2022 (with outside dates)
     expect(days[0]).toHaveAttribute('data-outside');
@@ -103,8 +107,8 @@ export function itSupportsMonthProps(
   });
 
   it('detects weekends correctly with default weekendDays value', () => {
-    render(<Component {...requiredProps} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} />);
+    const days = getDays(container);
 
     expect(days[0]).not.toHaveAttribute('data-weekend');
     expect(days[4]).not.toHaveAttribute('data-weekend');
@@ -115,8 +119,8 @@ export function itSupportsMonthProps(
   });
 
   it('detects weekends correctly with custom weekendDays value', () => {
-    render(<Component {...requiredProps} weekendDays={[3, 4]} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} weekendDays={[3, 4]} />);
+    const days = getDays(container);
 
     expect(days[7]).not.toHaveAttribute('data-weekend');
     expect(days[8]).not.toHaveAttribute('data-weekend');
@@ -125,12 +129,12 @@ export function itSupportsMonthProps(
   });
 
   it('detects weekends correctly with custom weekendDays value on DatesProvider', () => {
-    render(
+    const { container } = render(
       <DatesProvider settings={{ weekendDays: [3, 4] }}>
         <Component {...requiredProps} />
       </DatesProvider>
     );
-    const days = screen.getAllByRole('button');
+    const days = getDays(container);
 
     expect(days[7]).not.toHaveAttribute('data-weekend');
     expect(days[8]).not.toHaveAttribute('data-weekend');
@@ -140,7 +144,7 @@ export function itSupportsMonthProps(
 
   it('supports getDayProps', async () => {
     const spy = jest.fn();
-    render(
+    const { container } = render(
       <Component
         {...requiredProps}
         getDayProps={(date) => ({
@@ -150,7 +154,7 @@ export function itSupportsMonthProps(
       />
     );
 
-    const days = screen.getAllByRole('button');
+    const days = getDays(container);
 
     expect(days[18]).toHaveAttribute('data-selected');
     expect(days[0]).not.toHaveAttribute('data-selected');
@@ -161,8 +165,10 @@ export function itSupportsMonthProps(
   });
 
   it('adds disabled prop to Day components based on excludeDate callback', () => {
-    render(<Component {...requiredProps} excludeDate={(date) => date.getDay() === 0} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(
+      <Component {...requiredProps} excludeDate={(date) => date.getDay() === 0} />
+    );
+    const days = getDays(container);
 
     expect(days[5]).not.toHaveAttribute('data-disabled');
     expect(days[6]).toHaveAttribute('data-disabled');
@@ -170,8 +176,8 @@ export function itSupportsMonthProps(
   });
 
   it('supports minDate', () => {
-    render(<Component {...requiredProps} minDate={new Date(2022, 3, 10)} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} minDate={new Date(2022, 3, 10)} />);
+    const days = getDays(container);
 
     expect(days[0]).toHaveAttribute('data-disabled');
     expect(days[1]).toHaveAttribute('data-disabled');
@@ -182,8 +188,8 @@ export function itSupportsMonthProps(
   });
 
   it('supports maxDate', () => {
-    render(<Component {...requiredProps} maxDate={new Date(2022, 3, 22)} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} maxDate={new Date(2022, 3, 22)} />);
+    const days = getDays(container);
 
     expect(days[34]).toHaveAttribute('data-disabled');
     expect(days[33]).toHaveAttribute('data-disabled');
@@ -195,8 +201,10 @@ export function itSupportsMonthProps(
   });
 
   it('supports renderDay', () => {
-    render(<Component {...requiredProps} renderDay={(date) => date.getFullYear()} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(
+      <Component {...requiredProps} renderDay={(date) => date.getFullYear()} />
+    );
+    const days = getDays(container);
 
     days.forEach((day) => {
       expect(day.textContent).toBe('2022');
@@ -204,12 +212,14 @@ export function itSupportsMonthProps(
   });
 
   it('supports hideOutsideDates', () => {
-    render(<Component {...requiredProps} hideOutsideDates />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} hideOutsideDates />);
+    const days = getDays(container);
 
-    expect(days).toHaveLength(30);
-    expect(days[0].textContent).toBe('1');
-    expect(days[29].textContent).toBe('30');
+    expect(days).toHaveLength(35);
+    expect(days[0]).toHaveStyle({ display: 'none' });
+    expect(days[6]).not.toHaveStyle({ display: 'none' });
+    expect(days[33]).not.toHaveStyle({ display: 'none' });
+    expect(days[34]).toHaveStyle({ display: 'none' });
   });
 
   it('supports hideWeekdays', () => {
@@ -218,36 +228,36 @@ export function itSupportsMonthProps(
   });
 
   it('sets correct default aria-label on days without getDayAriaLabel', () => {
-    render(<Component {...requiredProps} />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} />);
+    const days = getDays(container);
     expect(days[0]).toHaveAttribute('aria-label', '28 March 2022');
     expect(days[4]).toHaveAttribute('aria-label', '1 April 2022');
   });
 
   it('supports default days aria-label localization with locale prop', () => {
-    render(<Component {...requiredProps} locale="ru" />);
-    const days = screen.getAllByRole('button');
+    const { container } = render(<Component {...requiredProps} locale="ru" />);
+    const days = getDays(container);
     expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
     expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
   });
 
   it('allows changing days aria-label with getDayAriaLabel prop', () => {
-    render(
+    const { container } = render(
       <Component {...requiredProps} getDayAriaLabel={(date) => dayjs(date).format('DD/MM/YYYY')} />
     );
 
-    const days = screen.getAllByRole('button');
+    const days = getDays(container);
     expect(days[0]).toHaveAttribute('aria-label', '28/03/2022');
     expect(days[4]).toHaveAttribute('aria-label', '01/04/2022');
   });
 
   it('supports default days aria-label localization with DatesProvider', () => {
-    render(
+    const { container } = render(
       <DatesProvider settings={{ locale: 'ru' }}>
         <Component {...requiredProps} />
       </DatesProvider>
     );
-    const days = screen.getAllByRole('button');
+    const days = getDays(container);
     expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
     expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
   });
