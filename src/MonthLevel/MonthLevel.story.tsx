@@ -29,3 +29,7 @@ export function Locale() {
 export function RenderMonthLabel() {
   return <Wrapper monthLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`} />;
 }
+
+export function Unstyled() {
+  return <Wrapper unstyled />;
+}

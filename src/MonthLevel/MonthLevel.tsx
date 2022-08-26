@@ -16,10 +16,12 @@ export type MonthLevelStylesNames =
   | CalendarHeaderStylesNames;
 
 export interface MonthLevelProps
-  extends DefaultProps,
+  extends DefaultProps<MonthLevelStylesNames>,
     MonthSettings,
     CalendarHeaderSettings,
     React.ComponentPropsWithoutRef<'div'> {
+  __staticSelector?: string;
+
   /** Month that is currently displayed */
   month: Date;
 
@@ -68,14 +70,31 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     // Other props
     className,
     monthLabelFormat,
+    classNames,
+    styles,
+    unstyled,
+    __staticSelector,
     ...others
   } = useComponentDefaultProps('MonthLevel', defaultProps, props);
 
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles(null, {
+    name: ['MonthLevel', __staticSelector],
+    classNames,
+    styles,
+    unstyled,
+  });
+
   const ctx = useDatesContext();
 
+  const stylesApiProps = {
+    classNames,
+    styles,
+    unstyled,
+    __staticSelector: __staticSelector || 'MonthLevel',
+  };
+
   return (
-    <Box className={cx(classes.MonthLevel, className)} ref={ref} {...others}>
+    <Box className={cx(classes.monthLevel, className)} ref={ref} {...others}>
       <CalendarHeader
         label={
           typeof monthLabelFormat === 'function'
@@ -97,6 +116,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         hasPrevious={hasPrevious}
         hasNextLevel={hasNextLevel}
         levelControlAriaLabel={levelControlAriaLabel}
+        {...stylesApiProps}
       />
 
       <Month
@@ -113,6 +133,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         hideOutsideDates={hideOutsideDates}
         hideWeekdays={hideWeekdays}
         getDayAriaLabel={getDayAriaLabel}
+        {...stylesApiProps}
       />
     </Box>
   );

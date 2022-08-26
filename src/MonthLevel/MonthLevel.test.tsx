@@ -39,4 +39,39 @@ describe('@mantine/dates/MonthLevel', () => {
 
     expectLabel('3/2022');
   });
+
+  it('has correct default __staticSelector', () => {
+    const { container } = render(<MonthLevel {...defaultProps} />);
+    expect(container.firstChild).toHaveClass('mantine-MonthLevel-monthLevel');
+    expect(container.querySelector('table td button')).toHaveClass('mantine-MonthLevel-day');
+    expect(screen.getByLabelText('level-control')).toHaveClass(
+      'mantine-MonthLevel-calendarHeaderLevel'
+    );
+  });
+
+  it('has supports custom __staticSelector', () => {
+    const { container } = render(<MonthLevel {...defaultProps} __staticSelector="Calendar" />);
+    expect(container.firstChild).toHaveClass('mantine-Calendar-monthLevel');
+    expect(container.querySelector('table td button')).toHaveClass('mantine-Calendar-day');
+    expect(screen.getByLabelText('level-control')).toHaveClass(
+      'mantine-Calendar-calendarHeaderLevel'
+    );
+  });
+
+  it('supports styles api (styles)', () => {
+    const { container } = render(
+      <MonthLevel
+        {...defaultProps}
+        styles={{
+          monthLevel: { borderColor: '#343436' },
+          day: { borderColor: '#232324' },
+          calendarHeaderLevel: { borderColor: '#121214' },
+        }}
+      />
+    );
+
+    expect(container.firstChild).toHaveStyle({ borderColor: '#343436' });
+    expect(container.querySelector('table td button')).toHaveStyle({ borderColor: '#232324' });
+    expect(screen.getByLabelText('level-control')).toHaveStyle({ borderColor: '#121214' });
+  });
 });
