@@ -30,7 +30,12 @@ export default createStyles((theme, { radius, isStatic }: DayStylesParams) => {
 
       '&[data-disabled]': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
-        pointerEvents: 'none',
+        cursor: 'not-allowed',
+        ...theme.fn.hover({ backgroundColor: 'transparent' }),
+
+        '&:active': {
+          transform: 'none',
+        },
       },
 
       '&[data-weekend]': {

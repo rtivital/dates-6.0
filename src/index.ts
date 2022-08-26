@@ -6,3 +6,4 @@ export * from './WeekdaysRow';
 export * from './Month';
 export * from './CalendarHeader';
 export * from './MonthLevel';
+export * from './CalendarPickerControl';
