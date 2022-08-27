@@ -74,4 +74,14 @@ describe('@mantine/dates/MonthLevel', () => {
     expect(container.querySelector('table td button')).toHaveStyle({ borderColor: '#232324' });
     expect(screen.getByLabelText('level-control')).toHaveStyle({ borderColor: '#121214' });
   });
+
+  it('disables next control if maxDate is before end of month', () => {
+    render(<MonthLevel {...defaultProps} maxDate={new Date(2022, 3, 11)} />);
+    expect(screen.getByLabelText('next')).toBeDisabled();
+  });
+
+  it('disables previous control if minDate is after start of month', () => {
+    render(<MonthLevel {...defaultProps} minDate={new Date(2022, 3, 11)} />);
+    expect(screen.getByLabelText('prev')).toBeDisabled();
+  });
 });

@@ -94,6 +94,20 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     __staticSelector: __staticSelector || 'MonthLevel',
   };
 
+  const _hasNext =
+    typeof hasNext === 'boolean'
+      ? hasNext
+      : maxDate
+      ? dayjs(month).endOf('month').isBefore(maxDate)
+      : true;
+
+  const _hasPrevious =
+    typeof hasPrevious === 'boolean'
+      ? hasPrevious
+      : minDate
+      ? dayjs(month).startOf('month').isAfter(minDate)
+      : true;
+
   return (
     <Box className={cx(classes.monthLevel, className)} ref={ref} {...others}>
       <CalendarHeader
@@ -113,8 +127,8 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         onNext={onNext}
         onPrevious={onPrevious}
         onLevelChange={onLevelChange}
-        hasNext={hasNext}
-        hasPrevious={hasPrevious}
+        hasNext={_hasNext}
+        hasPrevious={_hasPrevious}
         hasNextLevel={hasNextLevel}
         levelControlAriaLabel={levelControlAriaLabel}
         {...stylesApiProps}

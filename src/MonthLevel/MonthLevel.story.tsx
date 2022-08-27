@@ -33,3 +33,11 @@ export function RenderMonthLabel() {
 export function Unstyled() {
   return <Wrapper unstyled />;
 }
+
+export function MinDate() {
+  return <Wrapper minDate={new Date(2022, 3, 11)} />;
+}
+
+export function MaxDate() {
+  return <Wrapper maxDate={new Date(2022, 3, 11)} />;
+}
