@@ -16,6 +16,7 @@ export interface MonthTestProps extends WeekdaysTestProps {
   hideWeekdays?: boolean;
   getDayAriaLabel?(date: Date): string;
   getDayProps?(date: Date): Record<string, any>;
+  __getDayRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
 }
 
 function getDays(container: HTMLElement) {
@@ -260,5 +261,20 @@ export function itSupportsMonthProps(
     const days = getDays(container);
     expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
     expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
+  });
+
+  it('supports __getDayRef', () => {
+    const daysRefs: Record<string, HTMLButtonElement> = {};
+    render(
+      <Component
+        {...requiredProps}
+        __getDayRef={(rowIndex, cellIndex, node) => {
+          daysRefs[`${rowIndex}.${cellIndex}`] = node;
+        }}
+      />
+    );
+
+    expect(Object.keys(daysRefs)).toHaveLength(35);
+    expect(daysRefs['0.0']).toBeInstanceOf(HTMLButtonElement);
   });
 }

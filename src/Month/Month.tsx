@@ -18,6 +18,8 @@ export type MonthStylesNames =
   | DayStylesNames;
 
 export interface MonthSettings {
+  __getDayRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
+
   /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 
@@ -91,6 +93,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     hideWeekdays,
     getDayAriaLabel,
     static: isStatic,
+    __getDayRef,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -111,7 +114,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   };
 
   const rows = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek)).map((row, rowIndex) => {
-    const cells = row.map((date) => {
+    const cells = row.map((date, cellIndex) => {
       const outside = !isSameMonth(date, month);
       const ariaLabel =
         getDayAriaLabel?.(date) ||
@@ -135,6 +138,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
               !isBeforeMaxDate(date, maxDate) ||
               !isAfterMinDate(date, minDate)
             }
+            ref={(node) => __getDayRef?.(rowIndex, cellIndex, node)}
             {...getDayProps?.(date)}
           />
         </td>
