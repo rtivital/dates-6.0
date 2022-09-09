@@ -17,7 +17,9 @@ export interface MonthsGroupProps
   month: Date;
 }
 
-const defaultProps: Partial<MonthsGroupProps> = {};
+const defaultProps: Partial<MonthsGroupProps> = {
+  amountOfMonths: 1,
+};
 
 export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, ref) => {
   const { className, month, amountOfMonths, ...others } = useComponentDefaultProps(
@@ -34,6 +36,8 @@ export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, 
       <MonthLevel
         key={monthIndex}
         month={dayjs(month).add(monthIndex, 'months').toDate()}
+        withNext={monthIndex === amountOfMonths - 1}
+        withPrevious={monthIndex === 0}
         __getDayRef={(rowIndex, cellIndex, node) => {
           daysRefs.current[`${monthIndex}.${rowIndex}.${cellIndex}`] = node;
         }}
