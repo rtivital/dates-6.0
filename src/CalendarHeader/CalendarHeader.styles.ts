@@ -1,5 +1,7 @@
 import { createStyles } from '@mantine/core';
 
+const MOCK_CONTROL_SIZE = 36;
+
 export default createStyles((theme) => ({
   calendarHeaderControlIcon: {},
 
@@ -8,8 +10,8 @@ export default createStyles((theme) => ({
   },
 
   calendarHeaderControl: {
-    width: 36,
-    height: 36,
+    width: MOCK_CONTROL_SIZE,
+    height: MOCK_CONTROL_SIZE,
     borderRadius: theme.fn.radius(),
     display: 'flex',
     justifyContent: 'center',
@@ -34,6 +36,7 @@ export default createStyles((theme) => ({
   },
 
   calendarHeaderLevel: {
+    height: MOCK_CONTROL_SIZE,
     borderRadius: theme.fn.radius(),
     display: 'flex',
     justifyContent: 'center',
