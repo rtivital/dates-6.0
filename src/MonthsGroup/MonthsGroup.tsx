@@ -11,7 +11,7 @@ export interface MonthsGroupProps
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext'>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Amount of months to render next to each other */
-  amountOfMonths?: number;
+  numberOfMonths?: number;
 
   /** Month that is currently displayed */
   month: Date;
@@ -21,7 +21,7 @@ export interface MonthsGroupProps
 }
 
 const defaultProps: Partial<MonthsGroupProps> = {
-  amountOfMonths: 1,
+  numberOfMonths: 1,
 };
 
 export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, ref) => {
@@ -56,14 +56,14 @@ export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, 
 
     // Other settings
     className,
-    amountOfMonths,
+    numberOfMonths,
     levelControlAriaLabel,
     ...others
   } = useComponentDefaultProps('MonthsGroup', defaultProps, props);
   const { classes, cx } = useStyles();
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
 
-  const months = Array(amountOfMonths)
+  const months = Array(numberOfMonths)
     .fill(0)
     .map((_, monthIndex) => {
       const currentMonth = dayjs(month).add(monthIndex, 'months').toDate();
@@ -72,7 +72,7 @@ export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, 
         <MonthLevel
           key={monthIndex}
           month={currentMonth}
-          withNext={monthIndex === amountOfMonths - 1}
+          withNext={monthIndex === numberOfMonths - 1}
           withPrevious={monthIndex === 0}
           __getDayRef={(rowIndex, cellIndex, node) => {
             daysRefs.current[`${monthIndex}.${rowIndex}.${cellIndex}`] = node;
