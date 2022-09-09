@@ -24,4 +24,26 @@ describe('@mantine/dates/MonthsGroup', () => {
     rerender(<MonthsGroup {...defaultProps} numberOfMonths={3} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(3);
   });
+
+  it('renders correct months group based on month prop', () => {
+    render(<MonthsGroup {...defaultProps} numberOfMonths={3} />);
+    expect(screen.getAllByLabelText('level-control').map((node) => node.textContent)).toStrictEqual(
+      ['April 2022', 'May 2022', 'June 2022']
+    );
+  });
+
+  it('supports levelControlAriaLabel as string', () => {
+    render(<MonthsGroup {...defaultProps} levelControlAriaLabel="test-label" />);
+    expect(screen.getByText('April 2022')).toHaveAttribute('aria-label', 'test-label');
+  });
+
+  it('supports levelControlAriaLabel as function', () => {
+    render(
+      <MonthsGroup
+        {...defaultProps}
+        levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+      />
+    );
+    expect(screen.getByText('April 2022')).toHaveAttribute('aria-label', '3/2022');
+  });
 });
