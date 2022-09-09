@@ -68,6 +68,8 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     previousDisabled,
     hasNextLevel,
     levelControlAriaLabel,
+    withNext,
+    withPrevious,
 
     // Other props
     className,
@@ -132,6 +134,8 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         previousDisabled={_previousDisabled}
         hasNextLevel={hasNextLevel}
         levelControlAriaLabel={levelControlAriaLabel}
+        withNext={withNext}
+        withPrevious={withPrevious}
         {...stylesApiProps}
       />
 

@@ -13,6 +13,8 @@ export interface HeaderTestProps {
   levelControlAriaLabel?: string;
   nextDisabled?: boolean;
   previousDisabled?: boolean;
+  withNext?: boolean;
+  withPrevious?: boolean;
   hasNextLevel?: boolean;
   __preventFocus?: boolean;
 }
@@ -152,5 +154,21 @@ export function itSupportsHeaderProps(
 
     await userEvent.click(screen.getByLabelText('prev'));
     expect(document.body).toHaveFocus();
+  });
+
+  it('supports withNext prop', () => {
+    const { rerender } = render(<Component {...requiredProps} withNext />);
+    expect(screen.getByLabelText('next')).toBeInTheDocument();
+
+    rerender(<Component {...requiredProps} withNext={false} />);
+    expect(screen.queryAllByLabelText('next')).toHaveLength(0);
+  });
+
+  it('supports withPrevious prop', () => {
+    const { rerender } = render(<Component {...requiredProps} withPrevious />);
+    expect(screen.getByLabelText('prev')).toBeInTheDocument();
+
+    rerender(<Component {...requiredProps} withPrevious={false} />);
+    expect(screen.queryAllByLabelText('prev')).toHaveLength(0);
   });
 }

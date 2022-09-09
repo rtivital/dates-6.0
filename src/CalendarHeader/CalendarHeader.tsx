@@ -110,24 +110,26 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
 
   return (
     <Box className={cx(classes.calendarHeader, className)} ref={ref} {...others}>
-      <UnstyledButton
-        className={classes.calendarHeaderControl}
-        data-previous
-        aria-label={previousLabel}
-        onClick={onPrevious}
-        unstyled={unstyled}
-        onMouseDown={preventFocus}
-        disabled={previousDisabled}
-        data-disabled={previousDisabled || undefined}
-      >
-        {previousIcon || (
-          <Chevron
-            className={classes.calendarHeaderControlIcon}
-            direction="previous"
-            data-previous
-          />
-        )}
-      </UnstyledButton>
+      {withPrevious && (
+        <UnstyledButton
+          className={classes.calendarHeaderControl}
+          data-previous
+          aria-label={previousLabel}
+          onClick={onPrevious}
+          unstyled={unstyled}
+          onMouseDown={preventFocus}
+          disabled={previousDisabled}
+          data-disabled={previousDisabled || undefined}
+        >
+          {previousIcon || (
+            <Chevron
+              className={classes.calendarHeaderControlIcon}
+              direction="previous"
+              data-previous
+            />
+          )}
+        </UnstyledButton>
+      )}
 
       <UnstyledButton
         component={hasNextLevel ? 'button' : 'div'}
@@ -142,20 +144,22 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         {label}
       </UnstyledButton>
 
-      <UnstyledButton
-        className={classes.calendarHeaderControl}
-        data-next
-        aria-label={nextLabel}
-        onClick={onNext}
-        unstyled={unstyled}
-        onMouseDown={preventFocus}
-        disabled={nextDisabled}
-        data-disabled={nextDisabled || undefined}
-      >
-        {nextIcon || (
-          <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
-        )}
-      </UnstyledButton>
+      {withNext && (
+        <UnstyledButton
+          className={classes.calendarHeaderControl}
+          data-next
+          aria-label={nextLabel}
+          onClick={onNext}
+          unstyled={unstyled}
+          onMouseDown={preventFocus}
+          disabled={nextDisabled}
+          data-disabled={nextDisabled || undefined}
+        >
+          {nextIcon || (
+            <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
+          )}
+        </UnstyledButton>
+      )}
     </Box>
   );
 });
