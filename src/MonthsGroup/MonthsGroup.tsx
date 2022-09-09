@@ -1,5 +1,6 @@
 import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
+import dayjs from 'dayjs';
 import { MonthLevel, MonthLevelStylesNames, MonthLevelSettings } from '../MonthLevel';
 import useStyles from './MonthsGroup.styles';
 
@@ -27,16 +28,21 @@ export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, 
   const { classes, cx } = useStyles();
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
 
-  console.log(daysRefs);
+  const months = Array(amountOfMonths)
+    .fill(0)
+    .map((_, monthIndex) => (
+      <MonthLevel
+        key={monthIndex}
+        month={dayjs(month).add(monthIndex, 'months').toDate()}
+        __getDayRef={(rowIndex, cellIndex, node) => {
+          daysRefs.current[`${monthIndex}.${rowIndex}.${cellIndex}`] = node;
+        }}
+      />
+    ));
 
   return (
     <Box className={cx(classes.monthsGroup, className)} ref={ref} {...others}>
-      <MonthLevel
-        month={month}
-        __getDayRef={(rowIndex, cellIndex, node) => {
-          daysRefs.current[`${rowIndex}.${cellIndex}`] = node;
-        }}
-      />
+      {months}
     </Box>
   );
 });
