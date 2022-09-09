@@ -11,8 +11,8 @@ export interface HeaderTestProps {
   onPrevious?(): void;
   onLevelChange?(): void;
   levelControlAriaLabel?: string;
-  hasNext?: boolean;
-  hasPrevious?: boolean;
+  nextDisabled?: boolean;
+  previousDisabled?: boolean;
   hasNextLevel?: boolean;
   __preventFocus?: boolean;
 }
@@ -68,24 +68,24 @@ export function itSupportsHeaderProps(
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('supports hasNext prop', () => {
-    const { rerender } = render(<Component {...requiredProps} hasNext />);
-    expect(screen.getByLabelText('next')).not.toHaveAttribute('data-disabled');
-    expect(screen.getByLabelText('next')).not.toHaveAttribute('disabled');
-
-    rerender(<Component {...requiredProps} hasNext={false} />);
+  it('supports nextDisabled prop', () => {
+    const { rerender } = render(<Component {...requiredProps} nextDisabled />);
     expect(screen.getByLabelText('next')).toHaveAttribute('data-disabled');
     expect(screen.getByLabelText('next')).toHaveAttribute('disabled');
+
+    rerender(<Component {...requiredProps} nextDisabled={false} />);
+    expect(screen.getByLabelText('next')).not.toHaveAttribute('data-disabled');
+    expect(screen.getByLabelText('next')).not.toHaveAttribute('disabled');
   });
 
-  it('supports hasPrevious prop', () => {
-    const { rerender } = render(<Component {...requiredProps} hasPrevious />);
-    expect(screen.getByLabelText('prev')).not.toHaveAttribute('data-disabled');
-    expect(screen.getByLabelText('prev')).not.toHaveAttribute('disabled');
-
-    rerender(<Component {...requiredProps} hasPrevious={false} />);
+  it('supports previousDisabled prop', () => {
+    const { rerender } = render(<Component {...requiredProps} previousDisabled />);
     expect(screen.getByLabelText('prev')).toHaveAttribute('data-disabled');
     expect(screen.getByLabelText('prev')).toHaveAttribute('disabled');
+
+    rerender(<Component {...requiredProps} previousDisabled={false} />);
+    expect(screen.getByLabelText('prev')).not.toHaveAttribute('data-disabled');
+    expect(screen.getByLabelText('prev')).not.toHaveAttribute('disabled');
   });
 
   it('supports hasNextLevel prop', () => {

@@ -64,8 +64,8 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     onNext,
     onPrevious,
     onLevelChange,
-    hasNext,
-    hasPrevious,
+    nextDisabled,
+    previousDisabled,
     hasNextLevel,
     levelControlAriaLabel,
 
@@ -95,19 +95,19 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     __staticSelector: __staticSelector || 'MonthLevel',
   };
 
-  const _hasNext =
-    typeof hasNext === 'boolean'
-      ? hasNext
+  const _nextDisabled =
+    typeof nextDisabled === 'boolean'
+      ? nextDisabled
       : maxDate
-      ? dayjs(month).endOf('month').isBefore(maxDate)
-      : true;
+      ? !dayjs(month).endOf('month').isBefore(maxDate)
+      : false;
 
-  const _hasPrevious =
-    typeof hasPrevious === 'boolean'
-      ? hasPrevious
+  const _previousDisabled =
+    typeof previousDisabled === 'boolean'
+      ? previousDisabled
       : minDate
-      ? dayjs(month).startOf('month').isAfter(minDate)
-      : true;
+      ? !dayjs(month).startOf('month').isAfter(minDate)
+      : false;
 
   return (
     <Box className={cx(classes.monthLevel, className)} ref={ref} {...others}>
@@ -128,8 +128,8 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         onNext={onNext}
         onPrevious={onPrevious}
         onLevelChange={onLevelChange}
-        hasNext={_hasNext}
-        hasPrevious={_hasPrevious}
+        nextDisabled={_nextDisabled}
+        previousDisabled={_previousDisabled}
         hasNextLevel={hasNextLevel}
         levelControlAriaLabel={levelControlAriaLabel}
         {...stylesApiProps}

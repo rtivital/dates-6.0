@@ -14,7 +14,7 @@ export function Usage() {
 export function DisabledControls() {
   return (
     <div style={{ padding: 40, width: 300 }}>
-      <CalendarHeader label="March 2022" hasNext={false} hasPrevious={false} hasNextLevel={false} />
+      <CalendarHeader label="March 2022" nextDisabled previousDisabled hasNextLevel={false} />
     </div>
   );
 }

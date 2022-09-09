@@ -35,14 +35,20 @@ export interface CalendarHeaderSettings {
   /** Called when level button is clicked */
   onLevelChange?(): void;
 
-  /** Determines whether next control should be visible, defaults to true */
-  hasNext?: boolean;
+  /** Determines whether next control should be disabled, defaults to true */
+  nextDisabled?: boolean;
 
-  /** Determines whether previous control should be visible, defaults to true */
-  hasPrevious?: boolean;
+  /** Determines whether previous control should be disabled, defaults to true */
+  previousDisabled?: boolean;
 
   /** Determines whether next level button should be enabled, defaults to true */
   hasNextLevel?: boolean;
+
+  /** Determines whether next control should be rendered, defaults to true */
+  withNext?: boolean;
+
+  /** Determines whether previous control should be rendered, defaults to true */
+  withPrevious?: boolean;
 }
 
 export interface CalendarHeaderProps
@@ -59,9 +65,11 @@ export interface CalendarHeaderProps
 }
 
 const defaultProps: Partial<CalendarHeaderProps> = {
-  hasNext: true,
-  hasPrevious: true,
+  nextDisabled: false,
+  previousDisabled: false,
   hasNextLevel: true,
+  withNext: true,
+  withPrevious: true,
 };
 
 export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((props, ref) => {
@@ -78,10 +86,12 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     classNames,
     styles,
     unstyled,
-    hasNext,
-    hasPrevious,
+    nextDisabled,
+    previousDisabled,
     hasNextLevel,
     levelControlAriaLabel,
+    withNext,
+    withPrevious,
     __staticSelector,
     __preventFocus,
     ...others
@@ -107,8 +117,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         onClick={onPrevious}
         unstyled={unstyled}
         onMouseDown={preventFocus}
-        disabled={!hasPrevious}
-        data-disabled={!hasPrevious || undefined}
+        disabled={previousDisabled}
+        data-disabled={previousDisabled || undefined}
       >
         {previousIcon || (
           <Chevron
@@ -139,8 +149,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         onClick={onNext}
         unstyled={unstyled}
         onMouseDown={preventFocus}
-        disabled={!hasNext}
-        data-disabled={!hasNext || undefined}
+        disabled={nextDisabled}
+        data-disabled={nextDisabled || undefined}
       >
         {nextIcon || (
           <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
