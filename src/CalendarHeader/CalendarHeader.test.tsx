@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { itSupportsHeaderProps } from '../__tests__';
+import { itSupportsHeaderProps, itSupportsWithNextPrevious } from '../__tests__';
 import { CalendarHeader, CalendarHeaderProps } from './CalendarHeader';
 
 const defaultProps: CalendarHeaderProps = {
@@ -11,6 +11,7 @@ const defaultProps: CalendarHeaderProps = {
 
 describe('@mantine/dates/CalendarHeader', () => {
   itSupportsHeaderProps(CalendarHeader, defaultProps);
+  itSupportsWithNextPrevious(CalendarHeader, defaultProps);
 
   it('renders given label', () => {
     render(<CalendarHeader {...defaultProps} label="test-label" />);

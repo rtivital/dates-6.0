@@ -8,13 +8,16 @@ export type MonthsGroupStylesNames = Selectors<typeof useStyles> | MonthLevelSty
 
 export interface MonthsGroupProps
   extends DefaultProps<MonthLevelStylesNames>,
-    MonthLevelSettings,
+    Omit<MonthLevelSettings, 'withPrevious' | 'withNext'>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Amount of months to render next to each other */
   amountOfMonths?: number;
 
   /** Month that is currently displayed */
   month: Date;
+
+  /** Function that returns level control aria-label based on month date */
+  levelControlAriaLabel?: ((month: Date) => string) | string;
 }
 
 const defaultProps: Partial<MonthsGroupProps> = {
@@ -22,27 +25,89 @@ const defaultProps: Partial<MonthsGroupProps> = {
 };
 
 export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, ref) => {
-  const { className, month, amountOfMonths, ...others } = useComponentDefaultProps(
-    'MonthsGroup',
-    defaultProps,
-    props
-  );
+  const {
+    // Month settings
+    month,
+    locale,
+    firstDayOfWeek,
+    weekdayFormat,
+    weekendDays,
+    getDayProps,
+    excludeDate,
+    minDate,
+    maxDate,
+    renderDay,
+    hideOutsideDates,
+    hideWeekdays,
+    getDayAriaLabel,
+
+    // CalendarHeader settings
+    __preventFocus,
+    nextIcon,
+    previousIcon,
+    nextLabel,
+    previousLabel,
+    onNext,
+    onPrevious,
+    onLevelChange,
+    nextDisabled,
+    previousDisabled,
+    hasNextLevel,
+
+    // Other settings
+    className,
+    amountOfMonths,
+    levelControlAriaLabel,
+    ...others
+  } = useComponentDefaultProps('MonthsGroup', defaultProps, props);
   const { classes, cx } = useStyles();
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
 
   const months = Array(amountOfMonths)
     .fill(0)
-    .map((_, monthIndex) => (
-      <MonthLevel
-        key={monthIndex}
-        month={dayjs(month).add(monthIndex, 'months').toDate()}
-        withNext={monthIndex === amountOfMonths - 1}
-        withPrevious={monthIndex === 0}
-        __getDayRef={(rowIndex, cellIndex, node) => {
-          daysRefs.current[`${monthIndex}.${rowIndex}.${cellIndex}`] = node;
-        }}
-      />
-    ));
+    .map((_, monthIndex) => {
+      const currentMonth = dayjs(month).add(monthIndex, 'months').toDate();
+
+      return (
+        <MonthLevel
+          key={monthIndex}
+          month={currentMonth}
+          withNext={monthIndex === amountOfMonths - 1}
+          withPrevious={monthIndex === 0}
+          __getDayRef={(rowIndex, cellIndex, node) => {
+            daysRefs.current[`${monthIndex}.${rowIndex}.${cellIndex}`] = node;
+          }}
+          levelControlAriaLabel={
+            typeof levelControlAriaLabel === 'function'
+              ? levelControlAriaLabel(currentMonth)
+              : levelControlAriaLabel
+          }
+          locale={locale}
+          firstDayOfWeek={firstDayOfWeek}
+          weekdayFormat={weekdayFormat}
+          weekendDays={weekendDays}
+          getDayProps={getDayProps}
+          excludeDate={excludeDate}
+          minDate={minDate}
+          maxDate={maxDate}
+          renderDay={renderDay}
+          hideOutsideDates={hideOutsideDates}
+          hideWeekdays={hideWeekdays}
+          getDayAriaLabel={getDayAriaLabel}
+          __preventFocus={__preventFocus}
+          nextIcon={nextIcon}
+          previousIcon={previousIcon}
+          nextLabel={nextLabel}
+          previousLabel={previousLabel}
+          onNext={onNext}
+          onPrevious={onPrevious}
+          onLevelChange={onLevelChange}
+          nextDisabled={nextDisabled}
+          previousDisabled={previousDisabled}
+          hasNextLevel={hasNextLevel}
+        />
+      );
+    });
 
   return (
     <Box className={cx(classes.monthsGroup, className)} ref={ref} {...others}>

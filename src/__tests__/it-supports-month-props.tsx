@@ -262,19 +262,4 @@ export function itSupportsMonthProps(
     expect(days[0]).toHaveAttribute('aria-label', '28 марта 2022');
     expect(days[4]).toHaveAttribute('aria-label', '1 апреля 2022');
   });
-
-  it('supports __getDayRef', () => {
-    const daysRefs: Record<string, HTMLButtonElement> = {};
-    render(
-      <Component
-        {...requiredProps}
-        __getDayRef={(rowIndex, cellIndex, node) => {
-          daysRefs[`${rowIndex}.${cellIndex}`] = node;
-        }}
-      />
-    );
-
-    expect(Object.keys(daysRefs)).toHaveLength(35);
-    expect(daysRefs['0.0']).toBeInstanceOf(HTMLButtonElement);
-  });
 }

@@ -2,7 +2,12 @@ import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MonthLevel, MonthLevelProps } from './MonthLevel';
-import { itSupportsMonthProps, itSupportsHeaderProps } from '../__tests__';
+import {
+  itSupportsMonthProps,
+  itSupportsHeaderProps,
+  itSupportsGetDayRef,
+  itSupportsWithNextPrevious,
+} from '../__tests__';
 
 function expectLabel(label: string) {
   expect(screen.getByLabelText('level-control')).toHaveTextContent(label);
@@ -18,6 +23,8 @@ const defaultProps: MonthLevelProps = {
 describe('@mantine/dates/MonthLevel', () => {
   itSupportsHeaderProps(MonthLevel, defaultProps);
   itSupportsMonthProps(MonthLevel, defaultProps);
+  itSupportsGetDayRef(MonthLevel, defaultProps);
+  itSupportsWithNextPrevious(MonthLevel, defaultProps);
 
   it('renders correct CalendarHeader label', () => {
     render(<MonthLevel {...defaultProps} />);
