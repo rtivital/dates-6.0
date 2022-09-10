@@ -6,6 +6,7 @@ import {
   MantineNumberSize,
   Selectors,
 } from '@mantine/core';
+import dayjs from 'dayjs';
 import useStyles, { DayStylesParams } from './Day.styles';
 
 export type DayStylesNames = Selectors<typeof useStyles>;
@@ -86,6 +87,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       ref={ref}
       className={cx(classes.day, className)}
       disabled={disabled}
+      data-today={dayjs(date).isSame(new Date(), 'day') || undefined}
       data-hidden={hidden || undefined}
       data-disabled={disabled || undefined}
       data-weekend={(!disabled && !outside && weekend) || undefined}

@@ -108,4 +108,12 @@ describe('@mantine/dates/Day', () => {
     rerender(<Day {...defaultProps} static />);
     expect((container.firstChild as HTMLElement).tagName).toBe('DIV');
   });
+
+  it('adds data-today attribute if date is the same as today', () => {
+    const { rerender } = render(<Day {...defaultProps} date={new Date(2021, 11, 1)} />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('data-today');
+
+    rerender(<Day {...defaultProps} date={new Date()} />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-today');
+  });
 });
