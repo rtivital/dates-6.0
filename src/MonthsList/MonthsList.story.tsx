@@ -10,3 +10,19 @@ export function Usage() {
     </div>
   );
 }
+
+export function MinDate() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <MonthsList year={new Date(2022, 1, 1)} minDate={new Date(2022, 4, 1)} />
+    </div>
+  );
+}
+
+export function MaxDate() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <MonthsList year={new Date(20222, 1, 1)} maxDate={new Date(20222, 9, 1)} />
+    </div>
+  );
+}

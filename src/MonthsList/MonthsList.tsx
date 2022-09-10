@@ -3,8 +3,9 @@ import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
 import { CalendarPickerControl, CalendarPickerControlStylesNames } from '../CalendarPickerControl';
-import { getMonthsData } from './get-months-data/get-months-data';
 import { useDatesContext } from '../DatesProvider';
+import { getMonthsData } from './get-months-data/get-months-data';
+import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
 import useStyles from './MonthsList.styles';
 
 export type MonthsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
@@ -12,6 +13,12 @@ export type MonthsListStylesNames = CalendarPickerControlStylesNames | Selectors
 export interface MonthsListSettings {
   /** dayjs format for months list  */
   monthsListFormat?: string;
+
+  /** Minimum possible date */
+  minDate?: Date;
+
+  /** Maximum possible date */
+  maxDate?: Date;
 }
 
 export interface MonthsListProps
@@ -30,11 +37,8 @@ const defaultProps: Partial<MonthsListProps> = {
 };
 
 export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, ref) => {
-  const { year, className, monthsListFormat, locale, ...others } = useComponentDefaultProps(
-    'MonthsList',
-    defaultProps,
-    props
-  );
+  const { year, className, monthsListFormat, locale, minDate, maxDate, ...others } =
+    useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles();
   const ctx = useDatesContext();
 
@@ -43,7 +47,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
   const rows = months.map((monthsRow, rowIndex) => {
     const cells = monthsRow.map((month, cellIndex) => (
       <td key={cellIndex}>
-        <CalendarPickerControl>
+        <CalendarPickerControl disabled={isMonthDisabled(month, minDate, maxDate)}>
           {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
         </CalendarPickerControl>
       </td>
