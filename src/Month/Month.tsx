@@ -17,7 +17,14 @@ export type MonthStylesNames =
   | WeekdaysRowStylesNames
   | DayStylesNames;
 
+export interface DayKeydownPayload {
+  rowIndex: number;
+  cellIndex: number;
+  date: Date;
+}
+
 export interface MonthSettings {
+  __onDayKeyDown?(event: React.KeyboardEvent<HTMLButtonElement>, payload: DayKeydownPayload): void;
   __getDayRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
 
   /** dayjs locale, defaults to value defined in DatesProvider */
@@ -94,6 +101,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     getDayAriaLabel,
     static: isStatic,
     __getDayRef,
+    __onDayKeyDown,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -121,6 +129,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
         dayjs(date)
           .locale(locale || ctx.locale)
           .format('D MMMM YYYY');
+      const dayProps = getDayProps?.(date);
 
       return (
         <td key={date.toString()} className={classes.monthCell}>
@@ -139,7 +148,11 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
               !isAfterMinDate(date, minDate)
             }
             ref={(node) => __getDayRef?.(rowIndex, cellIndex, node)}
-            {...getDayProps?.(date)}
+            {...dayProps}
+            onKeyDown={(event) => {
+              dayProps?.onKeyDown?.(event);
+              __onDayKeyDown?.(event, { rowIndex, cellIndex, date });
+            }}
           />
         </td>
       );

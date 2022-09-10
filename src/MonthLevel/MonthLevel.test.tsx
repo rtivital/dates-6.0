@@ -7,6 +7,7 @@ import {
   itSupportsHeaderProps,
   itSupportsGetDayRef,
   itSupportsWithNextPrevious,
+  itSupportsOnDayKeydown,
 } from '../__tests__';
 
 function expectLabel(label: string) {
@@ -25,6 +26,7 @@ describe('@mantine/dates/MonthLevel', () => {
   itSupportsMonthProps(MonthLevel, defaultProps);
   itSupportsGetDayRef(MonthLevel, defaultProps);
   itSupportsWithNextPrevious(MonthLevel, defaultProps);
+  itSupportsOnDayKeydown(MonthLevel, defaultProps);
 
   it('renders correct CalendarHeader label', () => {
     render(<MonthLevel {...defaultProps} />);
