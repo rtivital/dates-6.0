@@ -7,7 +7,8 @@ export default createStyles((theme) => {
     calendarPickerControl: {
       padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
       fontSize: theme.fontSizes.sm,
-      display: 'inline-flex',
+      display: 'flex',
+      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
       userSelect: 'none',

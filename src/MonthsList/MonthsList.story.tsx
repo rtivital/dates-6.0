@@ -5,7 +5,7 @@ export default { title: 'MonthsList' };
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: 40, width: 320 }}>
       <MonthsList year={new Date()} />
     </div>
   );
