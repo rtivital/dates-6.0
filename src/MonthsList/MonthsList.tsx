@@ -29,6 +29,8 @@ export interface MonthsListProps
   extends DefaultProps<MonthsListStylesNames>,
     MonthsListSettings,
     React.ComponentPropsWithoutRef<'table'> {
+  __staticSelector?: string;
+
   /** Year for which months list should be displayed */
   year: Date;
 
@@ -52,9 +54,19 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     minDate,
     maxDate,
     getMonthControlProps,
+    classNames,
+    styles,
+    unstyled,
+    __staticSelector,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles(null, {
+    classNames,
+    styles,
+    unstyled,
+    name: ['MonthsList', __staticSelector],
+  });
+
   const ctx = useDatesContext();
 
   const months = getMonthsData(year);
@@ -63,6 +75,10 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     const cells = monthsRow.map((month, cellIndex) => (
       <td key={cellIndex}>
         <CalendarPickerControl
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
+          __staticSelector={__staticSelector || 'MonthsList'}
           disabled={isMonthDisabled(month, minDate, maxDate)}
           {...getMonthControlProps?.(month)}
         >
