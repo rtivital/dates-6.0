@@ -1,46 +1,46 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MonthsGroup, MonthsGroupProps } from './MonthsGroup';
+import { MonthLevelGroup, MonthLevelGroupProps } from './MonthLevelGroup';
 import { itSupportsMonthProps, itSupportsHeaderProps } from '../__tests__';
 
-const defaultProps: MonthsGroupProps = {
+const defaultProps: MonthLevelGroupProps = {
   month: new Date(2022, 3, 11),
   levelControlAriaLabel: () => 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
 };
 
-describe('@mantine/dates/MonthsGroup', () => {
-  itSupportsMonthProps(MonthsGroup, defaultProps);
-  itSupportsHeaderProps(MonthsGroup, defaultProps);
+describe('@mantine/dates/MonthLevelGroup', () => {
+  itSupportsMonthProps(MonthLevelGroup, defaultProps);
+  itSupportsHeaderProps(MonthLevelGroup, defaultProps);
 
   it('renders correct number of months based on numberOfMonths prop', () => {
-    const { rerender } = render(<MonthsGroup {...defaultProps} numberOfMonths={1} />);
+    const { rerender } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={1} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(1);
 
-    rerender(<MonthsGroup {...defaultProps} numberOfMonths={2} />);
+    rerender(<MonthLevelGroup {...defaultProps} numberOfMonths={2} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(2);
 
-    rerender(<MonthsGroup {...defaultProps} numberOfMonths={3} />);
+    rerender(<MonthLevelGroup {...defaultProps} numberOfMonths={3} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(3);
   });
 
   it('renders correct months group based on month prop', () => {
-    render(<MonthsGroup {...defaultProps} numberOfMonths={3} />);
+    render(<MonthLevelGroup {...defaultProps} numberOfMonths={3} />);
     expect(screen.getAllByLabelText('level-control').map((node) => node.textContent)).toStrictEqual(
       ['April 2022', 'May 2022', 'June 2022']
     );
   });
 
   it('supports levelControlAriaLabel as string', () => {
-    render(<MonthsGroup {...defaultProps} levelControlAriaLabel="test-label" />);
+    render(<MonthLevelGroup {...defaultProps} levelControlAriaLabel="test-label" />);
     expect(screen.getByText('April 2022')).toHaveAttribute('aria-label', 'test-label');
   });
 
   it('supports levelControlAriaLabel as function', () => {
     render(
-      <MonthsGroup
+      <MonthLevelGroup
         {...defaultProps}
         levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
       />
@@ -49,7 +49,7 @@ describe('@mantine/dates/MonthsGroup', () => {
   });
 
   it('handles arrow keyboard events correctly (numberOfMonths=1)', async () => {
-    const { container } = render(<MonthsGroup {...defaultProps} numberOfMonths={1} />);
+    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={1} />);
     const days = container.querySelectorAll('table button');
 
     await userEvent.click(days[0]);
@@ -69,7 +69,7 @@ describe('@mantine/dates/MonthsGroup', () => {
   });
 
   it('handles arrow keyboard events correctly (numberOfMonths=2)', async () => {
-    const { container } = render(<MonthsGroup {...defaultProps} numberOfMonths={2} />);
+    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={2} />);
     const months = container.querySelectorAll('.mantine-Month-month');
     const firstMonthDays = months[0].querySelectorAll('button');
     const secondMonthDays = months[1].querySelectorAll('button');
@@ -91,7 +91,7 @@ describe('@mantine/dates/MonthsGroup', () => {
   });
 
   it('handles arrow keyboard events correctly at month edges', async () => {
-    const { container } = render(<MonthsGroup {...defaultProps} numberOfMonths={1} />);
+    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={1} />);
     const days = container.querySelectorAll('table button');
 
     await userEvent.type(days[6], '{ArrowRight}');

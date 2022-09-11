@@ -3,11 +3,11 @@ import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine
 import dayjs from 'dayjs';
 import { MonthLevel, MonthLevelStylesNames, MonthLevelSettings } from '../MonthLevel';
 import { handleDayKeyDown } from './handle-day-keydown';
-import useStyles from './MonthsGroup.styles';
+import useStyles from './MonthLevelGroup.styles';
 
-export type MonthsGroupStylesNames = Selectors<typeof useStyles> | MonthLevelStylesNames;
+export type MonthLevelGroupStylesNames = Selectors<typeof useStyles> | MonthLevelStylesNames;
 
-export interface MonthsGroupProps
+export interface MonthLevelGroupProps
   extends DefaultProps<MonthLevelStylesNames>,
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext'>,
     React.ComponentPropsWithoutRef<'div'> {
@@ -21,11 +21,11 @@ export interface MonthsGroupProps
   levelControlAriaLabel?: ((month: Date) => string) | string;
 }
 
-const defaultProps: Partial<MonthsGroupProps> = {
+const defaultProps: Partial<MonthLevelGroupProps> = {
   numberOfMonths: 1,
 };
 
-export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, ref) => {
+export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>((props, ref) => {
   const {
     // Month settings
     month,
@@ -60,7 +60,7 @@ export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, 
     numberOfMonths,
     levelControlAriaLabel,
     ...others
-  } = useComponentDefaultProps('MonthsGroup', defaultProps, props);
+  } = useComponentDefaultProps('MonthLevelGroup', defaultProps, props);
   const { classes, cx } = useStyles();
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
 
@@ -128,4 +128,4 @@ export const MonthsGroup = forwardRef<HTMLDivElement, MonthsGroupProps>((props, 
   );
 });
 
-MonthsGroup.displayName = '@mantine/dates/MonthsGroup';
+MonthLevelGroup.displayName = '@mantine/dates/MonthLevelGroup';
