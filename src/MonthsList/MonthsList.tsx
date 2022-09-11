@@ -23,6 +23,9 @@ export interface MonthsListSettings {
 
   /** Maximum possible date */
   maxDate?: Date;
+
+  /** dayjs locale, defaults to value defined in DatesProvider */
+  locale?: string;
 }
 
 export interface MonthsListProps
@@ -33,9 +36,6 @@ export interface MonthsListProps
 
   /** Year for which months list should be displayed */
   year: Date;
-
-  /** dayjs locale, defaults to value defined in DatesProvider */
-  locale?: string;
 
   /** Adds props to month picker control based on date */
   getMonthControlProps?(date: Date): Partial<CalendarPickerControlProps>;
