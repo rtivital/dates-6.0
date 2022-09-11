@@ -39,6 +39,21 @@ const ruMonthsNames = [
   'дек.',
 ];
 
+const customFormatMonthsNames = [
+  'Jan 22',
+  'Feb 22',
+  'Mar 22',
+  'Apr 22',
+  'May 22',
+  'Jun 22',
+  'Jul 22',
+  'Aug 22',
+  'Sep 22',
+  'Oct 22',
+  'Nov 22',
+  'Dec 22',
+];
+
 function expectMonthNames(monthNames: string[]) {
   expect(screen.getAllByRole('button').map((node) => node.textContent)).toStrictEqual(monthNames);
 }
@@ -61,6 +76,11 @@ describe('@mantine/dates/MonthsList', () => {
       </DatesProvider>
     );
     expectMonthNames(ruMonthsNames);
+  });
+
+  it('supports custom monthsListFormat format', () => {
+    render(<MonthsList {...defaultProps} monthsListFormat="MMM YY" />);
+    expectMonthNames(customFormatMonthsNames);
   });
 
   it('disables months if they are before minDate', () => {
