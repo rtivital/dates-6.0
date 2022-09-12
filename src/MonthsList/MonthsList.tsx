@@ -26,6 +26,9 @@ export interface MonthsListSettings {
 
   /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
+
+  /** Adds props to month picker control based on date */
+  getMonthControlProps?(date: Date): Partial<CalendarPickerControlProps>;
 }
 
 export interface MonthsListProps
@@ -36,9 +39,6 @@ export interface MonthsListProps
 
   /** Year for which months list should be displayed */
   year: Date;
-
-  /** Adds props to month picker control based on date */
-  getMonthControlProps?(date: Date): Partial<CalendarPickerControlProps>;
 }
 
 const defaultProps: Partial<MonthsListProps> = {

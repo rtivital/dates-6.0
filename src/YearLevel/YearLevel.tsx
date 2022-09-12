@@ -45,6 +45,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     minDate,
     maxDate,
     monthsListFormat,
+    getMonthControlProps,
 
     // CalendarHeader settings
     __preventFocus,
@@ -136,6 +137,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         minDate={minDate}
         maxDate={maxDate}
         monthsListFormat={monthsListFormat}
+        getMonthControlProps={getMonthControlProps}
         {...stylesApiProps}
       />
     </Box>
