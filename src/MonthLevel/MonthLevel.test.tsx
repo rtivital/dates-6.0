@@ -84,6 +84,23 @@ describe('@mantine/dates/MonthLevel', () => {
     expect(screen.getByLabelText('level-control')).toHaveStyle({ borderColor: '#121214' });
   });
 
+  it('supports styles api (classNames)', () => {
+    const { container } = render(
+      <MonthLevel
+        {...defaultProps}
+        classNames={{
+          monthLevel: 'test-month-level',
+          day: 'test-day',
+          calendarHeaderLevel: 'test-level',
+        }}
+      />
+    );
+
+    expect(container.firstChild).toHaveClass('test-month-level');
+    expect(container.querySelector('table td button')).toHaveClass('test-day');
+    expect(screen.getByLabelText('level-control')).toHaveClass('test-level');
+  });
+
   it('disables next control if maxDate is before end of month', () => {
     render(<MonthLevel {...defaultProps} maxDate={new Date(2022, 3, 11)} />);
     expect(screen.getByLabelText('next')).toBeDisabled();

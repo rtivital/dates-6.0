@@ -40,40 +40,61 @@ describe('@mantine/dates/YearLevel', () => {
     expectLabel('3/2022');
   });
 
-  // it('has correct default __staticSelector', () => {
-  //   const { container } = render(<YearLevel {...defaultProps} />);
-  //   expect(container.firstChild).toHaveClass('mantine-YearLevel-monthLevel');
-  //   expect(container.querySelector('table td button')).toHaveClass('mantine-YearLevel-day');
-  //   expect(screen.getByLabelText('level-control')).toHaveClass(
-  //     'mantine-YearLevel-calendarHeaderLevel'
-  //   );
-  // });
+  it('has correct default __staticSelector', () => {
+    const { container } = render(<YearLevel {...defaultProps} />);
+    expect(container.firstChild).toHaveClass('mantine-YearLevel-yearLevel');
+    expect(container.querySelector('table td button')).toHaveClass(
+      'mantine-YearLevel-calendarPickerControl'
+    );
+    expect(screen.getByLabelText('level-control')).toHaveClass(
+      'mantine-YearLevel-calendarHeaderLevel'
+    );
+  });
 
-  // it('has supports custom __staticSelector', () => {
-  //   const { container } = render(<YearLevel {...defaultProps} __staticSelector="Calendar" />);
-  //   expect(container.firstChild).toHaveClass('mantine-Calendar-monthLevel');
-  //   expect(container.querySelector('table td button')).toHaveClass('mantine-Calendar-day');
-  //   expect(screen.getByLabelText('level-control')).toHaveClass(
-  //     'mantine-Calendar-calendarHeaderLevel'
-  //   );
-  // });
+  it('supports custom __staticSelector', () => {
+    const { container } = render(<YearLevel {...defaultProps} __staticSelector="Calendar" />);
+    expect(container.firstChild).toHaveClass('mantine-Calendar-yearLevel');
+    expect(container.querySelector('table td button')).toHaveClass(
+      'mantine-Calendar-calendarPickerControl'
+    );
+    expect(screen.getByLabelText('level-control')).toHaveClass(
+      'mantine-Calendar-calendarHeaderLevel'
+    );
+  });
 
-  // it('supports styles api (styles)', () => {
-  //   const { container } = render(
-  //     <YearLevel
-  //       {...defaultProps}
-  //       styles={{
-  //         monthLevel: { borderColor: '#343436' },
-  //         day: { borderColor: '#232324' },
-  //         calendarHeaderLevel: { borderColor: '#121214' },
-  //       }}
-  //     />
-  //   );
+  it('supports styles api (styles)', () => {
+    const { container } = render(
+      <YearLevel
+        {...defaultProps}
+        styles={{
+          yearLevel: { borderColor: '#343436' },
+          calendarPickerControl: { borderColor: '#232324' },
+          calendarHeaderLevel: { borderColor: '#121214' },
+        }}
+      />
+    );
 
-  //   expect(container.firstChild).toHaveStyle({ borderColor: '#343436' });
-  //   expect(container.querySelector('table td button')).toHaveStyle({ borderColor: '#232324' });
-  //   expect(screen.getByLabelText('level-control')).toHaveStyle({ borderColor: '#121214' });
-  // });
+    expect(container.firstChild).toHaveStyle({ borderColor: '#343436' });
+    expect(container.querySelector('table td button')).toHaveStyle({ borderColor: '#232324' });
+    expect(screen.getByLabelText('level-control')).toHaveStyle({ borderColor: '#121214' });
+  });
+
+  it('supports styles api (classNames)', () => {
+    const { container } = render(
+      <YearLevel
+        {...defaultProps}
+        classNames={{
+          yearLevel: 'test-year-level',
+          calendarPickerControl: 'test-picker-control',
+          calendarHeaderLevel: 'test-level',
+        }}
+      />
+    );
+
+    expect(container.firstChild).toHaveClass('test-year-level');
+    expect(container.querySelector('table td button')).toHaveClass('test-picker-control');
+    expect(screen.getByLabelText('level-control')).toHaveClass('test-level');
+  });
 
   it('disables next control if maxDate is before end of month', () => {
     render(<YearLevel {...defaultProps} maxDate={new Date(2022, 3, 11)} />);
