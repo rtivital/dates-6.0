@@ -15,7 +15,7 @@ import useStyles from './YearsList.styles';
 export type YearsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface YearsListSettings {
-  /** dayjs format for months list  */
+  /** dayjs format for years list  */
   yearsListFormat?: string;
 
   /** Minimum possible date */
@@ -27,8 +27,8 @@ export interface YearsListSettings {
   /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 
-  /** Adds props to month picker control based on date */
-  getMonthControlProps?(date: Date): Partial<CalendarPickerControlProps>;
+  /** Adds props to year picker control based on date */
+  getYearControlProps?(date: Date): Partial<CalendarPickerControlProps>;
 }
 
 export interface YearsListProps
@@ -53,13 +53,14 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     locale,
     minDate,
     maxDate,
-    getMonthControlProps,
+    getYearControlProps,
     classNames,
     styles,
     unstyled,
     __staticSelector,
     ...others
   } = useComponentDefaultProps('YearsList', defaultProps, props);
+
   const { classes, cx } = useStyles(null, {
     classNames,
     styles,
@@ -80,7 +81,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
           unstyled={unstyled}
           __staticSelector={__staticSelector || 'YearsList'}
           disabled={isYearDisabled(month, minDate, maxDate)}
-          {...getMonthControlProps?.(month)}
+          {...getYearControlProps?.(month)}
         >
           {dayjs(month).locale(ctx.getLocale(locale)).format(yearsListFormat)}
         </CalendarPickerControl>

@@ -23,7 +23,7 @@ export function Unstyled() {
 export function MinDate() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <YearsList decade={new Date(2022, 1, 1)} minDate={new Date(2022, 4, 1)} />
+      <YearsList decade={new Date(2022, 3, 11)} minDate={new Date(2024, 4, 11)} />
     </div>
   );
 }
@@ -43,7 +43,7 @@ export function WithSelection() {
     <div style={{ padding: 40, width: 320 }}>
       <YearsList
         decade={new Date()}
-        getMonthControlProps={(month) => ({
+        getYearControlProps={(month) => ({
           selected: dayjs(month).isSame(selected, 'month'),
           onClick: () => setSelected(month),
         })}
