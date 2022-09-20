@@ -7,45 +7,46 @@ import {
   CalendarHeaderSettings,
 } from '../CalendarHeader';
 import { useDatesContext } from '../DatesProvider';
-import { MonthsListSettings, MonthsListStylesNames, MonthsList } from '../MonthsList';
-import useStyles from './YearLevel.styles';
+import { YearsListSettings, YearsListStylesNames, YearsList } from '../YearsList';
+import { getDecadeRange } from './get-decade-range/get-decade-range';
+import useStyles from './DecadeLevel.styles';
 
-export type YearLevelStylesNames =
+export type DecadeLevelStylesNames =
   | Selectors<typeof useStyles>
-  | MonthsListStylesNames
+  | YearsListStylesNames
   | CalendarHeaderStylesNames;
 
-export interface YearLevelSettings extends MonthsListSettings, CalendarHeaderSettings {
-  /** dayjs label format to display year label or a function that returns year label based on year value, defaults to "YYYY" */
-  yearLabelFormat?: string | ((year: Date) => React.ReactNode);
+export interface DecadeLevelSettings extends YearsListSettings, CalendarHeaderSettings {
+  /** dayjs label format to display decade label or a function that returns decade label based on date value, defaults to "YYYY" */
+  decadeLabelFormat?: string | ((startOfDecade: Date, endOfDecade: Date) => React.ReactNode);
 }
 
-export interface YearLevelProps
-  extends DefaultProps<YearLevelStylesNames>,
-    YearLevelSettings,
+export interface DecadeLevelProps
+  extends DefaultProps<DecadeLevelStylesNames>,
+    DecadeLevelSettings,
     React.ComponentPropsWithoutRef<'div'> {
   __staticSelector?: string;
 
-  /** Year that is currently displayed */
-  year: Date;
+  /** Decade that is currently displayed */
+  decade: Date;
 
   /** aria-label for change level control */
   levelControlAriaLabel?: string;
 }
 
-const defaultProps: Partial<YearLevelProps> = {
-  yearLabelFormat: 'YYYY',
+const defaultProps: Partial<DecadeLevelProps> = {
+  decadeLabelFormat: 'YYYY',
 };
 
-export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref) => {
+export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, ref) => {
   const {
-    // MonthsList settings
-    year,
+    // YearsList settings
+    decade,
     locale,
     minDate,
     maxDate,
-    monthsListFormat,
-    getMonthControlProps,
+    yearsListFormat,
+    getYearControlProps,
 
     // CalendarHeader settings
     __preventFocus,
@@ -65,53 +66,60 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
 
     // Other props
     className,
-    yearLabelFormat,
+    decadeLabelFormat,
     classNames,
     styles,
     unstyled,
     __staticSelector,
     ...others
-  } = useComponentDefaultProps('YearLevel', defaultProps, props);
+  } = useComponentDefaultProps('DecadeLevel', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
-    name: ['YearLevel', __staticSelector],
+    name: ['DecadeLevel', __staticSelector],
     classNames,
     styles,
     unstyled,
   });
 
   const ctx = useDatesContext();
+  const [startOfDecade, endOfDecade] = getDecadeRange(decade);
 
   const stylesApiProps = {
     classNames,
     styles,
     unstyled,
-    __staticSelector: __staticSelector || 'YearLevel',
+    __staticSelector: __staticSelector || 'DecadeLevel',
   };
 
   const _nextDisabled =
     typeof nextDisabled === 'boolean'
       ? nextDisabled
       : maxDate
-      ? !dayjs(year).endOf('year').isBefore(maxDate)
+      ? !dayjs(endOfDecade).endOf('year').isBefore(maxDate)
       : false;
 
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
-      ? !dayjs(year).startOf('year').isAfter(minDate)
+      ? !dayjs(startOfDecade).startOf('year').isAfter(minDate)
       : false;
 
+  const formatDecade = (date: Date, format: string) =>
+    dayjs(date)
+      .locale(locale || ctx.locale)
+      .format(format);
+
   return (
-    <Box className={cx(classes.yearLevel, className)} ref={ref} {...others}>
+    <Box className={cx(classes.decadeLevel, className)} ref={ref} {...others}>
       <CalendarHeader
         label={
-          typeof yearLabelFormat === 'function'
-            ? yearLabelFormat(year)
-            : dayjs(year)
-                .locale(locale || ctx.locale)
-                .format(yearLabelFormat)
+          typeof decadeLabelFormat === 'function'
+            ? decadeLabelFormat(startOfDecade, endOfDecade)
+            : `${formatDecade(startOfDecade, decadeLabelFormat)} – ${formatDecade(
+                endOfDecade,
+                decadeLabelFormat
+              )}`
         }
         className={classes.calendarHeader}
         __preventFocus={__preventFocus}
@@ -131,13 +139,13 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         {...stylesApiProps}
       />
 
-      <MonthsList
-        year={year}
+      <YearsList
+        decade={decade}
         locale={locale}
         minDate={minDate}
         maxDate={maxDate}
-        monthsListFormat={monthsListFormat}
-        getMonthControlProps={getMonthControlProps}
+        yearsListFormat={yearsListFormat}
+        getYearControlProps={getYearControlProps}
         {...stylesApiProps}
       />
     </Box>
