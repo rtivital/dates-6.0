@@ -15,6 +15,8 @@ import useStyles from './MonthsList.styles';
 export type MonthsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface MonthsListSettings {
+  __getControlRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
+
   /** dayjs format for months list  */
   monthsListFormat?: string;
 
@@ -58,6 +60,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     styles,
     unstyled,
     __staticSelector,
+    __getControlRef,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
@@ -80,6 +83,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
           unstyled={unstyled}
           __staticSelector={__staticSelector || 'MonthsList'}
           disabled={isMonthDisabled(month, minDate, maxDate)}
+          ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
           {...getMonthControlProps?.(month)}
         >
           {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}

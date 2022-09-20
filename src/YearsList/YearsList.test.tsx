@@ -3,6 +3,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import dayjs from 'dayjs';
 import { DatesProvider } from '../DatesProvider';
+import { itSupportsGetControlRef } from '../__tests__';
 import { YearsList, YearsListProps } from './YearsList';
 
 const defaultProps: YearsListProps = {
@@ -59,6 +60,8 @@ function expectYearNames(monthNames: string[]) {
 }
 
 describe('@mantine/dates/YearsList', () => {
+  itSupportsGetControlRef(YearsList, defaultProps);
+
   it('renders correct years list', () => {
     render(<YearsList {...defaultProps} />);
     expectYearNames(defaultYearsNames);

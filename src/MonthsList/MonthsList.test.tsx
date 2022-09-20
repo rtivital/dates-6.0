@@ -2,6 +2,7 @@ import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import dayjs from 'dayjs';
+import { itSupportsGetControlRef } from '../__tests__';
 import { DatesProvider } from '../DatesProvider';
 import { MonthsList, MonthsListProps } from './MonthsList';
 
@@ -59,6 +60,8 @@ function expectMonthNames(monthNames: string[]) {
 }
 
 describe('@mantine/dates/MonthsList', () => {
+  itSupportsGetControlRef(MonthsList, defaultProps);
+
   it('renders correct months list', () => {
     render(<MonthsList {...defaultProps} />);
     expectMonthNames(defaultMonthNames);

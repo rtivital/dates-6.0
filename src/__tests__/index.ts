@@ -4,3 +4,4 @@ export { itSupportsHeaderProps } from './it-support-header-props';
 export { itSupportsGetDayRef } from './it-supports-get-day-ref';
 export { itSupportsWithNextPrevious } from './it-supports-with-next-previous';
 export { itSupportsOnDayKeydown } from './it-supports-on-day-keydown';
+export { itSupportsGetControlRef } from './it-supports-get-control-ref';
