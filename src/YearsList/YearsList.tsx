@@ -7,6 +7,7 @@ import {
   CalendarPickerControlStylesNames,
   CalendarPickerControlProps,
 } from '../CalendarPickerControl';
+import { ControlKeydownPayload } from '../__utils__/handle-control-key-down';
 import { useDatesContext } from '../DatesProvider';
 import { getYearsData } from './get-years-data/get-years-data';
 import { isYearDisabled } from './is-year-disabled/is-year-disabled';
@@ -15,6 +16,10 @@ import useStyles from './YearsList.styles';
 export type YearsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface YearsListSettings {
+  __onControlKeyDown?(
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    payload: ControlKeydownPayload
+  ): void;
   __getControlRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
 
   /** dayjs format for years list  */
@@ -61,6 +66,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     unstyled,
     __staticSelector,
     __getControlRef,
+    __onControlKeyDown,
     ...others
   } = useComponentDefaultProps('YearsList', defaultProps, props);
 
@@ -76,21 +82,28 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
   const years = getYearsData(decade);
 
   const rows = years.map((yearsRow, rowIndex) => {
-    const cells = yearsRow.map((month, cellIndex) => (
-      <td key={cellIndex}>
-        <CalendarPickerControl
-          classNames={classNames}
-          styles={styles}
-          unstyled={unstyled}
-          __staticSelector={__staticSelector || 'YearsList'}
-          disabled={isYearDisabled(month, minDate, maxDate)}
-          ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
-          {...getYearControlProps?.(month)}
-        >
-          {dayjs(month).locale(ctx.getLocale(locale)).format(yearsListFormat)}
-        </CalendarPickerControl>
-      </td>
-    ));
+    const cells = yearsRow.map((month, cellIndex) => {
+      const controlProps = getYearControlProps?.(month);
+      return (
+        <td key={cellIndex}>
+          <CalendarPickerControl
+            classNames={classNames}
+            styles={styles}
+            unstyled={unstyled}
+            __staticSelector={__staticSelector || 'YearsList'}
+            disabled={isYearDisabled(month, minDate, maxDate)}
+            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
+            {...controlProps}
+            onKeyDown={(event) => {
+              controlProps?.onKeyDown?.(event);
+              __onControlKeyDown?.(event, { rowIndex, cellIndex, date: month });
+            }}
+          >
+            {dayjs(month).locale(ctx.getLocale(locale)).format(yearsListFormat)}
+          </CalendarPickerControl>
+        </td>
+      );
+    });
 
     return <tr key={rowIndex}>{cells}</tr>;
   });
