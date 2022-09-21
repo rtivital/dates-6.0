@@ -1,7 +1,11 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { itSupportsGetControlRef, itSupportsMonthsListProps } from '../__tests__';
+import {
+  itSupportsGetControlRef,
+  itSupportsMonthsListProps,
+  itSupportsOnControlKeydown,
+} from '../__tests__';
 import { MonthsList, MonthsListProps } from './MonthsList';
 
 const defaultProps: MonthsListProps = {
@@ -11,6 +15,7 @@ const defaultProps: MonthsListProps = {
 describe('@mantine/dates/MonthsList', () => {
   itSupportsGetControlRef(MonthsList, defaultProps);
   itSupportsMonthsListProps(MonthsList, defaultProps);
+  itSupportsOnControlKeydown(MonthsList, defaultProps);
 
   it('has correct default __staticSelector', () => {
     render(<MonthsList {...defaultProps} />);
