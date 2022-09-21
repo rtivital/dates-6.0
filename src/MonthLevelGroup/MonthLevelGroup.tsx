@@ -2,7 +2,7 @@ import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
 import dayjs from 'dayjs';
 import { MonthLevel, MonthLevelStylesNames, MonthLevelSettings } from '../MonthLevel';
-import { handleDayKeyDown } from './handle-day-keydown';
+import { handleControlKeyDown } from '../__utils__/handle-control-key-down';
 import useStyles from './MonthLevelGroup.styles';
 
 export type MonthLevelGroupStylesNames = Selectors<typeof useStyles> | MonthLevelStylesNames;
@@ -76,7 +76,13 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           withNext={monthIndex === numberOfMonths - 1}
           withPrevious={monthIndex === 0}
           __onDayKeyDown={(event, payload) =>
-            handleDayKeyDown({ monthIndex, event, payload, daysRefs, numberOfMonths })
+            handleControlKeyDown({
+              monthIndex,
+              event,
+              payload,
+              controlsRef: daysRefs,
+              numberOfMonths,
+            })
           }
           __getDayRef={(rowIndex, cellIndex, node) => {
             if (!Array.isArray(daysRefs.current[monthIndex])) {
@@ -122,7 +128,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     });
 
   return (
-    <Box className={cx(classes.monthsGroup, className)} ref={ref} {...others}>
+    <Box className={cx(classes.monthLevelGroup, className)} ref={ref} {...others}>
       {months}
     </Box>
   );
