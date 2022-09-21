@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-interface ControlKeydownPayload {
+export interface ControlKeydownPayload {
   cellIndex: number;
   rowIndex: number;
   date: Date;

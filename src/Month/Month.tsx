@@ -6,6 +6,7 @@ import type { DayOfWeek } from '../types';
 import { useDatesContext } from '../DatesProvider';
 import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
 import { Day, DayStylesNames, DayProps } from '../Day';
+import { ControlKeydownPayload } from '../__utils__/handle-control-key-down';
 import { getMonthDays } from './get-month-days/get-month-days';
 import { isSameMonth } from './is-same-month/is-same-month';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
@@ -17,14 +18,11 @@ export type MonthStylesNames =
   | WeekdaysRowStylesNames
   | DayStylesNames;
 
-export interface DayKeydownPayload {
-  rowIndex: number;
-  cellIndex: number;
-  date: Date;
-}
-
 export interface MonthSettings {
-  __onDayKeyDown?(event: React.KeyboardEvent<HTMLButtonElement>, payload: DayKeydownPayload): void;
+  __onDayKeyDown?(
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    payload: ControlKeydownPayload
+  ): void;
   __getDayRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
 
   /** dayjs locale, defaults to value defined in DatesProvider */

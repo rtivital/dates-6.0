@@ -7,6 +7,7 @@ import {
   CalendarPickerControlStylesNames,
   CalendarPickerControlProps,
 } from '../CalendarPickerControl';
+import { ControlKeydownPayload } from '../__utils__/handle-control-key-down';
 import { useDatesContext } from '../DatesProvider';
 import { getMonthsData } from './get-months-data/get-months-data';
 import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
@@ -15,6 +16,10 @@ import useStyles from './MonthsList.styles';
 export type MonthsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface MonthsListSettings {
+  __onControlKeyDown?(
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    payload: ControlKeydownPayload
+  ): void;
   __getControlRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
 
   /** dayjs format for months list  */
@@ -61,6 +66,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     unstyled,
     __staticSelector,
     __getControlRef,
+    __onControlKeyDown,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
@@ -75,21 +81,28 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
   const months = getMonthsData(year);
 
   const rows = months.map((monthsRow, rowIndex) => {
-    const cells = monthsRow.map((month, cellIndex) => (
-      <td key={cellIndex}>
-        <CalendarPickerControl
-          classNames={classNames}
-          styles={styles}
-          unstyled={unstyled}
-          __staticSelector={__staticSelector || 'MonthsList'}
-          disabled={isMonthDisabled(month, minDate, maxDate)}
-          ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
-          {...getMonthControlProps?.(month)}
-        >
-          {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
-        </CalendarPickerControl>
-      </td>
-    ));
+    const cells = monthsRow.map((month, cellIndex) => {
+      const controlProps = getMonthControlProps?.(month);
+      return (
+        <td key={cellIndex}>
+          <CalendarPickerControl
+            classNames={classNames}
+            styles={styles}
+            unstyled={unstyled}
+            __staticSelector={__staticSelector || 'MonthsList'}
+            disabled={isMonthDisabled(month, minDate, maxDate)}
+            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
+            {...controlProps}
+            onKeyDown={(event) => {
+              controlProps?.onKeyDown?.(event);
+              __onControlKeyDown?.(event, { rowIndex, cellIndex, date: month });
+            }}
+          >
+            {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
+          </CalendarPickerControl>
+        </td>
+      );
+    });
 
     return <tr key={rowIndex}>{cells}</tr>;
   });
