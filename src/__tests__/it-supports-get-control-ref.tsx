@@ -9,7 +9,7 @@ export function itSupportsGetControlRef(
   Component: React.FC<ComponentTestProps>,
   requiredProps?: Record<string, any>
 ) {
-  it('supports __getDayRef', () => {
+  it('supports __getControlRef', () => {
     const spy = jest.fn();
     render(<Component {...requiredProps} __getControlRef={spy} />);
     expect(spy).toHaveBeenCalledTimes(12);

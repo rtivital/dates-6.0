@@ -5,3 +5,4 @@ export { itSupportsGetDayRef } from './it-supports-get-day-ref';
 export { itSupportsWithNextPrevious } from './it-supports-with-next-previous';
 export { itSupportsOnDayKeydown } from './it-supports-on-day-keydown';
 export { itSupportsGetControlRef } from './it-supports-get-control-ref';
+export { itSupportsMonthsListProps } from './it-supports-months-list-props';
