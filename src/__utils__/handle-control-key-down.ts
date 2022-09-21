@@ -11,14 +11,14 @@ type ControlsRef = RefObject<HTMLButtonElement[][][]>;
 interface ShiftFocusInput {
   controlsRef: ControlsRef;
   direction: 'down' | 'up' | 'left' | 'right';
-  monthIndex: number;
+  index: number;
   payload: ControlKeydownPayload;
   count?: number;
 }
 
 function focusOnNextFocusableControl({
   direction,
-  monthIndex,
+  index,
   payload,
   count = 1,
   controlsRef,
@@ -33,14 +33,14 @@ function focusOnNextFocusableControl({
     ? payload.cellIndex
     : payload.cellIndex + (direction === 'right' ? count : -count);
 
-  const controlToFocus = controlsRef.current[monthIndex][rowIndex][cellIndex];
+  const controlToFocus = controlsRef.current[index][rowIndex][cellIndex];
 
   if (!controlToFocus) {
     return;
   }
 
   if (controlToFocus.disabled) {
-    focusOnNextFocusableControl({ direction, monthIndex, payload, controlsRef, count: count + 1 });
+    focusOnNextFocusableControl({ direction, index, payload, controlsRef, count: count + 1 });
   } else {
     controlToFocus.focus();
   }
@@ -48,26 +48,28 @@ function focusOnNextFocusableControl({
 
 interface HandleControlKeydownInput {
   controlsRef: ControlsRef;
-  numberOfMonths: number;
-  monthIndex: number;
+  numberOfColumns: number;
+  index: number;
   payload: ControlKeydownPayload;
   event: React.KeyboardEvent<HTMLButtonElement>;
+  controlsPerRow: number;
 }
 
 export function handleControlKeyDown({
   controlsRef,
-  monthIndex,
+  index,
   payload,
   event,
-  numberOfMonths,
+  numberOfColumns,
+  controlsPerRow,
 }: HandleControlKeydownInput) {
   switch (event.key) {
     case 'ArrowDown': {
       event.preventDefault();
 
-      const hasRowBelow = payload.rowIndex + 1 < controlsRef.current[monthIndex].length;
+      const hasRowBelow = payload.rowIndex + 1 < controlsRef.current[index].length;
       if (hasRowBelow) {
-        focusOnNextFocusableControl({ direction: 'down', monthIndex, payload, controlsRef });
+        focusOnNextFocusableControl({ direction: 'down', index, payload, controlsRef });
       }
       break;
     }
@@ -77,7 +79,7 @@ export function handleControlKeyDown({
 
       const hasRowAbove = payload.rowIndex > 0;
       if (hasRowAbove) {
-        focusOnNextFocusableControl({ direction: 'up', monthIndex, payload, controlsRef });
+        focusOnNextFocusableControl({ direction: 'up', index, payload, controlsRef });
       }
       break;
     }
@@ -85,11 +87,11 @@ export function handleControlKeyDown({
     case 'ArrowRight': {
       event.preventDefault();
 
-      if (payload.cellIndex !== 6) {
-        focusOnNextFocusableControl({ direction: 'right', monthIndex, payload, controlsRef });
-      } else if (monthIndex + 1 < numberOfMonths) {
-        if (controlsRef.current[monthIndex + 1][payload.rowIndex]) {
-          controlsRef.current[monthIndex + 1][payload.rowIndex][0]?.focus();
+      if (payload.cellIndex !== controlsPerRow - 1) {
+        focusOnNextFocusableControl({ direction: 'right', index, payload, controlsRef });
+      } else if (index + 1 < numberOfColumns) {
+        if (controlsRef.current[index + 1][payload.rowIndex]) {
+          controlsRef.current[index + 1][payload.rowIndex][0]?.focus();
         }
       }
 
@@ -100,10 +102,10 @@ export function handleControlKeyDown({
       event.preventDefault();
 
       if (payload.cellIndex !== 0) {
-        focusOnNextFocusableControl({ direction: 'left', monthIndex, payload, controlsRef });
-      } else if (monthIndex > 0) {
-        if (controlsRef.current[monthIndex - 1][payload.rowIndex]) {
-          controlsRef.current[monthIndex - 1][payload.rowIndex][6].focus();
+        focusOnNextFocusableControl({ direction: 'left', index, payload, controlsRef });
+      } else if (index > 0) {
+        if (controlsRef.current[index - 1][payload.rowIndex]) {
+          controlsRef.current[index - 1][payload.rowIndex][controlsPerRow - 1].focus();
         }
       }
     }

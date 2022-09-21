@@ -12,7 +12,7 @@ export interface MonthLevelGroupProps
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext'>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Amount of months to render next to each other */
-  numberOfMonths?: number;
+  numberOfColumns?: number;
 
   /** Month that is currently displayed */
   month: Date;
@@ -22,7 +22,7 @@ export interface MonthLevelGroupProps
 }
 
 const defaultProps: Partial<MonthLevelGroupProps> = {
-  numberOfMonths: 1,
+  numberOfColumns: 1,
 };
 
 export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>((props, ref) => {
@@ -57,14 +57,14 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
 
     // Other settings
     className,
-    numberOfMonths,
+    numberOfColumns,
     levelControlAriaLabel,
     ...others
   } = useComponentDefaultProps('MonthLevelGroup', defaultProps, props);
   const { classes, cx } = useStyles();
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
 
-  const months = Array(numberOfMonths)
+  const months = Array(numberOfColumns)
     .fill(0)
     .map((_, monthIndex) => {
       const currentMonth = dayjs(month).add(monthIndex, 'months').toDate();
@@ -73,15 +73,16 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
         <MonthLevel
           key={monthIndex}
           month={currentMonth}
-          withNext={monthIndex === numberOfMonths - 1}
+          withNext={monthIndex === numberOfColumns - 1}
           withPrevious={monthIndex === 0}
           __onDayKeyDown={(event, payload) =>
             handleControlKeyDown({
-              monthIndex,
+              index: monthIndex,
               event,
               payload,
               controlsRef: daysRefs,
-              numberOfMonths,
+              numberOfColumns,
+              controlsPerRow: 7,
             })
           }
           __getDayRef={(rowIndex, cellIndex, node) => {

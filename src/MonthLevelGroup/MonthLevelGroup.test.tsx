@@ -15,19 +15,19 @@ describe('@mantine/dates/MonthLevelGroup', () => {
   itSupportsMonthProps(MonthLevelGroup, defaultProps);
   itSupportsHeaderProps(MonthLevelGroup, defaultProps);
 
-  it('renders correct number of months based on numberOfMonths prop', () => {
-    const { rerender } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={1} />);
+  it('renders correct number of months based on numberOfColumns prop', () => {
+    const { rerender } = render(<MonthLevelGroup {...defaultProps} numberOfColumns={1} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(1);
 
-    rerender(<MonthLevelGroup {...defaultProps} numberOfMonths={2} />);
+    rerender(<MonthLevelGroup {...defaultProps} numberOfColumns={2} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(2);
 
-    rerender(<MonthLevelGroup {...defaultProps} numberOfMonths={3} />);
+    rerender(<MonthLevelGroup {...defaultProps} numberOfColumns={3} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(3);
   });
 
   it('renders correct months group based on month prop', () => {
-    render(<MonthLevelGroup {...defaultProps} numberOfMonths={3} />);
+    render(<MonthLevelGroup {...defaultProps} numberOfColumns={3} />);
     expect(screen.getAllByLabelText('level-control').map((node) => node.textContent)).toStrictEqual(
       ['April 2022', 'May 2022', 'June 2022']
     );
@@ -48,8 +48,8 @@ describe('@mantine/dates/MonthLevelGroup', () => {
     expect(screen.getByText('April 2022')).toHaveAttribute('aria-label', '3/2022');
   });
 
-  it('handles arrow keyboard events correctly (numberOfMonths=1)', async () => {
-    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={1} />);
+  it('handles arrow keyboard events correctly (numberOfColumns=1)', async () => {
+    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfColumns={1} />);
     const days = container.querySelectorAll('table button');
 
     await userEvent.click(days[0]);
@@ -68,8 +68,8 @@ describe('@mantine/dates/MonthLevelGroup', () => {
     expect(days[0]).toHaveFocus();
   });
 
-  it('handles arrow keyboard events correctly (numberOfMonths=2)', async () => {
-    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={2} />);
+  it('handles arrow keyboard events correctly (numberOfColumns=2)', async () => {
+    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfColumns={2} />);
     const months = container.querySelectorAll('.mantine-Month-month');
     const firstMonthDays = months[0].querySelectorAll('button');
     const secondMonthDays = months[1].querySelectorAll('button');
@@ -91,7 +91,7 @@ describe('@mantine/dates/MonthLevelGroup', () => {
   });
 
   it('handles arrow keyboard events correctly at month edges', async () => {
-    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfMonths={1} />);
+    const { container } = render(<MonthLevelGroup {...defaultProps} numberOfColumns={1} />);
     const days = container.querySelectorAll('table button');
 
     await userEvent.type(days[6], '{ArrowRight}');
