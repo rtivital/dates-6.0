@@ -24,6 +24,9 @@ export interface CalendarLevelSettings
 
   /** Min level that user can go down to (decade, year, month), defaults to month */
   minLevel?: CalendarLevel;
+
+  /** Number of columns to render next to each other */
+  numberOfColumns?: number;
 }
 
 export interface CalendarLevelsProps
@@ -67,6 +70,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     date,
     defaultDate,
     onDateChange,
+    numberOfColumns,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -140,12 +144,14 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onPrevious={() => setDate(dayjs(_date).subtract(1, 'month').toDate())}
           hasNextLevel={maxLevel !== 'month'}
           onLevelChange={() => setLevel('year')}
+          numberOfColumns={numberOfColumns}
         />
       )}
 
       {_level === 'year' && (
         <YearLevelGroup
           year={_date}
+          numberOfColumns={numberOfColumns}
           minDate={minDate}
           maxDate={maxDate}
           monthsListFormat={monthsListFormat}
@@ -173,6 +179,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onNext={() => setDate(dayjs(_date).add(10, 'year').toDate())}
           onPrevious={() => setDate(dayjs(_date).subtract(10, 'year').toDate())}
           hasNextLevel={false}
+          numberOfColumns={numberOfColumns}
           __onControlClick={(_event, payload) => {
             setDate(payload);
             setLevel('year');

@@ -11,7 +11,7 @@ export interface MonthLevelGroupProps
   extends DefaultProps<MonthLevelStylesNames>,
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
     React.ComponentPropsWithoutRef<'div'> {
-  /** Amount of months to render next to each other */
+  /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
   /** Month that is currently displayed */

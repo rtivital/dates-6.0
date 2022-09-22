@@ -14,7 +14,7 @@ export interface DecadeLevelGroupProps
       'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'
     >,
     React.ComponentPropsWithoutRef<'div'> {
-  /** Amount of decades to render next to each other */
+  /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
   /** Decade that is currently displayed */

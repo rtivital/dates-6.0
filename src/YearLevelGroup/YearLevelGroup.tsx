@@ -11,7 +11,7 @@ export interface YearLevelGroupProps
   extends DefaultProps<YearLevelStylesNames>,
     Omit<YearLevelSettings, 'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'>,
     React.ComponentPropsWithoutRef<'div'> {
-  /** Amount of years to render next to each other */
+  /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
   /** Year that is currently displayed */

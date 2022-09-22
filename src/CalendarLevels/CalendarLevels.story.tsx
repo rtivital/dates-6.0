@@ -11,6 +11,21 @@ export function Usage() {
   );
 }
 
+export function NumberOfColumns() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div>1 column</div>
+      <CalendarLevels mb={50} mt="xs" />
+
+      <div>2 columns</div>
+      <CalendarLevels numberOfColumns={2} mb={50} mt="xs" />
+
+      <div>3 columns</div>
+      <CalendarLevels numberOfColumns={3} mb={50} mt="xs" />
+    </div>
+  );
+}
+
 export function InitialLevelYear() {
   return (
     <div style={{ padding: 40 }}>
