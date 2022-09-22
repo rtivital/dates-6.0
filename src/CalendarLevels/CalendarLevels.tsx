@@ -9,11 +9,11 @@ import { YearLevelGroup } from '../YearLevelGroup';
 import { MonthsListSettings } from '../MonthsList';
 import { DecadeLevelGroup } from '../DecadeLevelGroup';
 import { YearsListSettings } from '../YearsList';
+import { CalendarLevel } from '../types';
 import { getInitialLevel } from './get-initial-level/get-initial-level';
 import useStyles from './CalendarLevels.styles';
 
 export type CalendarLevelsStylesNames = Selectors<typeof useStyles>;
-export type CalendarLevel = 'decade' | 'year' | 'month';
 
 export interface CalendarLevelSettings
   extends YearsListSettings,

@@ -1,5 +1,5 @@
 import { clamp } from '@mantine/hooks';
-import type { CalendarLevel } from '../CalendarLevels';
+import type { CalendarLevel } from '../../types';
 
 // 0 – month, 1 – year, 2 – decade;
 type LevelNumber = 0 | 1 | 2;
