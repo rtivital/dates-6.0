@@ -1,10 +1,5 @@
 import { RefObject } from 'react';
-
-export interface ControlKeydownPayload {
-  cellIndex: number;
-  rowIndex: number;
-  date: Date;
-}
+import type { ControlKeydownPayload } from '../types';
 
 type ControlsRef = RefObject<HTMLButtonElement[][][]>;
 

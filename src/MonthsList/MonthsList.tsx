@@ -7,7 +7,7 @@ import {
   CalendarPickerControlStylesNames,
   CalendarPickerControlProps,
 } from '../CalendarPickerControl';
-import { ControlKeydownPayload } from '../__utils__/handle-control-key-down';
+import { ControlsGroupSettings } from '../types';
 import { useDatesContext } from '../DatesProvider';
 import { getMonthsData } from './get-months-data/get-months-data';
 import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
@@ -15,25 +15,9 @@ import useStyles from './MonthsList.styles';
 
 export type MonthsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
-export interface MonthsListSettings {
-  __onControlClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
-  __onControlKeyDown?(
-    event: React.KeyboardEvent<HTMLButtonElement>,
-    payload: ControlKeydownPayload
-  ): void;
-  __getControlRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
-
+export interface MonthsListSettings extends ControlsGroupSettings {
   /** dayjs format for months list  */
   monthsListFormat?: string;
-
-  /** Minimum possible date */
-  minDate?: Date;
-
-  /** Maximum possible date */
-  maxDate?: Date;
-
-  /** dayjs locale, defaults to value defined in DatesProvider */
-  locale?: string;
 
   /** Adds props to month picker control based on date */
   getMonthControlProps?(date: Date): Partial<CalendarPickerControlProps>;

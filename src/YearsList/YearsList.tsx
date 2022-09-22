@@ -7,7 +7,7 @@ import {
   CalendarPickerControlStylesNames,
   CalendarPickerControlProps,
 } from '../CalendarPickerControl';
-import { ControlKeydownPayload } from '../__utils__/handle-control-key-down';
+import { ControlsGroupSettings } from '../types';
 import { useDatesContext } from '../DatesProvider';
 import { getYearsData } from './get-years-data/get-years-data';
 import { isYearDisabled } from './is-year-disabled/is-year-disabled';
@@ -15,25 +15,9 @@ import useStyles from './YearsList.styles';
 
 export type YearsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
-export interface YearsListSettings {
-  __onControlClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
-  __onControlKeyDown?(
-    event: React.KeyboardEvent<HTMLButtonElement>,
-    payload: ControlKeydownPayload
-  ): void;
-  __getControlRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
-
+export interface YearsListSettings extends ControlsGroupSettings {
   /** dayjs format for years list  */
   yearsListFormat?: string;
-
-  /** Minimum possible date */
-  minDate?: Date;
-
-  /** Maximum possible date */
-  maxDate?: Date;
-
-  /** dayjs locale, defaults to value defined in DatesProvider */
-  locale?: string;
 
   /** Adds props to year picker control based on date */
   getYearControlProps?(date: Date): Partial<CalendarPickerControlProps>;
