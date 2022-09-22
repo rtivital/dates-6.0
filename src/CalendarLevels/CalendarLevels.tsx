@@ -138,6 +138,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           getDayAriaLabel={getDayAriaLabel}
           onNext={() => setDate(dayjs(_date).add(1, 'month').toDate())}
           onPrevious={() => setDate(dayjs(_date).subtract(1, 'month').toDate())}
+          hasNextLevel={maxLevel !== 'month'}
+          onLevelChange={() => setLevel('year')}
         />
       )}
 
@@ -149,6 +151,10 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           monthsListFormat={monthsListFormat}
           getMonthControlProps={getMonthControlProps}
           locale={locale}
+          onNext={() => setDate(dayjs(_date).add(1, 'year').toDate())}
+          onPrevious={() => setDate(dayjs(_date).subtract(1, 'year').toDate())}
+          hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
+          onLevelChange={() => setLevel('decade')}
         />
       )}
 
@@ -160,6 +166,9 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           yearsListFormat={yearsListFormat}
           getYearControlProps={getYearControlProps}
           locale={locale}
+          onNext={() => setDate(dayjs(_date).add(10, 'year').toDate())}
+          onPrevious={() => setDate(dayjs(_date).subtract(10, 'year').toDate())}
+          hasNextLevel={false}
         />
       )}
     </Box>
