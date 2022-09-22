@@ -155,6 +155,10 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onPrevious={() => setDate(dayjs(_date).subtract(1, 'year').toDate())}
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
           onLevelChange={() => setLevel('decade')}
+          __onControlClick={(_event, payload) => {
+            setDate(payload);
+            setLevel('month');
+          }}
         />
       )}
 
@@ -169,6 +173,10 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onNext={() => setDate(dayjs(_date).add(10, 'year').toDate())}
           onPrevious={() => setDate(dayjs(_date).subtract(10, 'year').toDate())}
           hasNextLevel={false}
+          __onControlClick={(_event, payload) => {
+            setDate(payload);
+            setLevel('year');
+          }}
         />
       )}
     </Box>
