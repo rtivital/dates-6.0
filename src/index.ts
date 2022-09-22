@@ -5,6 +5,7 @@ export * from './CalendarPickerControl';
 export * from './DatesProvider';
 export * from './Day';
 export * from './DecadeLevel';
+export * from './DecadeLevelGroup';
 export * from './Month';
 export * from './MonthLevel';
 export * from './MonthLevelGroup';

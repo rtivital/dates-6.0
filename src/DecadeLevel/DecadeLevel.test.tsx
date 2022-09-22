@@ -5,7 +5,7 @@ import { DecadeLevel, DecadeLevelProps } from './DecadeLevel';
 import {
   itSupportsHeaderProps,
   itSupportsWithNextPrevious,
-  itSupportsYearListProps,
+  itSupportsYearsListProps,
   itSupportsGetControlRef,
   itSupportsOnControlKeydown,
 } from '../__tests__';
@@ -24,7 +24,7 @@ const defaultProps: DecadeLevelProps = {
 describe('@mantine/dates/DecadeLevel', () => {
   itSupportsHeaderProps(DecadeLevel, defaultProps);
   itSupportsWithNextPrevious(DecadeLevel, defaultProps);
-  itSupportsYearListProps(DecadeLevel, defaultProps);
+  itSupportsYearsListProps(DecadeLevel, defaultProps);
   itSupportsGetControlRef(DecadeLevel, defaultProps);
   itSupportsOnControlKeydown(DecadeLevel, defaultProps);
 

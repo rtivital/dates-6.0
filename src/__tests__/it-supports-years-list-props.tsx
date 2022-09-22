@@ -63,7 +63,7 @@ function expectYearNames(container: HTMLElement, monthNames: string[]) {
   ).toStrictEqual(monthNames);
 }
 
-export function itSupportsYearListProps(
+export function itSupportsYearsListProps(
   Component: React.FC<MonthsListProps>,
   requiredProps?: Record<string, any>
 ) {

@@ -6,5 +6,5 @@ export { itSupportsWithNextPrevious } from './it-supports-with-next-previous';
 export { itSupportsOnDayKeydown } from './it-supports-on-day-keydown';
 export { itSupportsGetControlRef } from './it-supports-get-control-ref';
 export { itSupportsMonthsListProps } from './it-supports-months-list-props';
-export { itSupportsYearListProps } from './it-supports-years-list-props';
+export { itSupportsYearsListProps } from './it-supports-years-list-props';
 export { itSupportsOnControlKeydown } from './it-supports-on-control-key-down';

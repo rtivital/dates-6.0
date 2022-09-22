@@ -3,7 +3,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   itSupportsGetControlRef,
-  itSupportsYearListProps,
+  itSupportsYearsListProps,
   itSupportsOnControlKeydown,
 } from '../__tests__';
 import { YearsList, YearsListProps } from './YearsList';
@@ -14,7 +14,7 @@ const defaultProps: YearsListProps = {
 
 describe('@mantine/dates/YearsList', () => {
   itSupportsGetControlRef(YearsList, defaultProps);
-  itSupportsYearListProps(YearsList, defaultProps);
+  itSupportsYearsListProps(YearsList, defaultProps);
   itSupportsOnControlKeydown(YearsList, defaultProps);
 
   it('has correct default __staticSelector', () => {

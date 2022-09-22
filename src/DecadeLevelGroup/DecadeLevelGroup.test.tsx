@@ -1,55 +1,55 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { YearLevelGroup, YearLevelGroupProps } from './YearLevelGroup';
-import { itSupportsMonthsListProps, itSupportsHeaderProps } from '../__tests__';
+import { DecadeLevelGroup, DecadeLevelGroupProps } from './DecadeLevelGroup';
+import { itSupportsYearsListProps, itSupportsHeaderProps } from '../__tests__';
 
-const defaultProps: YearLevelGroupProps = {
-  year: new Date(2022, 3, 11),
+const defaultProps: DecadeLevelGroupProps = {
+  decade: new Date(2022, 3, 11),
   levelControlAriaLabel: () => 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
 };
 
-describe('@mantine/dates/YearLevelGroup', () => {
-  itSupportsMonthsListProps(YearLevelGroup, defaultProps);
-  itSupportsHeaderProps(YearLevelGroup, defaultProps);
+describe('@mantine/dates/DecadeLevelGroup', () => {
+  itSupportsYearsListProps(DecadeLevelGroup, defaultProps);
+  itSupportsHeaderProps(DecadeLevelGroup, defaultProps);
 
   it('renders correct number of columns based on numberOfColumns prop', () => {
-    const { rerender } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);
+    const { rerender } = render(<DecadeLevelGroup {...defaultProps} numberOfColumns={1} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(1);
 
-    rerender(<YearLevelGroup {...defaultProps} numberOfColumns={2} />);
+    rerender(<DecadeLevelGroup {...defaultProps} numberOfColumns={2} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(2);
 
-    rerender(<YearLevelGroup {...defaultProps} numberOfColumns={3} />);
+    rerender(<DecadeLevelGroup {...defaultProps} numberOfColumns={3} />);
     expect(screen.getAllByLabelText('level-control')).toHaveLength(3);
   });
 
   it('renders correct years group based on year prop', () => {
-    render(<YearLevelGroup {...defaultProps} numberOfColumns={3} />);
+    render(<DecadeLevelGroup {...defaultProps} numberOfColumns={3} />);
     expect(screen.getAllByLabelText('level-control').map((node) => node.textContent)).toStrictEqual(
-      ['2022', '2023', '2024']
+      ['2019 – 2030', '2029 – 2040', '2039 – 2050']
     );
   });
 
   it('supports levelControlAriaLabel as string', () => {
-    render(<YearLevelGroup {...defaultProps} levelControlAriaLabel="test-label" />);
-    expect(screen.getByText('2022')).toHaveAttribute('aria-label', 'test-label');
+    render(<DecadeLevelGroup {...defaultProps} levelControlAriaLabel="test-label" />);
+    expect(screen.getByText('2019 – 2030')).toHaveAttribute('aria-label', 'test-label');
   });
 
   it('supports levelControlAriaLabel as function', () => {
     render(
-      <YearLevelGroup
+      <DecadeLevelGroup
         {...defaultProps}
         levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
       />
     );
-    expect(screen.getByText('2022')).toHaveAttribute('aria-label', '3/2022');
+    expect(screen.getByText('2019 – 2030')).toHaveAttribute('aria-label', '3/2022');
   });
 
   it('handles arrow keyboard events correctly (numberOfColumns=1)', async () => {
-    const { container } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);
+    const { container } = render(<DecadeLevelGroup {...defaultProps} numberOfColumns={1} />);
     const controls = container.querySelectorAll('table button');
 
     await userEvent.click(controls[0]);
@@ -69,8 +69,8 @@ describe('@mantine/dates/YearLevelGroup', () => {
   });
 
   it('handles arrow keyboard events correctly (numberOfColumns=2)', async () => {
-    const { container } = render(<YearLevelGroup {...defaultProps} numberOfColumns={2} />);
-    const columns = container.querySelectorAll('.mantine-MonthsList-monthsList');
+    const { container } = render(<DecadeLevelGroup {...defaultProps} numberOfColumns={2} />);
+    const columns = container.querySelectorAll('.mantine-YearsList-yearsList');
     const firstColumnControls = columns[0].querySelectorAll('button');
     const secondColumnControls = columns[1].querySelectorAll('button');
 
@@ -91,7 +91,7 @@ describe('@mantine/dates/YearLevelGroup', () => {
   });
 
   it('handles arrow keyboard events correctly at edges', async () => {
-    const { container } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);
+    const { container } = render(<DecadeLevelGroup {...defaultProps} numberOfColumns={1} />);
     const controls = container.querySelectorAll('table button');
 
     await userEvent.type(controls[2], '{ArrowRight}');
