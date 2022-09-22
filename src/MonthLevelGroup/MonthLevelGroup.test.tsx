@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MonthLevelGroup, MonthLevelGroupProps } from './MonthLevelGroup';
-import { itSupportsMonthProps, itSupportsHeaderProps } from '../__tests__';
+import { itSupportsMonthProps, itSupportsHeaderProps, itSupportsOnDayClick } from '../__tests__';
 
 const defaultProps: MonthLevelGroupProps = {
   month: new Date(2022, 3, 11),
@@ -14,6 +14,7 @@ const defaultProps: MonthLevelGroupProps = {
 describe('@mantine/dates/MonthLevelGroup', () => {
   itSupportsMonthProps(MonthLevelGroup, defaultProps);
   itSupportsHeaderProps(MonthLevelGroup, defaultProps);
+  itSupportsOnDayClick(MonthLevelGroup, defaultProps);
 
   it('renders correct number of months based on numberOfColumns prop', () => {
     const { rerender } = render(<MonthLevelGroup {...defaultProps} numberOfColumns={1} />);

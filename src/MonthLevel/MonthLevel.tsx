@@ -55,6 +55,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     getDayAriaLabel,
     __getDayRef,
     __onDayKeyDown,
+    __onDayClick,
 
     // CalendarHeader settings
     __preventFocus,
@@ -156,6 +157,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         getDayAriaLabel={getDayAriaLabel}
         __getDayRef={__getDayRef}
         __onDayKeyDown={__onDayKeyDown}
+        __onDayClick={__onDayClick}
         {...stylesApiProps}
       />
     </Box>

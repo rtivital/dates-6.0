@@ -6,7 +6,7 @@ import type { DayOfWeek } from '../types';
 import { useDatesContext } from '../DatesProvider';
 import { WeekdaysRow, WeekdaysRowStylesNames } from '../WeekdaysRow';
 import { Day, DayStylesNames, DayProps } from '../Day';
-import { ControlKeydownPayload } from '../__utils__/handle-control-key-down';
+import { ControlKeydownPayload } from '../types';
 import { getMonthDays } from './get-month-days/get-month-days';
 import { isSameMonth } from './is-same-month/is-same-month';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
@@ -19,10 +19,16 @@ export type MonthStylesNames =
   | DayStylesNames;
 
 export interface MonthSettings {
+  /** Called when day is clicked with click event and date */
+  __onDayClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+
+  /** Called when any keydown event is registered on day, used for arrows navigation */
   __onDayKeyDown?(
     event: React.KeyboardEvent<HTMLButtonElement>,
     payload: ControlKeydownPayload
   ): void;
+
+  /** Assigns ref of every day based on its position in the table, used for arrows navigation */
   __getDayRef?(rowIndex: number, cellIndex: number, node: HTMLButtonElement): void;
 
   /** dayjs locale, defaults to value defined in DatesProvider */
@@ -100,6 +106,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     static: isStatic,
     __getDayRef,
     __onDayKeyDown,
+    __onDayClick,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -150,6 +157,10 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             onKeyDown={(event) => {
               dayProps?.onKeyDown?.(event);
               __onDayKeyDown?.(event, { rowIndex, cellIndex, date });
+            }}
+            onClick={(event) => {
+              dayProps?.onClick?.(event);
+              __onDayClick?.(event, month);
             }}
           />
         </td>

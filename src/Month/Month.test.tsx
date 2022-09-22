@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsMonthProps, itSupportsGetDayRef, itSupportsOnDayKeydown } from '../__tests__';
+import {
+  itSupportsMonthProps,
+  itSupportsGetDayRef,
+  itSupportsOnDayKeydown,
+  itSupportsOnDayClick,
+} from '../__tests__';
 import { Month, MonthProps } from './Month';
 
 const defaultProps: MonthProps = {
@@ -11,6 +16,7 @@ describe('@mantine/core/Month', () => {
   itSupportsMonthProps(Month, defaultProps);
   itSupportsGetDayRef(Month, defaultProps);
   itSupportsOnDayKeydown(Month, defaultProps);
+  itSupportsOnDayClick(Month, defaultProps);
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<Month {...defaultProps} />);

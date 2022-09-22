@@ -9,7 +9,7 @@ export type MonthLevelGroupStylesNames = Selectors<typeof useStyles> | MonthLeve
 
 export interface MonthLevelGroupProps
   extends DefaultProps<MonthLevelStylesNames>,
-    Omit<MonthLevelSettings, 'withPrevious' | 'withNext'>,
+    Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Amount of months to render next to each other */
   numberOfColumns?: number;
@@ -41,6 +41,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     hideOutsideDates,
     hideWeekdays,
     getDayAriaLabel,
+    __onDayClick,
 
     // CalendarHeader settings
     __preventFocus,
@@ -75,6 +76,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           month={currentMonth}
           withNext={monthIndex === numberOfColumns - 1}
           withPrevious={monthIndex === 0}
+          __onDayClick={__onDayClick}
           __onDayKeyDown={(event, payload) =>
             handleControlKeyDown({
               index: monthIndex,
