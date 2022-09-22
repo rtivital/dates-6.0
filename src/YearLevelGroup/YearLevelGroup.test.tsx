@@ -2,7 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { YearLevelGroup, YearLevelGroupProps } from './YearLevelGroup';
-import { itSupportsMonthsListProps, itSupportsHeaderProps } from '../__tests__';
+import {
+  itSupportsMonthsListProps,
+  itSupportsHeaderProps,
+  itSupportsOnControlClick,
+} from '../__tests__';
 
 const defaultProps: YearLevelGroupProps = {
   year: new Date(2022, 3, 11),
@@ -14,6 +18,7 @@ const defaultProps: YearLevelGroupProps = {
 describe('@mantine/dates/YearLevelGroup', () => {
   itSupportsMonthsListProps(YearLevelGroup, defaultProps);
   itSupportsHeaderProps(YearLevelGroup, defaultProps);
+  itSupportsOnControlClick(YearLevelGroup, defaultProps);
 
   it('renders correct number of columns based on numberOfColumns prop', () => {
     const { rerender } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);

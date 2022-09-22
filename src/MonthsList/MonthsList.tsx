@@ -16,6 +16,7 @@ import useStyles from './MonthsList.styles';
 export type MonthsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface MonthsListSettings {
+  __onControlClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
   __onControlKeyDown?(
     event: React.KeyboardEvent<HTMLButtonElement>,
     payload: ControlKeydownPayload
@@ -67,6 +68,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     __staticSelector,
     __getControlRef,
     __onControlKeyDown,
+    __onControlClick,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
@@ -96,6 +98,10 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
             onKeyDown={(event) => {
               controlProps?.onKeyDown?.(event);
               __onControlKeyDown?.(event, { rowIndex, cellIndex, date: month });
+            }}
+            onClick={(event) => {
+              controlProps?.onClick?.(event);
+              __onControlClick?.(event, month);
             }}
           >
             {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}

@@ -2,7 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DecadeLevelGroup, DecadeLevelGroupProps } from './DecadeLevelGroup';
-import { itSupportsYearsListProps, itSupportsHeaderProps } from '../__tests__';
+import {
+  itSupportsYearsListProps,
+  itSupportsHeaderProps,
+  itSupportsOnControlClick,
+} from '../__tests__';
 
 const defaultProps: DecadeLevelGroupProps = {
   decade: new Date(2022, 3, 11),
@@ -14,6 +18,7 @@ const defaultProps: DecadeLevelGroupProps = {
 describe('@mantine/dates/DecadeLevelGroup', () => {
   itSupportsYearsListProps(DecadeLevelGroup, defaultProps);
   itSupportsHeaderProps(DecadeLevelGroup, defaultProps);
+  itSupportsOnControlClick(DecadeLevelGroup, defaultProps);
 
   it('renders correct number of columns based on numberOfColumns prop', () => {
     const { rerender } = render(<DecadeLevelGroup {...defaultProps} numberOfColumns={1} />);

@@ -8,3 +8,4 @@ export { itSupportsGetControlRef } from './it-supports-get-control-ref';
 export { itSupportsMonthsListProps } from './it-supports-months-list-props';
 export { itSupportsYearsListProps } from './it-supports-years-list-props';
 export { itSupportsOnControlKeydown } from './it-supports-on-control-key-down';
+export { itSupportsOnControlClick } from './it-supports-on-control-click';

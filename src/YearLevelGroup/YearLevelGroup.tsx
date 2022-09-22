@@ -9,7 +9,7 @@ export type YearLevelGroupStylesNames = Selectors<typeof useStyles> | YearLevelS
 
 export interface YearLevelGroupProps
   extends DefaultProps<YearLevelStylesNames>,
-    Omit<YearLevelSettings, 'withPrevious' | 'withNext'>,
+    Omit<YearLevelSettings, 'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Amount of years to render next to each other */
   numberOfColumns?: number;
@@ -34,6 +34,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     maxDate,
     monthsListFormat,
     getMonthControlProps,
+    __onControlClick,
 
     // CalendarHeader settings
     __preventFocus,
@@ -69,6 +70,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           year={currentYear}
           withNext={yearIndex === numberOfColumns - 1}
           withPrevious={yearIndex === 0}
+          __onControlClick={__onControlClick}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
               index: yearIndex,

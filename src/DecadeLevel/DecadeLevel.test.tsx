@@ -8,6 +8,7 @@ import {
   itSupportsYearsListProps,
   itSupportsGetControlRef,
   itSupportsOnControlKeydown,
+  itSupportsOnControlClick,
 } from '../__tests__';
 
 function expectLabel(label: string) {
@@ -27,6 +28,7 @@ describe('@mantine/dates/DecadeLevel', () => {
   itSupportsYearsListProps(DecadeLevel, defaultProps);
   itSupportsGetControlRef(DecadeLevel, defaultProps);
   itSupportsOnControlKeydown(DecadeLevel, defaultProps);
+  itSupportsOnControlClick(DecadeLevel, defaultProps);
 
   it('renders correct CalendarHeader label', () => {
     render(<DecadeLevel {...defaultProps} />);

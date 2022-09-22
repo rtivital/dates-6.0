@@ -48,6 +48,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     getMonthControlProps,
     __getControlRef,
     __onControlKeyDown,
+    __onControlClick,
 
     // CalendarHeader settings
     __preventFocus,
@@ -142,6 +143,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         getMonthControlProps={getMonthControlProps}
         __getControlRef={__getControlRef}
         __onControlKeyDown={__onControlKeyDown}
+        __onControlClick={__onControlClick}
         {...stylesApiProps}
       />
     </Box>

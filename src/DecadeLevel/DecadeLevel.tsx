@@ -49,6 +49,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
     getYearControlProps,
     __getControlRef,
     __onControlKeyDown,
+    __onControlClick,
 
     // CalendarHeader settings
     __preventFocus,
@@ -150,6 +151,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
         getYearControlProps={getYearControlProps}
         __getControlRef={__getControlRef}
         __onControlKeyDown={__onControlKeyDown}
+        __onControlClick={__onControlClick}
         {...stylesApiProps}
       />
     </Box>

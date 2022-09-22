@@ -5,6 +5,7 @@ import {
   itSupportsGetControlRef,
   itSupportsYearsListProps,
   itSupportsOnControlKeydown,
+  itSupportsOnControlClick,
 } from '../__tests__';
 import { YearsList, YearsListProps } from './YearsList';
 
@@ -16,6 +17,7 @@ describe('@mantine/dates/YearsList', () => {
   itSupportsGetControlRef(YearsList, defaultProps);
   itSupportsYearsListProps(YearsList, defaultProps);
   itSupportsOnControlKeydown(YearsList, defaultProps);
+  itSupportsOnControlClick(YearsList, defaultProps);
 
   it('has correct default __staticSelector', () => {
     render(<YearsList {...defaultProps} />);

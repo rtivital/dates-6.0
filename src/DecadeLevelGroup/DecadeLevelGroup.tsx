@@ -9,7 +9,10 @@ export type DecadeLevelGroupStylesNames = Selectors<typeof useStyles> | DecadeLe
 
 export interface DecadeLevelGroupProps
   extends DefaultProps<DecadeLevelStylesNames>,
-    Omit<DecadeLevelSettings, 'withPrevious' | 'withNext'>,
+    Omit<
+      DecadeLevelSettings,
+      'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'
+    >,
     React.ComponentPropsWithoutRef<'div'> {
   /** Amount of decades to render next to each other */
   numberOfColumns?: number;
@@ -34,6 +37,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     maxDate,
     yearsListFormat,
     getYearControlProps,
+    __onControlClick,
 
     // CalendarHeader settings
     __preventFocus,
@@ -71,6 +75,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           decade={currentDecade}
           withNext={decadeIndex === numberOfColumns - 1}
           withPrevious={decadeIndex === 0}
+          __onControlClick={__onControlClick}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
               index: decadeIndex,
