@@ -109,6 +109,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           nextDisabled={nextDisabled}
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}
+          getMonthControlProps={getMonthControlProps}
         />
       );
     });

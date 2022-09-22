@@ -1,0 +1,109 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { YearLevelGroup, YearLevelGroupProps } from './YearLevelGroup';
+import { itSupportsMonthsListProps, itSupportsHeaderProps } from '../__tests__';
+
+const defaultProps: YearLevelGroupProps = {
+  year: new Date(2022, 3, 11),
+  levelControlAriaLabel: () => 'level-control',
+  nextLabel: 'next',
+  previousLabel: 'prev',
+};
+
+describe('@mantine/dates/YearLevelGroup', () => {
+  itSupportsMonthsListProps(YearLevelGroup, defaultProps);
+  itSupportsHeaderProps(YearLevelGroup, defaultProps);
+
+  it('renders correct number of columns based on numberOfColumns prop', () => {
+    const { rerender } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);
+    expect(screen.getAllByLabelText('level-control')).toHaveLength(1);
+
+    rerender(<YearLevelGroup {...defaultProps} numberOfColumns={2} />);
+    expect(screen.getAllByLabelText('level-control')).toHaveLength(2);
+
+    rerender(<YearLevelGroup {...defaultProps} numberOfColumns={3} />);
+    expect(screen.getAllByLabelText('level-control')).toHaveLength(3);
+  });
+
+  it('renders correct years group based on year prop', () => {
+    render(<YearLevelGroup {...defaultProps} numberOfColumns={3} />);
+    expect(screen.getAllByLabelText('level-control').map((node) => node.textContent)).toStrictEqual(
+      ['2022', '2023', '2024']
+    );
+  });
+
+  it('supports levelControlAriaLabel as string', () => {
+    render(<YearLevelGroup {...defaultProps} levelControlAriaLabel="test-label" />);
+    expect(screen.getByText('2022')).toHaveAttribute('aria-label', 'test-label');
+  });
+
+  it('supports levelControlAriaLabel as function', () => {
+    render(
+      <YearLevelGroup
+        {...defaultProps}
+        levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+      />
+    );
+    expect(screen.getByText('2022')).toHaveAttribute('aria-label', '3/2022');
+  });
+
+  it('handles arrow keyboard events correctly (numberOfColumns=1)', async () => {
+    const { container } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);
+    const controls = container.querySelectorAll('table button');
+
+    await userEvent.click(controls[0]);
+    expect(controls[0]).toHaveFocus();
+
+    await userEvent.type(controls[0], '{ArrowRight}', { skipClick: true });
+    expect(controls[1]).toHaveFocus();
+
+    await userEvent.type(controls[1], '{ArrowDown}', { skipClick: true });
+    expect(controls[4]).toHaveFocus();
+
+    await userEvent.type(controls[4], '{ArrowLeft}', { skipClick: true });
+    expect(controls[3]).toHaveFocus();
+
+    await userEvent.type(controls[3], '{ArrowUp}', { skipClick: true });
+    expect(controls[0]).toHaveFocus();
+  });
+
+  it('handles arrow keyboard events correctly (numberOfColumns=2)', async () => {
+    const { container } = render(<YearLevelGroup {...defaultProps} numberOfColumns={2} />);
+    const columns = container.querySelectorAll('.mantine-MonthsList-monthsList');
+    const firstMonthControls = columns[0].querySelectorAll('button');
+    const secondMonthControls = columns[1].querySelectorAll('button');
+
+    await userEvent.click(firstMonthControls[1]);
+    expect(firstMonthControls[1]).toHaveFocus();
+
+    await userEvent.type(firstMonthControls[1], '{ArrowRight}', { skipClick: true });
+    expect(firstMonthControls[2]).toHaveFocus();
+
+    await userEvent.type(firstMonthControls[2], '{ArrowRight}', { skipClick: true });
+    expect(secondMonthControls[0]).toHaveFocus();
+
+    await userEvent.type(secondMonthControls[0], '{ArrowDown}', { skipClick: true });
+    expect(secondMonthControls[3]).toHaveFocus();
+
+    await userEvent.type(secondMonthControls[3], '{ArrowLeft}', { skipClick: true });
+    expect(firstMonthControls[5]).toHaveFocus();
+  });
+
+  it('handles arrow keyboard events correctly at edges', async () => {
+    const { container } = render(<YearLevelGroup {...defaultProps} numberOfColumns={1} />);
+    const controls = container.querySelectorAll('table button');
+
+    await userEvent.type(controls[2], '{ArrowRight}');
+    expect(controls[2]).toHaveFocus();
+
+    await userEvent.type(controls[0], '{ArrowLeft}');
+    expect(controls[0]).toHaveFocus();
+
+    await userEvent.type(controls[0], '{ArrowUp}');
+    expect(controls[0]).toHaveFocus();
+
+    await userEvent.type(controls[controls.length - 1], '{ArrowDown}');
+    expect(controls[controls.length - 1]).toHaveFocus();
+  });
+});
