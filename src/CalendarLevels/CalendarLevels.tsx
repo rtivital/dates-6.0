@@ -38,33 +38,11 @@ export interface CalendarLevelSettings
   extends YearsListSettings,
     MonthsListSettings,
     MonthSettings {
-  /** Max level that user can go up to (decade, year, month), defaults to decade */
-  maxLevel?: CalendarLevel;
-
-  /** Min level that user can go down to (decade, year, month), defaults to month */
-  minLevel?: CalendarLevel;
-
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
   /** aria-label attributes for controls on different levels */
   ariaLabels?: CalendarLevelsAriaLabels;
-}
-
-export interface CalendarLevelsProps
-  extends DefaultProps<CalendarLevelsStylesNames>,
-    CalendarLevelSettings,
-    React.ComponentPropsWithoutRef<'div'> {
-  __staticSelector?: string;
-
-  /** Initial date that is displayed, used for uncontrolled component */
-  defaultDate?: Date;
-
-  /** Date that is displayed, used for controlled component */
-  date?: Date;
-
-  /** Called when date changes */
-  onDateChange?(date: Date): void;
 
   /** Initial level displayed to the user (decade, year, month), used for uncontrolled component */
   defaultLevel?: CalendarLevel;
@@ -74,6 +52,34 @@ export interface CalendarLevelsProps
 
   /** Called when level changes */
   onLevelChange?(level: CalendarLevel): void;
+
+  /** Called when user clicks year on decade level */
+  onYearSelect?(date: Date): void;
+
+  /** Called when user clicks month on year level */
+  onMonthSelect?(date: Date): void;
+}
+
+export interface CalendarLevelsProps
+  extends DefaultProps<CalendarLevelsStylesNames>,
+    CalendarLevelSettings,
+    React.ComponentPropsWithoutRef<'div'> {
+  __staticSelector?: string;
+
+  /** Max level that user can go up to (decade, year, month), defaults to decade */
+  maxLevel?: CalendarLevel;
+
+  /** Min level that user can go down to (decade, year, month), defaults to month */
+  minLevel?: CalendarLevel;
+
+  /** Initial date that is displayed, used for uncontrolled component */
+  defaultDate?: Date;
+
+  /** Date that is displayed, used for controlled component */
+  date?: Date;
+
+  /** Called when date changes */
+  onDateChange?(date: Date): void;
 }
 
 const defaultProps: Partial<CalendarLevelsProps> = {
@@ -94,6 +100,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     onDateChange,
     numberOfColumns,
     ariaLabels,
+    onYearSelect,
+    onMonthSelect,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -202,6 +210,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           __onControlClick={(_event, payload) => {
             setDate(payload);
             setLevel(clampLevel('month', minLevel, maxLevel));
+            onMonthSelect?.(payload);
           }}
           {...stylesApiProps}
         />
@@ -225,6 +234,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           __onControlClick={(_event, payload) => {
             setDate(payload);
             setLevel(clampLevel('year', minLevel, maxLevel));
+            onYearSelect?.(payload);
           }}
           {...stylesApiProps}
         />

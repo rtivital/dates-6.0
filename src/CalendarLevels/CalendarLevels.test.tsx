@@ -288,4 +288,22 @@ describe('@mantine/dates/CalendarLevels', () => {
     await userEvent.click(container.querySelector('table button'));
     expectLevelsCount([0, 1, 0]);
   });
+
+  it('calls onYearSelect when year control is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <CalendarLevels {...defaultProps} level="decade" onYearSelect={spy} />
+    );
+    await userEvent.click(container.querySelector('table button'));
+    expect(spy).toHaveBeenCalledWith(new Date(2019, 0, 1));
+  });
+
+  it('calls onMonthSelect when month control is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <CalendarLevels {...defaultProps} level="year" onMonthSelect={spy} />
+    );
+    await userEvent.click(container.querySelector('table button'));
+    expect(spy).toHaveBeenCalledWith(new Date(2022, 0, 1));
+  });
 });
