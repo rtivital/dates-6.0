@@ -66,6 +66,12 @@ export interface CalendarLevelBaseProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {
   __staticSelector?: string;
 
+  /** Determines whether date should be updated when year control is clicked */
+  __updateDateOnYearSelect?: boolean;
+
+  /** Determines whether date should be updated when month control is clicked */
+  __updateDateOnMonthSelect?: boolean;
+
   /** Initial date that is displayed, used for uncontrolled component */
   defaultDate?: Date;
 
@@ -87,6 +93,8 @@ export interface CalendarLevelsProps extends CalendarLevelBaseProps {
 const defaultProps: Partial<CalendarLevelsProps> = {
   maxLevel: 'decade',
   minLevel: 'month',
+  __updateDateOnYearSelect: true,
+  __updateDateOnMonthSelect: true,
 };
 
 export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((props, ref) => {
@@ -104,6 +112,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     ariaLabels,
     onYearSelect,
     onMonthSelect,
+    __updateDateOnYearSelect,
+    __updateDateOnMonthSelect,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -210,7 +220,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           nextLabel={ariaLabels?.nextYear}
           previousLabel={ariaLabels?.previousYear}
           __onControlClick={(_event, payload) => {
-            setDate(payload);
+            __updateDateOnMonthSelect && setDate(payload);
             setLevel(clampLevel('month', minLevel, maxLevel));
             onMonthSelect?.(payload);
           }}
@@ -234,7 +244,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           nextLabel={ariaLabels?.nextDecade}
           previousLabel={ariaLabels?.previousDecade}
           __onControlClick={(_event, payload) => {
-            setDate(payload);
+            __updateDateOnYearSelect && setDate(payload);
             setLevel(clampLevel('year', minLevel, maxLevel));
             onYearSelect?.(payload);
           }}

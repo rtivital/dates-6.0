@@ -35,6 +35,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>((props, re
     <CalendarLevels
       ref={ref}
       minLevel="decade"
+      __updateDateOnYearSelect={false}
       getYearControlProps={(date) => ({
         selected: dayjs(date).isSame(_value, 'year'),
         onClick: () => setValue(date),

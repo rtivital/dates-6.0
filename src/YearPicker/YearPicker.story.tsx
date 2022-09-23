@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { YearPicker } from './YearPicker';
 
 export default { title: 'YearPicker' };
@@ -7,6 +7,16 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <YearPicker />
+    </div>
+  );
+}
+
+export function Controlled() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <div style={{ padding: 40 }}>
+      <YearPicker value={value} onChange={setValue} numberOfColumns={3} />
+      {value?.toISOString()}
     </div>
   );
 }
