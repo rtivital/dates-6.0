@@ -65,7 +65,6 @@ export interface CalendarLevelSettings
 
 export interface CalendarLevelsBaseProps
   extends DefaultProps<CalendarLevelsStylesNames>,
-    CalendarLevelSettings,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {
   __staticSelector?: string;
 
@@ -85,7 +84,7 @@ export interface CalendarLevelsBaseProps
   onDateChange?(date: Date): void;
 }
 
-export interface CalendarLevelsProps extends CalendarLevelsBaseProps {
+export interface CalendarLevelsProps extends CalendarLevelSettings, CalendarLevelsBaseProps {
   /** Max level that user can go up to (decade, year, month), defaults to decade */
   maxLevel?: CalendarLevel;
 

@@ -30,6 +30,15 @@ describe('@mantine/dates/YearPicker', () => {
     expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
   });
 
+  it('supports onClick handler from getYearControlProps', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <YearPicker {...defaultProps} getYearControlProps={() => ({ onClick: spy })} />
+    );
+    await userEvent.click(container.querySelector('table button'));
+    expect(spy).toHaveBeenCalled();
+  });
+
   it('has correct default __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} />);
     expect(container.firstChild).toHaveClass('mantine-YearPicker-calendarLevels');
