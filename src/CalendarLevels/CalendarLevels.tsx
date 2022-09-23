@@ -19,6 +19,21 @@ export type CalendarLevelsStylesNames =
   | YearLevelGroupStylesNames
   | MonthLevelGroupStylesNames;
 
+export interface CalendarLevelAriaLabels {
+  monthLevelControl?: string;
+  yearLevelControl?: string;
+  decadeLevelControl?: string;
+
+  nextMonth?: string;
+  previousMonth?: string;
+
+  nextYear?: string;
+  previousYear?: string;
+
+  nextDecade?: string;
+  previousDecade?: string;
+}
+
 export interface CalendarLevelSettings
   extends YearsListSettings,
     MonthsListSettings,
@@ -31,6 +46,9 @@ export interface CalendarLevelSettings
 
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
+
+  /** aria-label attributes for controls on different levels */
+  ariaLabels?: CalendarLevelAriaLabels;
 }
 
 export interface CalendarLevelsProps
@@ -75,6 +93,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     defaultDate,
     onDateChange,
     numberOfColumns,
+    ariaLabels,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -157,6 +176,9 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onLevelChange={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
           locale={locale}
+          levelControlAriaLabel={ariaLabels?.monthLevelControl}
+          nextLabel={ariaLabels?.nextMonth}
+          previousLabel={ariaLabels?.previousMonth}
           {...stylesApiProps}
         />
       )}
@@ -174,6 +196,9 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onPrevious={() => setDate(dayjs(_date).subtract(1, 'year').toDate())}
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
           onLevelChange={() => setLevel('decade')}
+          levelControlAriaLabel={ariaLabels?.yearLevelControl}
+          nextLabel={ariaLabels?.nextYear}
+          previousLabel={ariaLabels?.previousYear}
           __onControlClick={(_event, payload) => {
             setDate(payload);
             setLevel('month');
@@ -194,6 +219,9 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onPrevious={() => setDate(dayjs(_date).subtract(10, 'year').toDate())}
           hasNextLevel={false}
           numberOfColumns={numberOfColumns}
+          levelControlAriaLabel={ariaLabels?.decadeLevelControl}
+          nextLabel={ariaLabels?.nextDecade}
+          previousLabel={ariaLabels?.previousDecade}
           __onControlClick={(_event, payload) => {
             setDate(payload);
             setLevel('year');
