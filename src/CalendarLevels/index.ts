@@ -4,5 +4,5 @@ export type {
   CalendarLevelsAriaLabels,
   CalendarLevelsProps,
   CalendarLevelsStylesNames,
-  CalendarLevelBaseProps,
+  CalendarLevelsBaseProps,
 } from './CalendarLevels';

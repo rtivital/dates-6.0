@@ -2,9 +2,9 @@ import React, { forwardRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { useComponentDefaultProps } from '@mantine/core';
 import dayjs from 'dayjs';
-import { CalendarLevels, CalendarLevelBaseProps } from '../CalendarLevels';
+import { CalendarLevels, CalendarLevelsBaseProps } from '../CalendarLevels';
 
-export interface YearPickerProps extends CalendarLevelBaseProps {
+export interface YearPickerProps extends CalendarLevelsBaseProps {
   __staticSelector?: string;
 
   /** Default value for uncontrolled component */
