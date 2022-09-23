@@ -14,4 +14,5 @@ export * from './MonthsList';
 export * from './WeekdaysRow';
 export * from './YearLevel';
 export * from './YearLevelGroup';
+export * from './YearPicker';
 export * from './YearsList';
