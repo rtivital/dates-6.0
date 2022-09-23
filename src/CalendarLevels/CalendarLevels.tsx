@@ -156,6 +156,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           hasNextLevel={maxLevel !== 'month'}
           onLevelChange={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
+          locale={locale}
           {...stylesApiProps}
         />
       )}
