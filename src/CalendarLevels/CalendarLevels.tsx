@@ -19,7 +19,7 @@ export type CalendarLevelsStylesNames =
   | YearLevelGroupStylesNames
   | MonthLevelGroupStylesNames;
 
-export interface CalendarLevelAriaLabels {
+export interface CalendarLevelsAriaLabels {
   monthLevelControl?: string;
   yearLevelControl?: string;
   decadeLevelControl?: string;
@@ -48,7 +48,7 @@ export interface CalendarLevelSettings
   numberOfColumns?: number;
 
   /** aria-label attributes for controls on different levels */
-  ariaLabels?: CalendarLevelAriaLabels;
+  ariaLabels?: CalendarLevelsAriaLabels;
 }
 
 export interface CalendarLevelsProps
