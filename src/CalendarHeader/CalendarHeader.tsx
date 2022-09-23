@@ -33,7 +33,7 @@ export interface CalendarHeaderSettings {
   onPrevious?(): void;
 
   /** Called when level button is clicked */
-  onLevelChange?(): void;
+  onLevelClick?(): void;
 
   /** Determines whether next control should be disabled, defaults to true */
   nextDisabled?: boolean;
@@ -81,7 +81,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
     previousLabel,
     onNext,
     onPrevious,
-    onLevelChange,
+    onLevelClick,
     label,
     classNames,
     styles,
@@ -134,7 +134,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
       <UnstyledButton
         component={hasNextLevel ? 'button' : 'div'}
         className={classes.calendarHeaderLevel}
-        onClick={hasNextLevel ? onLevelChange : undefined}
+        onClick={hasNextLevel ? onLevelClick : undefined}
         unstyled={unstyled}
         onMouseDown={hasNextLevel ? preventFocus : undefined}
         disabled={!hasNextLevel}

@@ -49,7 +49,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     previousLabel,
     onNext,
     onPrevious,
-    onLevelChange,
+    onLevelClick,
     nextDisabled,
     previousDisabled,
     hasNextLevel,
@@ -62,6 +62,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     __staticSelector,
     numberOfColumns,
     levelControlAriaLabel,
+    decadeLabelFormat,
     ...others
   } = useComponentDefaultProps('DecadeLevelGroup', defaultProps, props);
 
@@ -88,6 +89,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           decade={currentDecade}
           withNext={decadeIndex === numberOfColumns - 1}
           withPrevious={decadeIndex === 0}
+          decadeLabelFormat={decadeLabelFormat}
           __onControlClick={__onControlClick}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
@@ -125,7 +127,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           previousLabel={previousLabel}
           onNext={onNext}
           onPrevious={onPrevious}
-          onLevelChange={onLevelChange}
+          onLevelClick={onLevelClick}
           nextDisabled={nextDisabled}
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}

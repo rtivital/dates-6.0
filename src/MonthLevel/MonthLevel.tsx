@@ -65,7 +65,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
     previousLabel,
     onNext,
     onPrevious,
-    onLevelChange,
+    onLevelClick,
     nextDisabled,
     previousDisabled,
     hasNextLevel,
@@ -131,7 +131,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         previousLabel={previousLabel}
         onNext={onNext}
         onPrevious={onPrevious}
-        onLevelChange={onLevelChange}
+        onLevelClick={onLevelClick}
         nextDisabled={_nextDisabled}
         previousDisabled={_previousDisabled}
         hasNextLevel={hasNextLevel}

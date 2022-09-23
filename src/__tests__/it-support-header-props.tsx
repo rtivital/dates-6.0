@@ -9,7 +9,7 @@ export interface HeaderTestProps {
   previousLabel?: string;
   onNext?(): void;
   onPrevious?(): void;
-  onLevelChange?(): void;
+  onLevelClick?(): void;
   levelControlAriaLabel?: any;
   nextDisabled?: boolean;
   previousDisabled?: boolean;
@@ -63,9 +63,9 @@ export function itSupportsHeaderProps(
     expect(onPrevious).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onLevelChange when level control is clicked', async () => {
+  it('calls onLevelClick when level control is clicked', async () => {
     const spy = jest.fn();
-    render(<Component {...requiredProps} levelControlAriaLabel="click me" onLevelChange={spy} />);
+    render(<Component {...requiredProps} levelControlAriaLabel="click me" onLevelClick={spy} />);
 
     await userEvent.click(screen.getByLabelText('click me'));
     expect(spy).toHaveBeenCalledTimes(1);
@@ -103,14 +103,14 @@ export function itSupportsHeaderProps(
     expect(screen.getByLabelText('test-level')).toHaveAttribute('data-static');
   });
 
-  it('does not call onLevelChange when level is clicked and hasNextLevel is false', async () => {
+  it('does not call onLevelClick when level is clicked and hasNextLevel is false', async () => {
     const spy = jest.fn();
     const { rerender } = render(
       <Component
         {...requiredProps}
         levelControlAriaLabel="test-level"
         hasNextLevel
-        onLevelChange={spy}
+        onLevelClick={spy}
       />
     );
 
@@ -122,7 +122,7 @@ export function itSupportsHeaderProps(
         {...requiredProps}
         levelControlAriaLabel="test-level"
         hasNextLevel={false}
-        onLevelChange={spy}
+        onLevelClick={spy}
       />
     );
 

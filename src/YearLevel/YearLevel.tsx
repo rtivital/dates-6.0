@@ -58,7 +58,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
     previousLabel,
     onNext,
     onPrevious,
-    onLevelChange,
+    onLevelClick,
     nextDisabled,
     previousDisabled,
     hasNextLevel,
@@ -124,7 +124,7 @@ export const YearLevel = forwardRef<HTMLDivElement, YearLevelProps>((props, ref)
         previousLabel={previousLabel}
         onNext={onNext}
         onPrevious={onPrevious}
-        onLevelChange={onLevelChange}
+        onLevelClick={onLevelClick}
         nextDisabled={_nextDisabled}
         previousDisabled={_previousDisabled}
         hasNextLevel={hasNextLevel}

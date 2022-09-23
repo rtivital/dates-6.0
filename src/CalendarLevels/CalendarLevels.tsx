@@ -4,14 +4,14 @@ import React, { forwardRef } from 'react';
 import { Box, DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { MonthLevelGroup, MonthLevelGroupStylesNames } from '../MonthLevelGroup';
-import { MonthSettings } from '../Month';
 import { YearLevelGroup, YearLevelGroupStylesNames } from '../YearLevelGroup';
-import { MonthsListSettings } from '../MonthsList';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
-import { YearsListSettings } from '../YearsList';
 import { CalendarLevel } from '../types';
 import { clampLevel } from './clamp-level/clamp-level';
 import useStyles from './CalendarLevels.styles';
+import { MonthLevelSettings } from '../MonthLevel';
+import { YearLevelSettings } from '../YearLevel';
+import { DecadeLevelSettings } from '../DecadeLevel';
 
 export type CalendarLevelsStylesNames =
   | Selectors<typeof useStyles>
@@ -35,9 +35,9 @@ export interface CalendarLevelsAriaLabels {
 }
 
 export interface CalendarLevelSettings
-  extends YearsListSettings,
-    MonthsListSettings,
-    MonthSettings {
+  extends DecadeLevelSettings,
+    YearLevelSettings,
+    MonthLevelSettings {
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
@@ -129,14 +129,17 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     hideOutsideDates,
     hideWeekdays,
     getDayAriaLabel,
+    monthLabelFormat,
 
     // YearLevelGroup props
     monthsListFormat,
     getMonthControlProps,
+    yearLabelFormat,
 
     // DecadeLevelGroup props
     yearsListFormat,
     getYearControlProps,
+    decadeLabelFormat,
 
     // Other props
     minDate,
@@ -199,12 +202,13 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onNext={() => setDate(dayjs(_date).add(_columnsToScroll, 'month').toDate())}
           onPrevious={() => setDate(dayjs(_date).subtract(_columnsToScroll, 'month').toDate())}
           hasNextLevel={maxLevel !== 'month'}
-          onLevelChange={() => setLevel('year')}
+          onLevelClick={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
           nextLabel={ariaLabels?.nextMonth}
           previousLabel={ariaLabels?.previousMonth}
+          monthLabelFormat={monthLabelFormat}
           {...stylesApiProps}
         />
       )}
@@ -221,10 +225,11 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           onNext={() => setDate(dayjs(_date).add(_columnsToScroll, 'year').toDate())}
           onPrevious={() => setDate(dayjs(_date).subtract(_columnsToScroll, 'year').toDate())}
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
-          onLevelChange={() => setLevel('decade')}
+          onLevelClick={() => setLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
           nextLabel={ariaLabels?.nextYear}
           previousLabel={ariaLabels?.previousYear}
+          yearLabelFormat={yearLabelFormat}
           __onControlClick={(_event, payload) => {
             __updateDateOnMonthSelect && setDate(payload);
             setLevel(clampLevel('month', minLevel, maxLevel));
@@ -261,6 +266,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           levelControlAriaLabel={ariaLabels?.decadeLevelControl}
           nextLabel={ariaLabels?.nextDecade}
           previousLabel={ariaLabels?.previousDecade}
+          decadeLabelFormat={decadeLabelFormat}
           __onControlClick={(_event, payload) => {
             __updateDateOnYearSelect && setDate(payload);
             setLevel(clampLevel('year', minLevel, maxLevel));

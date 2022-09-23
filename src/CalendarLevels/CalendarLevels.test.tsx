@@ -326,4 +326,56 @@ describe('@mantine/dates/CalendarLevels', () => {
     await clickNext('month');
     expectHeaderLevels('month', ['July 2022', 'August 2022']);
   });
+
+  it('supports changing month label format', () => {
+    render(<CalendarLevels {...defaultProps} monthLabelFormat="MM/YY" />);
+    expectHeaderLevel('month', '04/22');
+  });
+
+  it('supports changing month label with callback', () => {
+    render(
+      <CalendarLevels
+        {...defaultProps}
+        monthLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+      />
+    );
+
+    expectHeaderLevel('month', '3/2022');
+  });
+
+  it('supports changing year label format', () => {
+    render(<CalendarLevels {...defaultProps} level="year" yearLabelFormat="MM/YY" />);
+    expectHeaderLevel('year', '04/22');
+  });
+
+  it('supports changing year label with callback', () => {
+    render(
+      <CalendarLevels
+        {...defaultProps}
+        level="year"
+        yearLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+      />
+    );
+
+    expectHeaderLevel('year', '3/2022');
+  });
+
+  it('supports changing decade label format', () => {
+    render(<CalendarLevels {...defaultProps} level="decade" decadeLabelFormat="MM/YY" />);
+    expectHeaderLevel('decade', '01/20 – 01/29');
+  });
+
+  it('supports changing decade label with callback', () => {
+    render(
+      <CalendarLevels
+        {...defaultProps}
+        level="decade"
+        decadeLabelFormat={(startOfDecade, endOfDecade) =>
+          `${startOfDecade.getMonth()}/${startOfDecade.getFullYear()} – ${endOfDecade.getMonth()}/${endOfDecade.getFullYear()}`
+        }
+      />
+    );
+
+    expectHeaderLevel('decade', '0/2020 – 0/2029');
+  });
 });

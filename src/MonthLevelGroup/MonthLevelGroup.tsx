@@ -53,7 +53,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     previousLabel,
     onNext,
     onPrevious,
-    onLevelChange,
+    onLevelClick,
     nextDisabled,
     previousDisabled,
     hasNextLevel,
@@ -65,6 +65,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     unstyled,
     numberOfColumns,
     levelControlAriaLabel,
+    monthLabelFormat,
     __staticSelector,
     ...others
   } = useComponentDefaultProps('MonthLevelGroup', defaultProps, props);
@@ -89,6 +90,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           month={currentMonth}
           withNext={monthIndex === numberOfColumns - 1}
           withPrevious={monthIndex === 0}
+          monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
           __onDayKeyDown={(event, payload) =>
             handleControlKeyDown({
@@ -135,7 +137,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           previousLabel={previousLabel}
           onNext={onNext}
           onPrevious={onPrevious}
-          onLevelChange={onLevelChange}
+          onLevelClick={onLevelClick}
           nextDisabled={nextDisabled}
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}

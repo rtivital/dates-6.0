@@ -46,7 +46,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     previousLabel,
     onNext,
     onPrevious,
-    onLevelChange,
+    onLevelClick,
     nextDisabled,
     previousDisabled,
     hasNextLevel,
@@ -59,6 +59,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     __staticSelector,
     numberOfColumns,
     levelControlAriaLabel,
+    yearLabelFormat,
     ...others
   } = useComponentDefaultProps('YearLevelGroup', defaultProps, props);
 
@@ -83,6 +84,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           year={currentYear}
           withNext={yearIndex === numberOfColumns - 1}
           withPrevious={yearIndex === 0}
+          yearLabelFormat={yearLabelFormat}
           __onControlClick={__onControlClick}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
@@ -120,7 +122,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           previousLabel={previousLabel}
           onNext={onNext}
           onPrevious={onPrevious}
-          onLevelChange={onLevelChange}
+          onLevelClick={onLevelClick}
           nextDisabled={nextDisabled}
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}
