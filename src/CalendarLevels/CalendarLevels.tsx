@@ -41,6 +41,9 @@ export interface CalendarLevelSettings
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
+  /** Number of columns to scroll when user clicks next/prev month, defaults to numberOfColumns */
+  columnsToScroll?: number;
+
   /** aria-label attributes for controls on different levels */
   ariaLabels?: CalendarLevelsAriaLabels;
 
@@ -109,6 +112,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     defaultDate,
     onDateChange,
     numberOfColumns,
+    columnsToScroll,
     ariaLabels,
     onYearSelect,
     onMonthSelect,
@@ -174,6 +178,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     __staticSelector: __staticSelector || 'CalendarLevels',
   };
 
+  const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
+
   return (
     <Box className={cx(classes.calendarLevels, className)} ref={ref} {...others}>
       {_level === 'month' && (
@@ -190,8 +196,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           getDayAriaLabel={getDayAriaLabel}
-          onNext={() => setDate(dayjs(_date).add(1, 'month').toDate())}
-          onPrevious={() => setDate(dayjs(_date).subtract(1, 'month').toDate())}
+          onNext={() => setDate(dayjs(_date).add(_columnsToScroll, 'month').toDate())}
+          onPrevious={() => setDate(dayjs(_date).subtract(_columnsToScroll, 'month').toDate())}
           hasNextLevel={maxLevel !== 'month'}
           onLevelChange={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
@@ -212,8 +218,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           monthsListFormat={monthsListFormat}
           getMonthControlProps={getMonthControlProps}
           locale={locale}
-          onNext={() => setDate(dayjs(_date).add(1, 'year').toDate())}
-          onPrevious={() => setDate(dayjs(_date).subtract(1, 'year').toDate())}
+          onNext={() => setDate(dayjs(_date).add(_columnsToScroll, 'year').toDate())}
+          onPrevious={() => setDate(dayjs(_date).subtract(_columnsToScroll, 'year').toDate())}
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
           onLevelChange={() => setLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
@@ -236,8 +242,20 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           yearsListFormat={yearsListFormat}
           getYearControlProps={getYearControlProps}
           locale={locale}
-          onNext={() => setDate(dayjs(_date).add(10, 'year').toDate())}
-          onPrevious={() => setDate(dayjs(_date).subtract(10, 'year').toDate())}
+          onNext={() =>
+            setDate(
+              dayjs(_date)
+                .add(10 * _columnsToScroll, 'year')
+                .toDate()
+            )
+          }
+          onPrevious={() =>
+            setDate(
+              dayjs(_date)
+                .subtract(10 * _columnsToScroll, 'year')
+                .toDate()
+            )
+          }
           hasNextLevel={false}
           numberOfColumns={numberOfColumns}
           levelControlAriaLabel={ariaLabels?.decadeLevelControl}

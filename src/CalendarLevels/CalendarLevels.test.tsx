@@ -33,6 +33,12 @@ function expectHeaderLevel(level: 'month' | 'year' | 'decade', label: string) {
   expect(screen.getByLabelText(`${level}-level`).textContent).toBe(label);
 }
 
+function expectHeaderLevels(level: 'month' | 'year' | 'decade', labels: string[]) {
+  expect(screen.getAllByLabelText(`${level}-level`).map((node) => node.textContent)).toStrictEqual(
+    labels
+  );
+}
+
 async function clickNext(level: 'month' | 'year' | 'decade') {
   await userEvent.click(screen.getByLabelText(`next-${level}`));
 }
@@ -305,5 +311,19 @@ describe('@mantine/dates/CalendarLevels', () => {
     );
     await userEvent.click(container.querySelector('table button'));
     expect(spy).toHaveBeenCalledWith(new Date(2022, 0, 1));
+  });
+
+  it('supports columnsToScroll', async () => {
+    const { rerender } = render(
+      <CalendarLevels {...defaultProps} numberOfColumns={2} columnsToScroll={1} />
+    );
+    expectHeaderLevels('month', ['April 2022', 'May 2022']);
+    await clickNext('month');
+    expectHeaderLevels('month', ['May 2022', 'June 2022']);
+
+    rerender(<CalendarLevels {...defaultProps} numberOfColumns={2} columnsToScroll={2} />);
+    expectHeaderLevels('month', ['May 2022', 'June 2022']);
+    await clickNext('month');
+    expectHeaderLevels('month', ['July 2022', 'August 2022']);
   });
 });
