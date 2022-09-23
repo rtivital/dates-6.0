@@ -107,4 +107,43 @@ describe('@mantine/dates/MonthLevelGroup', () => {
     await userEvent.type(days[days.length - 1], '{ArrowDown}');
     expect(days[days.length - 1]).toHaveFocus();
   });
+
+  it('has correct default __staticSelector', () => {
+    const { container } = render(<MonthLevelGroup {...defaultProps} />);
+    expect(container.firstChild).toHaveClass('mantine-MonthLevelGroup-monthLevelGroup');
+    expect(container.querySelector('table button')).toHaveClass('mantine-MonthLevelGroup-day');
+  });
+
+  it('supports custom __staticSelector', () => {
+    const { container } = render(<MonthLevelGroup {...defaultProps} __staticSelector="Calendar" />);
+    expect(container.firstChild).toHaveClass('mantine-Calendar-monthLevelGroup');
+    expect(container.querySelector('table button')).toHaveClass('mantine-Calendar-day');
+  });
+
+  it('supports styles api (styles)', () => {
+    const { container } = render(
+      <MonthLevelGroup
+        {...defaultProps}
+        styles={{
+          monthLevelGroup: { borderColor: '#CCEE45' },
+          day: { borderColor: '#443443' },
+        }}
+      />
+    );
+
+    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
+    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#443443' });
+  });
+
+  it('supports styles api (classNames)', () => {
+    const { container } = render(
+      <MonthLevelGroup
+        {...defaultProps}
+        classNames={{ monthLevelGroup: 'test-group', day: 'test-day' }}
+      />
+    );
+
+    expect(container.firstChild).toHaveClass('test-group');
+    expect(container.querySelector('table button')).toHaveClass('test-day');
+  });
 });
