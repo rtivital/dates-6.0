@@ -266,4 +266,26 @@ describe('@mantine/dates/CalendarLevels', () => {
     await clickPrevious('decade');
     expect(spy).toHaveBeenLastCalledWith(new Date(2012, 3, 11));
   });
+
+  it('supports maxLevel', async () => {
+    render(<CalendarLevels {...defaultProps} defaultLevel="month" maxLevel="year" />);
+    expectLevelsCount([1, 0, 0]);
+    await userEvent.click(screen.getByLabelText('month-level'));
+    expectLevelsCount([0, 1, 0]);
+    await userEvent.click(screen.getByLabelText('year-level'));
+    expectLevelsCount([0, 1, 0]);
+  });
+
+  it('supports minLevel', async () => {
+    const { container } = render(
+      <CalendarLevels {...defaultProps} defaultLevel="decade" minLevel="year" />
+    );
+    expectLevelsCount([0, 0, 1]);
+
+    await userEvent.click(container.querySelector('table button'));
+    expectLevelsCount([0, 1, 0]);
+
+    await userEvent.click(container.querySelector('table button'));
+    expectLevelsCount([0, 1, 0]);
+  });
 });

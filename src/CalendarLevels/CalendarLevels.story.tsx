@@ -11,6 +11,22 @@ export function Usage() {
   );
 }
 
+export function MaxLevel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CalendarLevels maxLevel="year" />
+    </div>
+  );
+}
+
+export function MinLevel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CalendarLevels minLevel="year" />
+    </div>
+  );
+}
+
 export function NumberOfColumns() {
   return (
     <div style={{ padding: 40 }}>

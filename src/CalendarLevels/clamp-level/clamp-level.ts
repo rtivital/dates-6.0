@@ -16,7 +16,7 @@ function levelNumberToLevel(levelNumber: LevelNumber): CalendarLevel {
   return levelNumber === 0 ? 'month' : levelNumber === 1 ? 'year' : 'decade';
 }
 
-export function getInitialLevel(
+export function clampLevel(
   level: CalendarLevel,
   minLevel: CalendarLevel,
   maxLevel: CalendarLevel

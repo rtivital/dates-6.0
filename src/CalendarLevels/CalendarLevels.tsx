@@ -10,7 +10,7 @@ import { MonthsListSettings } from '../MonthsList';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { YearsListSettings } from '../YearsList';
 import { CalendarLevel } from '../types';
-import { getInitialLevel } from './get-initial-level/get-initial-level';
+import { clampLevel } from './clamp-level/clamp-level';
 import useStyles from './CalendarLevels.styles';
 
 export type CalendarLevelsStylesNames =
@@ -134,9 +134,9 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
   });
 
   const [_level, setLevel] = useUncontrolled({
-    value: level ? getInitialLevel(level, minLevel, maxLevel) : undefined,
-    defaultValue: defaultLevel ? getInitialLevel(defaultLevel, minLevel, maxLevel) : undefined,
-    finalValue: getInitialLevel(undefined, minLevel, maxLevel),
+    value: level ? clampLevel(level, minLevel, maxLevel) : undefined,
+    defaultValue: defaultLevel ? clampLevel(defaultLevel, minLevel, maxLevel) : undefined,
+    finalValue: clampLevel(undefined, minLevel, maxLevel),
     onChange: onLevelChange,
   });
 
@@ -201,7 +201,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           previousLabel={ariaLabels?.previousYear}
           __onControlClick={(_event, payload) => {
             setDate(payload);
-            setLevel('month');
+            setLevel(clampLevel('month', minLevel, maxLevel));
           }}
           {...stylesApiProps}
         />
@@ -224,7 +224,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           previousLabel={ariaLabels?.previousDecade}
           __onControlClick={(_event, payload) => {
             setDate(payload);
-            setLevel('year');
+            setLevel(clampLevel('year', minLevel, maxLevel));
           }}
           {...stylesApiProps}
         />
