@@ -96,7 +96,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
               payload,
               controlsRef: controlsRefs,
               numberOfColumns,
-              controlsPerRow: 3,
+              controlsPerRow: [3, 3, 3, 1],
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {

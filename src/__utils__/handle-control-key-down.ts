@@ -47,7 +47,7 @@ interface HandleControlKeydownInput {
   index: number;
   payload: ControlKeydownPayload;
   event: React.KeyboardEvent<HTMLButtonElement>;
-  controlsPerRow: number;
+  controlsPerRow: number | number[];
 }
 
 export function handleControlKeyDown({
@@ -58,6 +58,10 @@ export function handleControlKeyDown({
   numberOfColumns,
   controlsPerRow,
 }: HandleControlKeydownInput) {
+  const _controlsPerRow = Array.isArray(controlsPerRow)
+    ? controlsPerRow[payload.rowIndex]
+    : controlsPerRow;
+
   switch (event.key) {
     case 'ArrowDown': {
       event.preventDefault();
@@ -82,7 +86,7 @@ export function handleControlKeyDown({
     case 'ArrowRight': {
       event.preventDefault();
 
-      if (payload.cellIndex !== controlsPerRow - 1) {
+      if (payload.cellIndex !== _controlsPerRow - 1) {
         focusOnNextFocusableControl({ direction: 'right', index, payload, controlsRef });
       } else if (index + 1 < numberOfColumns) {
         if (controlsRef.current[index + 1][payload.rowIndex]) {
@@ -100,7 +104,7 @@ export function handleControlKeyDown({
         focusOnNextFocusableControl({ direction: 'left', index, payload, controlsRef });
       } else if (index > 0) {
         if (controlsRef.current[index - 1][payload.rowIndex]) {
-          controlsRef.current[index - 1][payload.rowIndex][controlsPerRow - 1].focus();
+          controlsRef.current[index - 1][payload.rowIndex][_controlsPerRow - 1].focus();
         }
       }
     }
