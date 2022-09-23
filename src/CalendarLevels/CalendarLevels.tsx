@@ -3,17 +3,21 @@ import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { Box, DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { MonthLevelGroup } from '../MonthLevelGroup';
+import { MonthLevelGroup, MonthLevelGroupStylesNames } from '../MonthLevelGroup';
 import { MonthSettings } from '../Month';
-import { YearLevelGroup } from '../YearLevelGroup';
+import { YearLevelGroup, YearLevelGroupStylesNames } from '../YearLevelGroup';
 import { MonthsListSettings } from '../MonthsList';
-import { DecadeLevelGroup } from '../DecadeLevelGroup';
+import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { YearsListSettings } from '../YearsList';
 import { CalendarLevel } from '../types';
 import { getInitialLevel } from './get-initial-level/get-initial-level';
 import useStyles from './CalendarLevels.styles';
 
-export type CalendarLevelsStylesNames = Selectors<typeof useStyles>;
+export type CalendarLevelsStylesNames =
+  | Selectors<typeof useStyles>
+  | DecadeLevelGroupStylesNames
+  | YearLevelGroupStylesNames
+  | MonthLevelGroupStylesNames;
 
 export interface CalendarLevelSettings
   extends YearsListSettings,
@@ -124,6 +128,13 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     onChange: onDateChange,
   });
 
+  const stylesApiProps = {
+    styles,
+    classNames,
+    unstyled,
+    __staticSelector: __staticSelector || 'CalendarLevels',
+  };
+
   return (
     <Box className={cx(classes.calendarLevels, className)} ref={ref} {...others}>
       {_level === 'month' && (
@@ -145,6 +156,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           hasNextLevel={maxLevel !== 'month'}
           onLevelChange={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
+          {...stylesApiProps}
         />
       )}
 
@@ -165,6 +177,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
             setDate(payload);
             setLevel('month');
           }}
+          {...stylesApiProps}
         />
       )}
 
@@ -184,6 +197,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
             setDate(payload);
             setLevel('year');
           }}
+          {...stylesApiProps}
         />
       )}
     </Box>
