@@ -26,18 +26,18 @@ describe('@mantine/dates/DecadeLevel', () => {
   itSupportsHeaderProps(DecadeLevel, defaultProps);
   itSupportsWithNextPrevious(DecadeLevel, defaultProps);
   itSupportsYearsListProps(DecadeLevel, defaultProps);
-  itSupportsGetControlRef(DecadeLevel, defaultProps);
+  itSupportsGetControlRef(DecadeLevel, 10, defaultProps);
   itSupportsOnControlKeydown(DecadeLevel, defaultProps);
   itSupportsOnControlClick(DecadeLevel, defaultProps);
 
   it('renders correct CalendarHeader label', () => {
     render(<DecadeLevel {...defaultProps} />);
-    expectLabel('2019 – 2030');
+    expectLabel('2020 – 2029');
   });
 
   it('supports changing decade label format', () => {
     render(<DecadeLevel {...defaultProps} decadeLabelFormat="MM/YY" />);
-    expectLabel('01/19 – 01/30');
+    expectLabel('01/20 – 01/29');
   });
 
   it('supports changing decade label with callback', () => {
@@ -50,7 +50,7 @@ describe('@mantine/dates/DecadeLevel', () => {
       />
     );
 
-    expectLabel('0/2019 – 0/2030');
+    expectLabel('0/2020 – 0/2029');
   });
 
   it('has correct default __staticSelector', () => {

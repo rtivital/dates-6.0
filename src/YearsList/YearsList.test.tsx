@@ -14,7 +14,7 @@ const defaultProps: YearsListProps = {
 };
 
 describe('@mantine/dates/YearsList', () => {
-  itSupportsGetControlRef(YearsList, defaultProps);
+  itSupportsGetControlRef(YearsList, 10, defaultProps);
   itSupportsYearsListProps(YearsList, defaultProps);
   itSupportsOnControlKeydown(YearsList, defaultProps);
   itSupportsOnControlClick(YearsList, defaultProps);

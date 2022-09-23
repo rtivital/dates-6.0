@@ -1,11 +1,8 @@
 import { getYearsData } from './get-years-data';
 
-const TEST_RANGE = [
-  [2019, 2020, 2021],
-  [2022, 2023, 2024],
-  [2025, 2026, 2027],
-  [2028, 2029, 2030],
-].map((row) => row.map((year) => new Date(year, 0)));
+const TEST_RANGE = [[2020, 2021, 2022], [2023, 2024, 2025], [2026, 2027, 2028], [2029]].map((row) =>
+  row.map((year) => new Date(year, 0))
+);
 
 describe('@mantine/dates/getYearsData', () => {
   it('returns correct decade range for year that ends with 0', () => {

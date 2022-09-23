@@ -13,7 +13,6 @@ export interface MonthsListProps {
 }
 
 const defaultYearsNames = [
-  '2019',
   '2020',
   '2021',
   '2022',
@@ -24,11 +23,9 @@ const defaultYearsNames = [
   '2027',
   '2028',
   '2029',
-  '2030',
 ];
 
 const ruYearsNames = [
-  'янв. 2019',
   'янв. 2020',
   'янв. 2021',
   'янв. 2022',
@@ -39,11 +36,9 @@ const ruYearsNames = [
   'янв. 2027',
   'янв. 2028',
   'янв. 2029',
-  'янв. 2030',
 ];
 
 const customFormatYearsNames = [
-  'Jan 19',
   'Jan 20',
   'Jan 21',
   'Jan 22',
@@ -54,7 +49,6 @@ const customFormatYearsNames = [
   'Jan 27',
   'Jan 28',
   'Jan 29',
-  'Jan 30',
 ];
 
 function expectYearNames(container: HTMLElement, monthNames: string[]) {
@@ -100,9 +94,9 @@ export function itSupportsYearsListProps(
     const years = container.querySelectorAll('table button');
     expect(years[0]).toBeDisabled();
     expect(years[1]).toBeDisabled();
-    expect(years[3]).toBeDisabled();
-    expect(years[4]).not.toBeDisabled();
-    expect(years[11]).not.toBeDisabled();
+    expect(years[2]).toBeDisabled();
+    expect(years[3]).not.toBeDisabled();
+    expect(years[9]).not.toBeDisabled();
   });
 
   it('disables years if they are after minDate', () => {
@@ -111,9 +105,9 @@ export function itSupportsYearsListProps(
     );
     const years = container.querySelectorAll('table button');
     expect(years[0]).not.toBeDisabled();
-    expect(years[4]).not.toBeDisabled();
-    expect(years[5]).toBeDisabled();
-    expect(years[11]).toBeDisabled();
+    expect(years[3]).not.toBeDisabled();
+    expect(years[4]).toBeDisabled();
+    expect(years[9]).toBeDisabled();
   });
 
   it('supports getYearControlProps', () => {
@@ -127,8 +121,8 @@ export function itSupportsYearsListProps(
     );
 
     const years = container.querySelectorAll('table button');
-    expect(years[2]).not.toHaveAttribute('data-selected');
-    expect(years[3]).toHaveAttribute('data-selected');
-    expect(years[4]).not.toHaveAttribute('data-selected');
+    expect(years[1]).not.toHaveAttribute('data-selected');
+    expect(years[2]).toHaveAttribute('data-selected');
+    expect(years[3]).not.toHaveAttribute('data-selected');
   });
 }

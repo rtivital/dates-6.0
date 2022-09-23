@@ -14,7 +14,7 @@ const defaultProps: MonthsListProps = {
 };
 
 describe('@mantine/dates/MonthsList', () => {
-  itSupportsGetControlRef(MonthsList, defaultProps);
+  itSupportsGetControlRef(MonthsList, 12, defaultProps);
   itSupportsMonthsListProps(MonthsList, defaultProps);
   itSupportsOnControlKeydown(MonthsList, defaultProps);
   itSupportsOnControlClick(MonthsList, defaultProps);

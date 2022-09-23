@@ -40,13 +40,13 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
   it('renders correct years group based on year prop', () => {
     render(<DecadeLevelGroup {...defaultProps} numberOfColumns={3} />);
     expect(screen.getAllByLabelText('level-control').map((node) => node.textContent)).toStrictEqual(
-      ['2019 – 2030', '2029 – 2040', '2039 – 2050']
+      ['2020 – 2029', '2030 – 2039', '2040 – 2049']
     );
   });
 
   it('supports levelControlAriaLabel as string', () => {
     render(<DecadeLevelGroup {...defaultProps} levelControlAriaLabel="test-label" />);
-    expect(screen.getByText('2019 – 2030')).toHaveAttribute('aria-label', 'test-label');
+    expect(screen.getByText('2020 – 2029')).toHaveAttribute('aria-label', 'test-label');
   });
 
   it('supports levelControlAriaLabel as function', () => {
@@ -56,7 +56,7 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
         levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
       />
     );
-    expect(screen.getByText('2019 – 2030')).toHaveAttribute('aria-label', '3/2022');
+    expect(screen.getByText('2020 – 2029')).toHaveAttribute('aria-label', '3/2022');
   });
 
   it('has correct default __staticSelector', () => {

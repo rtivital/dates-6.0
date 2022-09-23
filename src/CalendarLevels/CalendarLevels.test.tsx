@@ -163,7 +163,7 @@ describe('@mantine/dates/CalendarLevels', () => {
     expectHeaderLevel('year', '2021');
 
     await userEvent.click(screen.getByLabelText('year-level'));
-    expectHeaderLevel('decade', '2019 – 2030');
+    expectHeaderLevel('decade', '2020 – 2029');
   });
 
   it('renders correct header labels with date (controlled)', async () => {
@@ -174,7 +174,7 @@ describe('@mantine/dates/CalendarLevels', () => {
     expectHeaderLevel('year', '2021');
 
     await userEvent.click(screen.getByLabelText('year-level'));
-    expectHeaderLevel('decade', '2019 – 2030');
+    expectHeaderLevel('decade', '2020 – 2029');
   });
 
   it('changes displayed date when next/previous controls are clicked with defaultDate prop (uncontrolled)', async () => {
@@ -193,11 +193,11 @@ describe('@mantine/dates/CalendarLevels', () => {
     expectHeaderLevel('year', '2022');
 
     rerender(<CalendarLevels {...defaultProps} level="decade" />);
-    expectHeaderLevel('decade', '2019 – 2030');
+    expectHeaderLevel('decade', '2020 – 2029');
     await clickNext('decade');
-    expectHeaderLevel('decade', '2029 – 2040');
+    expectHeaderLevel('decade', '2030 – 2039');
     await clickPrevious('decade');
-    expectHeaderLevel('decade', '2019 – 2030');
+    expectHeaderLevel('decade', '2020 – 2029');
   });
 
   it('does not change date when next/previous controls are clicked with date prop (controlled)', async () => {
@@ -214,9 +214,9 @@ describe('@mantine/dates/CalendarLevels', () => {
     expectHeaderLevel('year', '2022');
 
     rerender(<CalendarLevels {...defaultProps} date={new Date(2022, 3, 11)} level="decade" />);
-    expectHeaderLevel('decade', '2019 – 2030');
+    expectHeaderLevel('decade', '2020 – 2029');
     await clickNext('decade');
-    expectHeaderLevel('decade', '2019 – 2030');
+    expectHeaderLevel('decade', '2020 – 2029');
   });
 
   it('calls onDateChange when date changes', async () => {
@@ -295,7 +295,7 @@ describe('@mantine/dates/CalendarLevels', () => {
       <CalendarLevels {...defaultProps} level="decade" onYearSelect={spy} />
     );
     await userEvent.click(container.querySelector('table button'));
-    expect(spy).toHaveBeenCalledWith(new Date(2019, 0, 1));
+    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
   });
 
   it('calls onMonthSelect when month control is clicked', async () => {

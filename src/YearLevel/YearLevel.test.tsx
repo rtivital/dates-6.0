@@ -27,7 +27,7 @@ describe('@mantine/dates/YearLevel', () => {
   itSupportsWithNextPrevious(YearLevel, defaultProps);
   itSupportsMonthsListProps(YearLevel, defaultProps);
   itSupportsOnControlKeydown(YearLevel, defaultProps);
-  itSupportsGetControlRef(YearLevel, defaultProps);
+  itSupportsGetControlRef(YearLevel, 12, defaultProps);
   itSupportsOnControlClick(YearLevel, defaultProps);
 
   it('renders correct CalendarHeader label', () => {

@@ -7,12 +7,13 @@ export interface ComponentTestProps {
 
 export function itSupportsGetControlRef(
   Component: React.FC<ComponentTestProps>,
+  numberOfControls: number,
   requiredProps?: Record<string, any>
 ) {
   it('supports __getControlRef', () => {
     const spy = jest.fn();
     render(<Component {...requiredProps} __getControlRef={spy} />);
-    expect(spy).toHaveBeenCalledTimes(12);
+    expect(spy).toHaveBeenCalledTimes(numberOfControls);
     expect(spy).toHaveBeenCalledWith(
       expect.any(Number),
       expect.any(Number),
