@@ -8,12 +8,14 @@ import useStyles from './DecadeLevelGroup.styles';
 export type DecadeLevelGroupStylesNames = Selectors<typeof useStyles> | DecadeLevelStylesNames;
 
 export interface DecadeLevelGroupProps
-  extends DefaultProps<DecadeLevelStylesNames>,
+  extends DefaultProps<DecadeLevelGroupStylesNames>,
     Omit<
       DecadeLevelSettings,
       'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'
     >,
     React.ComponentPropsWithoutRef<'div'> {
+  __staticSelector?: string;
+
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
@@ -54,11 +56,22 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
 
     // Other settings
     className,
+    classNames,
+    styles,
+    unstyled,
+    __staticSelector,
     numberOfColumns,
     levelControlAriaLabel,
     ...others
   } = useComponentDefaultProps('DecadeLevelGroup', defaultProps, props);
-  const { classes, cx } = useStyles();
+
+  const { classes, cx } = useStyles(null, {
+    styles,
+    classNames,
+    unstyled,
+    name: ['DecadeLevelGroup', __staticSelector],
+  });
+
   const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
 
   const decades = Array(numberOfColumns)
@@ -117,6 +130,10 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}
           getYearControlProps={getYearControlProps}
+          __staticSelector={__staticSelector || 'DecadeLevelGroup'}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
         />
       );
     });

@@ -8,9 +8,11 @@ import useStyles from './YearLevelGroup.styles';
 export type YearLevelGroupStylesNames = Selectors<typeof useStyles> | YearLevelStylesNames;
 
 export interface YearLevelGroupProps
-  extends DefaultProps<YearLevelStylesNames>,
+  extends DefaultProps<YearLevelGroupStylesNames>,
     Omit<YearLevelSettings, 'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'>,
     React.ComponentPropsWithoutRef<'div'> {
+  __staticSelector?: string;
+
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
 
@@ -51,11 +53,22 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
 
     // Other settings
     className,
+    classNames,
+    styles,
+    unstyled,
+    __staticSelector,
     numberOfColumns,
     levelControlAriaLabel,
     ...others
   } = useComponentDefaultProps('YearLevelGroup', defaultProps, props);
-  const { classes, cx } = useStyles();
+
+  const { classes, cx } = useStyles(null, {
+    styles,
+    classNames,
+    unstyled,
+    name: ['YearLevelGroup', __staticSelector],
+  });
+
   const controlsRefs = useRef<HTMLButtonElement[][][]>([]);
 
   const years = Array(numberOfColumns)
@@ -112,6 +125,10 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}
           getMonthControlProps={getMonthControlProps}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
+          __staticSelector={__staticSelector || 'YearLevelGroup'}
         />
       );
     });
