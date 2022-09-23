@@ -29,4 +29,14 @@ describe('@mantine/dates/YearPicker', () => {
     await userEvent.click(container.querySelector('table button'));
     expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
   });
+
+  it('has correct default __staticSelector', () => {
+    const { container } = render(<YearPicker {...defaultProps} />);
+    expect(container.firstChild).toHaveClass('mantine-YearPicker-calendarLevels');
+  });
+
+  it('supports custom __staticSelector', () => {
+    const { container } = render(<YearPicker {...defaultProps} __staticSelector="Calendar" />);
+    expect(container.firstChild).toHaveClass('mantine-Calendar-calendarLevels');
+  });
 });

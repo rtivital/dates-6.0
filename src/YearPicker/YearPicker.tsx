@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 import { CalendarLevels, CalendarLevelBaseProps } from '../CalendarLevels';
 
 export interface YearPickerProps extends CalendarLevelBaseProps {
+  __staticSelector?: string;
+
   /** Default value for uncontrolled component */
   defaultValue?: Date | null;
 
@@ -18,7 +20,7 @@ export interface YearPickerProps extends CalendarLevelBaseProps {
 const defaultProps: Partial<YearPickerProps> = {};
 
 export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>((props, ref) => {
-  const { defaultValue, value, onChange, ...others } = useComponentDefaultProps(
+  const { defaultValue, value, onChange, __staticSelector, ...others } = useComponentDefaultProps(
     'YearPicker',
     defaultProps,
     props
@@ -36,6 +38,7 @@ export const YearPicker = forwardRef<HTMLDivElement, YearPickerProps>((props, re
       ref={ref}
       minLevel="decade"
       __updateDateOnYearSelect={false}
+      __staticSelector={__staticSelector || 'YearPicker'}
       getYearControlProps={(date) => ({
         selected: dayjs(date).isSame(_value, 'year'),
         onClick: () => setValue(date),
