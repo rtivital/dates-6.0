@@ -21,6 +21,14 @@ export interface YearsRangePickerProps extends DecadeLevelSettings, CalendarLeve
 
 const defaultProps: Partial<YearsRangePickerProps> = {};
 
+function isInRange(date: Date, range: [Date, Date]) {
+  const _range = [...range].sort((a, b) => a.getTime() - b.getTime());
+  return (
+    dayjs(date).subtract(1, 'day').isBefore(_range[1]) &&
+    dayjs(date).add(1, 'day').isAfter(_range[0])
+  );
+}
+
 export const YearsRangePicker = forwardRef<HTMLDivElement, YearsRangePickerProps>((props, ref) => {
   const {
     defaultValue,
@@ -29,6 +37,7 @@ export const YearsRangePicker = forwardRef<HTMLDivElement, YearsRangePickerProps
     __staticSelector,
     getYearControlProps,
     allowSingleDateInRange,
+    onMouseLeave,
     ...others
   } = useComponentDefaultProps('YearsRangePicker', defaultProps, props);
 
@@ -38,7 +47,7 @@ export const YearsRangePicker = forwardRef<HTMLDivElement, YearsRangePickerProps
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
-    finalValue: null,
+    finalValue: [null, null],
     onChange,
   });
 
@@ -57,7 +66,7 @@ export const YearsRangePicker = forwardRef<HTMLDivElement, YearsRangePickerProps
       return null;
     }
 
-    if (value[0] && dayjs(date).isSame(value[0], 'year') && !allowSingleDateInRange) {
+    if (_value[0] && dayjs(date).isSame(_value[0], 'year') && !allowSingleDateInRange) {
       setPickedDate(null);
       setHoveredDate(null);
       setValue([null, null]);
@@ -69,17 +78,38 @@ export const YearsRangePicker = forwardRef<HTMLDivElement, YearsRangePickerProps
     return null;
   };
 
+  const isDateInRange = (date: Date) => {
+    if (pickedDate instanceof Date && hoveredDate instanceof Date) {
+      return isInRange(date, [hoveredDate, pickedDate]);
+    }
+
+    if (_value[0] instanceof Date && _value[1] instanceof Date) {
+      return isInRange(date, _value);
+    }
+
+    return false;
+  };
+
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+    onMouseLeave?.(event);
+    setHoveredDate(null);
+  };
+
   return (
     <CalendarLevels
       ref={ref}
       minLevel="decade"
       __updateDateOnYearSelect={false}
       __staticSelector={__staticSelector || 'YearsRangePicker'}
+      onMouseLeave={handleMouseLeave}
       onYearMouseEnter={(event, date) => setHoveredDate(date)}
       onYearSelect={setRange}
       getYearControlProps={(date) => ({
         ...getYearControlProps?.(date),
-        selected: dayjs(date).isSame(_value, 'year'),
+        selected: _value.some((selection) => selection && dayjs(selection).isSame(date, 'year')),
+        inRange: isDateInRange(date),
+        firstInRange: _value[0] instanceof Date && dayjs(date).isSame(_value[0], 'year'),
+        lastInRange: _value[1] instanceof Date && dayjs(date).isSame(_value[1], 'year'),
       })}
       {...others}
     />

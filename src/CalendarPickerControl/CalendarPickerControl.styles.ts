@@ -27,11 +27,13 @@ export default createStyles((theme) => {
       },
 
       '&[data-first-in-range]': {
+        borderRadius: 0,
         borderTopLeftRadius: theme.radius.sm,
         borderBottomLeftRadius: theme.radius.sm,
       },
 
       '&[data-last-in-range]': {
+        borderRadius: 0,
         borderTopRightRadius: theme.radius.sm,
         borderBottomRightRadius: theme.radius.sm,
       },
