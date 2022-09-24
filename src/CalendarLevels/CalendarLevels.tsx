@@ -38,15 +38,6 @@ export interface CalendarLevelSettings
   extends DecadeLevelSettings,
     YearLevelSettings,
     MonthLevelSettings {
-  /** Number of columns to render next to each other */
-  numberOfColumns?: number;
-
-  /** Number of columns to scroll when user clicks next/prev month, defaults to numberOfColumns */
-  columnsToScroll?: number;
-
-  /** aria-label attributes for controls on different levels */
-  ariaLabels?: CalendarLevelsAriaLabels;
-
   /** Initial level displayed to the user (decade, year, month), used for uncontrolled component */
   defaultLevel?: CalendarLevel;
 
@@ -88,6 +79,15 @@ export interface CalendarLevelsBaseProps
 
   /** Called when date changes */
   onDateChange?(date: Date): void;
+
+  /** Number of columns to render next to each other */
+  numberOfColumns?: number;
+
+  /** Number of columns to scroll when user clicks next/prev month, defaults to numberOfColumns */
+  columnsToScroll?: number;
+
+  /** aria-label attributes for controls on different levels */
+  ariaLabels?: CalendarLevelsAriaLabels;
 }
 
 export interface CalendarLevelsProps extends CalendarLevelSettings, CalendarLevelsBaseProps {

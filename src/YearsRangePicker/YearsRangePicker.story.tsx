@@ -6,7 +6,7 @@ export default { title: 'YearsRangePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <YearsRangePicker />
+      <YearsRangePicker numberOfColumns={2} />
     </div>
   );
 }
