@@ -16,3 +16,4 @@ export * from './YearLevel';
 export * from './YearLevelGroup';
 export * from './YearPicker';
 export * from './YearsList';
+export * from './YearsRangePicker';
