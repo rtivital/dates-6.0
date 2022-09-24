@@ -10,3 +10,11 @@ export function Usage() {
     </div>
   );
 }
+
+export function AllowSingleDateInRange() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearsRangePicker numberOfColumns={2} allowSingleDateInRange />
+    </div>
+  );
+}

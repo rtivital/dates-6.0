@@ -38,6 +38,10 @@ export default createStyles((theme) => {
         borderBottomRightRadius: theme.radius.sm,
       },
 
+      '&[data-last-in-range][data-first-in-range]': {
+        borderRadius: theme.radius.sm,
+      },
+
       '&[data-selected]': {
         color: colors.color,
         backgroundColor: colors.background,
