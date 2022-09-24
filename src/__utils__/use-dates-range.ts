@@ -81,11 +81,35 @@ export function useDatesRange({
     setHoveredDate(null);
   };
 
+  const isFirstInRange = (date: Date) => {
+    if (!(_value[0] instanceof Date)) {
+      return false;
+    }
+
+    if (dayjs(date).isSame(_value[0], level)) {
+      return !(hoveredDate && dayjs(hoveredDate).isBefore(_value[0]));
+    }
+
+    return false;
+  };
+
+  const isLastInRange = (date: Date) => {
+    if (_value[1] instanceof Date) {
+      return dayjs(date).isSame(_value[1], level);
+    }
+
+    if (!(_value[0] instanceof Date) || !hoveredDate) {
+      return false;
+    }
+
+    return dayjs(hoveredDate).isBefore(_value[0]) && dayjs(date).isSame(_value[0], level);
+  };
+
   const getControlProps = (date: Date) => ({
-    selected: _value.some((selection) => selection && dayjs(selection).isSame(date, 'year')),
+    selected: _value.some((selection) => selection && dayjs(selection).isSame(date, level)),
     inRange: isDateInRange(date),
-    firstInRange: _value[0] instanceof Date && dayjs(date).isSame(_value[0], 'year'),
-    lastInRange: _value[1] instanceof Date && dayjs(date).isSame(_value[1], 'year'),
+    firstInRange: isFirstInRange(date),
+    lastInRange: isLastInRange(date),
   });
 
   return {
