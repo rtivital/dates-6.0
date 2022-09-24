@@ -42,6 +42,7 @@ export function useDatesRange({
       if (dayjs(date).isSame(pickedDate, level) && !allowSingleDateInRange) {
         setPickedDate(null);
         setHoveredDate(null);
+        setValue([null, null]);
         return null;
       }
 
