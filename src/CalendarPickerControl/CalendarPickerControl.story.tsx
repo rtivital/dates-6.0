@@ -20,3 +20,18 @@ export function Unstyled() {
     </div>
   );
 }
+
+export function Range() {
+  return (
+    <div style={{ padding: 40, display: 'flex' }}>
+      <CalendarPickerControl firstInRange inRange selected>
+        March
+      </CalendarPickerControl>
+      <CalendarPickerControl inRange>April</CalendarPickerControl>
+      <CalendarPickerControl inRange>May</CalendarPickerControl>
+      <CalendarPickerControl lastInRange inRange selected>
+        June
+      </CalendarPickerControl>
+    </div>
+  );
+}

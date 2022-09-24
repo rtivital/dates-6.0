@@ -1,10 +1,29 @@
 import React from 'react';
+import lodash from 'lodash';
 import { render, screen } from '@testing-library/react';
 import { CalendarPickerControl, CalendarPickerControlProps } from './CalendarPickerControl';
 
 const defaultProps: CalendarPickerControlProps = {};
 
+function validateDataAttribute(prop: string) {
+  const attr = `data-${lodash.kebabCase(prop)}`;
+  it(`sets ${attr} prop when ${prop} prop is set`, () => {
+    const { rerender } = render(<CalendarPickerControl {...defaultProps} />);
+    expect(screen.getByRole('button')).not.toHaveAttribute(attr);
+
+    rerender(<CalendarPickerControl {...defaultProps} {...{ [prop]: true }} />);
+    expect(screen.getByRole('button')).toHaveAttribute(attr);
+
+    rerender(<CalendarPickerControl {...defaultProps} {...{ [prop]: true }} disabled />);
+    expect(screen.getByRole('button')).not.toHaveAttribute(attr);
+  });
+}
+
 describe('@mantine/dates/CalendarPickerControl', () => {
+  validateDataAttribute('inRange');
+  validateDataAttribute('firstInRange');
+  validateDataAttribute('lastInRange');
+
   it('sets correct attributes when disabled prop is set', () => {
     const { rerender } = render(<CalendarPickerControl {...defaultProps} />);
     expect(screen.getByRole('button')).not.toHaveAttribute('disabled');

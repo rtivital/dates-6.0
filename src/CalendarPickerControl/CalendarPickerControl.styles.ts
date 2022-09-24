@@ -2,6 +2,7 @@ import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => {
   const colors = theme.fn.variant({ variant: 'filled' });
+  const lightColors = theme.fn.variant({ variant: 'light' });
 
   return {
     calendarPickerControl: {
@@ -18,6 +19,22 @@ export default createStyles((theme) => {
       }),
 
       '&:active': theme.activeStyles,
+
+      '&[data-in-range]': {
+        backgroundColor: lightColors.background,
+        borderRadius: 0,
+        ...theme.fn.hover({ backgroundColor: lightColors.hover }),
+      },
+
+      '&[data-first-in-range]': {
+        borderTopLeftRadius: theme.radius.sm,
+        borderBottomLeftRadius: theme.radius.sm,
+      },
+
+      '&[data-last-in-range]': {
+        borderTopRightRadius: theme.radius.sm,
+        borderBottomRightRadius: theme.radius.sm,
+      },
 
       '&[data-selected]': {
         color: colors.color,
