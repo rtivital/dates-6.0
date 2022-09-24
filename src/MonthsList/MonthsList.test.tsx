@@ -6,6 +6,7 @@ import {
   itSupportsMonthsListProps,
   itSupportsOnControlKeydown,
   itSupportsOnControlClick,
+  itSupportsOnControlMouseEnter,
 } from '../__tests__';
 import { MonthsList, MonthsListProps } from './MonthsList';
 
@@ -18,6 +19,7 @@ describe('@mantine/dates/MonthsList', () => {
   itSupportsMonthsListProps(MonthsList, defaultProps);
   itSupportsOnControlKeydown(MonthsList, defaultProps);
   itSupportsOnControlClick(MonthsList, defaultProps);
+  itSupportsOnControlMouseEnter(MonthsList, defaultProps);
 
   it('has correct default __staticSelector', () => {
     render(<MonthsList {...defaultProps} />);

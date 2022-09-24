@@ -40,6 +40,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
     yearsListFormat,
     getYearControlProps,
     __onControlClick,
+    __onControlMouseEnter,
 
     // CalendarHeader settings
     __preventFocus,
@@ -91,6 +92,7 @@ export const DecadeLevelGroup = forwardRef<HTMLDivElement, DecadeLevelGroupProps
           withPrevious={decadeIndex === 0}
           decadeLabelFormat={decadeLabelFormat}
           __onControlClick={__onControlClick}
+          __onControlMouseEnter={__onControlMouseEnter}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
               index: decadeIndex,

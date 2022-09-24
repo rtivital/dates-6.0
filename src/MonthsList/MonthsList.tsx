@@ -53,6 +53,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     __getControlRef,
     __onControlKeyDown,
     __onControlClick,
+    __onControlMouseEnter,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
@@ -86,6 +87,10 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
             onClick={(event) => {
               controlProps?.onClick?.(event);
               __onControlClick?.(event, month);
+            }}
+            onMouseEnter={(event) => {
+              controlProps?.onMouseEnter?.(event);
+              __onControlMouseEnter?.(event, month);
             }}
           >
             {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}

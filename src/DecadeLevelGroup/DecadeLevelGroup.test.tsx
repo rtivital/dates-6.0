@@ -6,6 +6,7 @@ import {
   itSupportsHeaderProps,
   itSupportsOnControlClick,
   itHandlesControlsKeyboardEvents,
+  itSupportsOnControlMouseEnter,
 } from '../__tests__';
 
 const defaultProps: DecadeLevelGroupProps = {
@@ -19,6 +20,7 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
   itSupportsYearsListProps(DecadeLevelGroup, defaultProps);
   itSupportsHeaderProps(DecadeLevelGroup, defaultProps);
   itSupportsOnControlClick(DecadeLevelGroup, defaultProps);
+  itSupportsOnControlMouseEnter(DecadeLevelGroup, defaultProps);
   itHandlesControlsKeyboardEvents(
     DecadeLevelGroup,
     'decade',

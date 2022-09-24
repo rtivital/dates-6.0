@@ -9,6 +9,7 @@ import {
   itSupportsOnControlKeydown,
   itSupportsGetControlRef,
   itSupportsOnControlClick,
+  itSupportsOnControlMouseEnter,
 } from '../__tests__';
 
 function expectLabel(label: string) {
@@ -29,6 +30,7 @@ describe('@mantine/dates/YearLevel', () => {
   itSupportsOnControlKeydown(YearLevel, defaultProps);
   itSupportsGetControlRef(YearLevel, 12, defaultProps);
   itSupportsOnControlClick(YearLevel, defaultProps);
+  itSupportsOnControlMouseEnter(YearLevel, defaultProps);
 
   it('renders correct CalendarHeader label', () => {
     render(<YearLevel {...defaultProps} />);

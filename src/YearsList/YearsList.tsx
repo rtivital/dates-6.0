@@ -53,6 +53,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     __getControlRef,
     __onControlKeyDown,
     __onControlClick,
+    __onControlMouseEnter,
     ...others
   } = useComponentDefaultProps('YearsList', defaultProps, props);
 
@@ -68,8 +69,8 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
   const years = getYearsData(decade);
 
   const rows = years.map((yearsRow, rowIndex) => {
-    const cells = yearsRow.map((month, cellIndex) => {
-      const controlProps = getYearControlProps?.(month);
+    const cells = yearsRow.map((year, cellIndex) => {
+      const controlProps = getYearControlProps?.(year);
       return (
         <td key={cellIndex}>
           <CalendarPickerControl
@@ -77,19 +78,23 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
             styles={styles}
             unstyled={unstyled}
             __staticSelector={__staticSelector || 'YearsList'}
-            disabled={isYearDisabled(month, minDate, maxDate)}
+            disabled={isYearDisabled(year, minDate, maxDate)}
             ref={(node) => __getControlRef?.(rowIndex, cellIndex, node)}
             {...controlProps}
             onKeyDown={(event) => {
               controlProps?.onKeyDown?.(event);
-              __onControlKeyDown?.(event, { rowIndex, cellIndex, date: month });
+              __onControlKeyDown?.(event, { rowIndex, cellIndex, date: year });
             }}
             onClick={(event) => {
               controlProps?.onClick?.(event);
-              __onControlClick?.(event, month);
+              __onControlClick?.(event, year);
+            }}
+            onMouseEnter={(event) => {
+              controlProps?.onMouseEnter?.(event);
+              __onControlMouseEnter?.(event, year);
             }}
           >
-            {dayjs(month).locale(ctx.getLocale(locale)).format(yearsListFormat)}
+            {dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat)}
           </CalendarPickerControl>
         </td>
       );

@@ -61,6 +61,12 @@ export interface CalendarLevelSettings
 
   /** Called when user clicks month on year level */
   onMonthSelect?(date: Date): void;
+
+  /** Called when mouse enters year control */
+  onYearMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+
+  /** Called when mouse enters month control */
+  onMonthMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
 }
 
 export interface CalendarLevelsBaseProps
@@ -115,6 +121,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     ariaLabels,
     onYearSelect,
     onMonthSelect,
+    onYearMouseEnter,
+    onMonthMouseEnter,
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
 
@@ -229,6 +237,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           nextLabel={ariaLabels?.nextYear}
           previousLabel={ariaLabels?.previousYear}
           yearLabelFormat={yearLabelFormat}
+          __onControlMouseEnter={onMonthMouseEnter}
           __onControlClick={(_event, payload) => {
             __updateDateOnMonthSelect && setDate(payload);
             setLevel(clampLevel('month', minLevel, maxLevel));
@@ -266,6 +275,7 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           nextLabel={ariaLabels?.nextDecade}
           previousLabel={ariaLabels?.previousDecade}
           decadeLabelFormat={decadeLabelFormat}
+          __onControlMouseEnter={onYearMouseEnter}
           __onControlClick={(_event, payload) => {
             __updateDateOnYearSelect && setDate(payload);
             setLevel(clampLevel('year', minLevel, maxLevel));

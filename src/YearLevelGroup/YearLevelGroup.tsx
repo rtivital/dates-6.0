@@ -37,6 +37,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
     monthsListFormat,
     getMonthControlProps,
     __onControlClick,
+    __onControlMouseEnter,
 
     // CalendarHeader settings
     __preventFocus,
@@ -86,6 +87,7 @@ export const YearLevelGroup = forwardRef<HTMLDivElement, YearLevelGroupProps>((p
           withPrevious={yearIndex === 0}
           yearLabelFormat={yearLabelFormat}
           __onControlClick={__onControlClick}
+          __onControlMouseEnter={__onControlMouseEnter}
           __onControlKeyDown={(event, payload) =>
             handleControlKeyDown({
               index: yearIndex,
