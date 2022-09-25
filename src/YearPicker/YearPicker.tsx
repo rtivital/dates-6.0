@@ -33,6 +33,7 @@ export const YearPicker: YearPickerComponent = forwardRef(
       allowSingleDateInRange,
       allowDeselect,
       onMouseLeave,
+      onYearSelect,
       ...others
     } = useComponentDefaultProps('YearsRangePicker', defaultProps, props as any);
 
@@ -56,7 +57,10 @@ export const YearPicker: YearPickerComponent = forwardRef(
         __staticSelector={__staticSelector || 'YearPicker'}
         onMouseLeave={onRootMouseLeave}
         onYearMouseEnter={(_event, date) => onHoveredDateChange(date)}
-        onYearSelect={onDateChange}
+        onYearSelect={(date) => {
+          onDateChange(date);
+          onYearSelect?.(date);
+        }}
         getYearControlProps={(date) => ({
           ...getYearControlProps?.(date),
           ...getControlProps(date),

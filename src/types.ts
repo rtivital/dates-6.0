@@ -1,3 +1,10 @@
+import type { PopoverProps } from '@mantine/core';
+
+export type DatesPopoverProps = Omit<
+  PopoverProps,
+  'onChange' | 'classNames' | 'styles' | 'children'
+>;
+
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type CalendarLevel = 'month' | 'year' | 'decade';
 export type DateValue = Date | null;
