@@ -53,7 +53,7 @@ export const YearPicker: YearPickerComponent = forwardRef(
         ref={ref}
         minLevel="decade"
         __updateDateOnYearSelect={false}
-        __staticSelector={__staticSelector || 'YearsRangePicker'}
+        __staticSelector={__staticSelector || 'YearPicker'}
         onMouseLeave={onRootMouseLeave}
         onYearMouseEnter={(_event, date) => onHoveredDateChange(date)}
         onYearSelect={onDateChange}
