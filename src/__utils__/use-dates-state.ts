@@ -66,6 +66,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
 
       setValue([date, null]);
       setPickedDate(date);
+      return;
     }
 
     if (type === 'multiple') {
@@ -74,6 +75,8 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       } else {
         setValue([..._value, date]);
       }
+
+      return;
     }
 
     if (_value && allowDeselect && dayjs(date).isSame(_value, level)) {
@@ -150,7 +153,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
     return { selected: dayjs(_value).isSame(date, level) };
   };
 
-  const onHoveredDateChange = type === 'range' ? setHoveredDate : undefined;
+  const onHoveredDateChange = type === 'range' ? setHoveredDate : () => {};
 
   return {
     onDateChange,

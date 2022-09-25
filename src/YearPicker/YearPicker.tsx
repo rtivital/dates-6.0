@@ -31,6 +31,7 @@ export const YearPicker: YearPickerComponent = forwardRef(
       __staticSelector,
       getYearControlProps,
       allowSingleDateInRange,
+      allowDeselect,
       onMouseLeave,
       ...others
     } = useComponentDefaultProps('YearsRangePicker', defaultProps, props as any);
@@ -39,6 +40,7 @@ export const YearPicker: YearPickerComponent = forwardRef(
       useDatesState<Type>({
         type,
         level: 'year',
+        allowDeselect,
         allowSingleDateInRange,
         value,
         defaultValue,
