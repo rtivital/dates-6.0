@@ -1,19 +1,19 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
-import { useDatesRangeState } from '../__utils__/use-dates-range-state';
-import { RangeValue } from '../types';
+import { useDatesRangeState } from '../__utils__/use-dates-state';
+import { DatesRangeValue } from '../types';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { CalendarLevels, CalendarLevelsBaseProps } from '../CalendarLevels';
 
 export interface YearsRangePickerProps extends DecadeLevelSettings, CalendarLevelsBaseProps {
   /** Default value for uncontrolled component */
-  defaultValue?: RangeValue;
+  defaultValue?: DatesRangeValue;
 
   /** Value for controlled component */
-  value?: RangeValue;
+  value?: DatesRangeValue;
 
   /** Called when value changes */
-  onChange?(range: RangeValue): void;
+  onChange?(range: DatesRangeValue): void;
 
   /** Determines whether single year can be selected as range */
   allowSingleDateInRange?: boolean;

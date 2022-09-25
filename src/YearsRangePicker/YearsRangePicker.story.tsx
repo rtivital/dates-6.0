@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RangeValue } from '../types';
+import { DatesRangeValue } from '../types';
 import { YearsRangePicker } from './YearsRangePicker';
 
 export default { title: 'YearsRangePicker' };
@@ -13,7 +13,7 @@ export function Usage() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<RangeValue>([new Date(2022, 3, 11), null]);
+  const [value, setValue] = useState<DatesRangeValue>([new Date(2022, 3, 11), null]);
 
   return (
     <div style={{ padding: 40 }}>

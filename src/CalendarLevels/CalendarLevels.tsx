@@ -62,7 +62,7 @@ export interface CalendarLevelSettings
 
 export interface CalendarLevelsBaseProps
   extends DefaultProps<CalendarLevelsStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {
   __staticSelector?: string;
 
   /** Determines whether date should be updated when year control is clicked */
