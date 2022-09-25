@@ -11,6 +11,14 @@ export function Usage() {
   );
 }
 
+export function AllowDeselect() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearPicker allowDeselect />
+    </div>
+  );
+}
+
 export function Controlled() {
   const [value, setValue] = useState<Date | null>(null);
   return (

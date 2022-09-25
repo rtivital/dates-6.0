@@ -39,6 +39,22 @@ describe('@mantine/dates/YearPicker', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('supports allowDeselect', async () => {
+    const spy = jest.fn();
+    const { container, rerender } = render(<YearPicker {...defaultProps} onChange={spy} />);
+
+    await userEvent.click(container.querySelector('table button'));
+    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
+    await userEvent.click(container.querySelector('table button'));
+    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
+
+    rerender(<YearPicker {...defaultProps} onChange={spy} allowDeselect />);
+    await userEvent.click(container.querySelector('table button'));
+    expect(spy).toHaveBeenCalledWith(null);
+    await userEvent.click(container.querySelector('table button'));
+    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
+  });
+
   it('has correct default __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} />);
     expect(container.firstChild).toHaveClass('mantine-YearPicker-calendarLevels');
