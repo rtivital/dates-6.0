@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
-import { useDatesRange } from '../__utils__/use-dates-range';
+import { useDatesRangeState } from '../__utils__/use-dates-range-state';
 import { RangeValue } from '../types';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { CalendarLevels, CalendarLevelsBaseProps } from '../CalendarLevels';
@@ -32,14 +32,15 @@ export const YearsRangePicker = forwardRef<HTMLDivElement, YearsRangePickerProps
     onMouseLeave,
     ...others
   } = useComponentDefaultProps('YearsRangePicker', defaultProps, props);
-  const { onRangeChange, onRootMouseLeave, onHoveredDateChange, getControlProps } = useDatesRange({
-    level: 'year',
-    allowSingleDateInRange,
-    value,
-    defaultValue,
-    onChange,
-    onMouseLeave,
-  });
+  const { onRangeChange, onRootMouseLeave, onHoveredDateChange, getControlProps } =
+    useDatesRangeState({
+      level: 'year',
+      allowSingleDateInRange,
+      value,
+      defaultValue,
+      onChange,
+      onMouseLeave,
+    });
 
   return (
     <CalendarLevels

@@ -19,7 +19,7 @@ interface UseDatesRangeInput {
   onMouseLeave?(event: React.MouseEvent<HTMLDivElement>): void;
 }
 
-export function useDatesRange({
+export function useDatesRangeState({
   level,
   value,
   defaultValue,
