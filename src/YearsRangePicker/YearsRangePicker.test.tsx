@@ -32,4 +32,26 @@ describe('@mantine/dates/YearsRangePicker', () => {
     await userEvent.click(container.querySelector('table button'));
     expect(spy).toHaveBeenLastCalledWith([new Date(2020, 0, 1), null]);
   });
+
+  it('handles allowSingleDateInRange={true} correctly', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <YearsRangePicker {...defaultProps} allowSingleDateInRange onChange={spy} />
+    );
+    await userEvent.click(container.querySelectorAll('table button')[2]);
+    expect(spy).toHaveBeenCalledWith([new Date(2022, 0, 1), null]);
+    await userEvent.click(container.querySelectorAll('table button')[2]);
+    expect(spy).toHaveBeenCalledWith([new Date(2022, 0, 1), new Date(2022, 0, 1)]);
+  });
+
+  it('handles allowSingleDateInRange={false} correctly', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <YearsRangePicker {...defaultProps} allowSingleDateInRange={false} onChange={spy} />
+    );
+    await userEvent.click(container.querySelectorAll('table button')[2]);
+    expect(spy).toHaveBeenCalledWith([new Date(2022, 0, 1), null]);
+    await userEvent.click(container.querySelectorAll('table button')[2]);
+    expect(spy).toHaveBeenCalledWith([null, null]);
+  });
 });
