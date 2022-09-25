@@ -34,7 +34,7 @@ export function useDatesRange({
     onChange,
   });
 
-  const [pickedDate, setPickedDate] = useState<Date>(null);
+  const [pickedDate, setPickedDate] = useState<Date>(_value[0] && !_value[1] ? _value[0] : null);
   const [hoveredDate, setHoveredDate] = useState<Date>(null);
 
   const onRangeChange = (date: Date) => {
