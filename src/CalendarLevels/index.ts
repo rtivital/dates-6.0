@@ -5,4 +5,5 @@ export type {
   CalendarLevelsProps,
   CalendarLevelsStylesNames,
   CalendarLevelsBaseProps,
+  CalendarLevelsSystemProps,
 } from './CalendarLevels';

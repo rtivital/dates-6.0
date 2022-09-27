@@ -60,9 +60,11 @@ export interface CalendarLevelSettings
   onMonthMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
 }
 
-export interface CalendarLevelsBaseProps
+export interface CalendarLevelsSystemProps
   extends DefaultProps<CalendarLevelsStylesNames>,
-    Omit<React.ComponentPropsWithRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {}
+
+export interface CalendarLevelsBaseProps {
   __staticSelector?: string;
 
   /** Determines whether date should be updated when year control is clicked */
@@ -90,7 +92,10 @@ export interface CalendarLevelsBaseProps
   ariaLabels?: CalendarLevelsAriaLabels;
 }
 
-export interface CalendarLevelsProps extends CalendarLevelSettings, CalendarLevelsBaseProps {
+export interface CalendarLevelsProps
+  extends CalendarLevelSettings,
+    CalendarLevelsBaseProps,
+    CalendarLevelsSystemProps {
   /** Max level that user can go up to (decade, year, month), defaults to decade */
   maxLevel?: CalendarLevel;
 
