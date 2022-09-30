@@ -7,6 +7,7 @@ import {
   DefaultProps,
   Selectors,
   Popover,
+  Modal,
   InputStylesNames,
   InputWrapperStylesNames,
 } from '@mantine/core';
@@ -31,6 +32,9 @@ export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
     Omit<React.ComponentPropsWithRef<'button'>, 'defaultValue' | 'value' | 'onChange' | 'type'> {
   /** Determines whether dropdown should be closed when date is selected, not applicable when type="multiple", true by default */
   closeOnChange?: boolean;
+
+  /** Type of dropdown, defaults to popover */
+  dropdownType?: 'popover' | 'modal';
 
   /** Props added to Popover component */
   popoverProps?: DatesPopoverProps;
@@ -62,6 +66,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     unstyled,
     popoverProps,
     closeOnChange,
+    dropdownType,
     ...rest
   } = useInputProps('YearPickerInput', defaultProps, props);
 
@@ -96,28 +101,9 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
   };
 
   return (
-    <Input.Wrapper __staticSelector="YearPickerInput" {...wrapperProps}>
-      <Popover
-        position="bottom-start"
-        opened={dropdownOpened}
-        onClose={dropdownHandlers.close}
-        {...popoverProps}
-      >
-        <Popover.Target>
-          <Input
-            component="button"
-            __staticSelector="YearPickerInput"
-            onClick={dropdownHandlers.toggle}
-            {...inputProps}
-            classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
-            {...others}
-            ref={ref}
-          >
-            {formattedValue || <div className={classes.placeholder}>{placeholder}</div>}
-          </Input>
-        </Popover.Target>
-
-        <Popover.Dropdown>
+    <>
+      {dropdownType === 'modal' && (
+        <Modal opened={dropdownOpened} onClose={dropdownHandlers.close} withCloseButton={false}>
           <YearPicker
             {...calendarLevelsProps}
             type={type}
@@ -130,9 +116,47 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
             unstyled={unstyled}
             __staticSelector="YearPickerInput"
           />
-        </Popover.Dropdown>
-      </Popover>
-    </Input.Wrapper>
+        </Modal>
+      )}
+
+      <Input.Wrapper __staticSelector="YearPickerInput" {...wrapperProps}>
+        <Popover
+          position="bottom-start"
+          opened={dropdownOpened}
+          onClose={dropdownHandlers.close}
+          {...popoverProps}
+        >
+          <Popover.Target>
+            <Input
+              component="button"
+              __staticSelector="YearPickerInput"
+              onClick={dropdownHandlers.toggle}
+              {...inputProps}
+              classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
+              {...others}
+              ref={ref}
+            >
+              {formattedValue || <div className={classes.placeholder}>{placeholder}</div>}
+            </Input>
+          </Popover.Target>
+
+          <Popover.Dropdown>
+            <YearPicker
+              {...calendarLevelsProps}
+              type={type}
+              value={_value}
+              onChange={handleChange}
+              yearsListFormat={yearsListFormat}
+              locale={locale}
+              classNames={classNames}
+              styles={styles}
+              unstyled={unstyled}
+              __staticSelector="YearPickerInput"
+            />
+          </Popover.Dropdown>
+        </Popover>
+      </Input.Wrapper>
+    </>
   );
 });
 

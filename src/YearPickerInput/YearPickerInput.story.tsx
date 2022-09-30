@@ -11,6 +11,14 @@ export function Usage() {
   );
 }
 
+export function DropdownModal() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <YearPickerInput label="Year picker input" placeholder="Pick year" dropdownType="modal" />
+    </div>
+  );
+}
+
 export function Range() {
   return (
     <div style={{ padding: 40 }}>
