@@ -1,12 +1,23 @@
 import React, { forwardRef } from 'react';
-import { Input, useInputProps, InputSharedProps, InputWrapperBaseProps } from '@mantine/core';
+import {
+  Input,
+  useInputProps,
+  InputSharedProps,
+  InputWrapperBaseProps,
+  DefaultProps,
+  Selectors,
+} from '@mantine/core';
 import { useDatesInput } from '../__utils__/use-dates-input';
-import { pickCalendarLevelsProps } from '../CalendarLevels';
+import { pickCalendarLevelsProps, CalendarLevelsStylesNames } from '../CalendarLevels';
 import { YearPicker, YearPickerBaseProps } from '../YearPicker';
 import { DatePickerType } from '../types';
+import useStyles from './YearPickerInput.styles';
+
+export type YearPickerInputStylesNames = CalendarLevelsStylesNames | Selectors<typeof useStyles>;
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
-  extends InputSharedProps,
+  extends DefaultProps<YearPickerInputStylesNames>,
+    InputSharedProps,
     InputWrapperBaseProps,
     YearPickerBaseProps<Type>,
     Omit<React.ComponentPropsWithRef<'button'>, 'defaultValue' | 'value' | 'onChange' | 'type'> {}
@@ -30,9 +41,14 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     onChange,
     yearsListFormat,
     locale,
+    placeholder,
+    classNames,
+    styles,
+    unstyled,
     ...rest
   } = useInputProps('YearPickerInput', defaultProps, props);
 
+  const { classes } = useStyles(null, { classNames, styles, unstyled, name: 'YearPickerInput' });
   const { calendarLevelsProps, others } = pickCalendarLevelsProps(rest);
 
   const { _value, setValue, formattedValue } = useDatesInput({
@@ -45,9 +61,15 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
   });
 
   return (
-    <Input.Wrapper {...wrapperProps}>
-      <Input component="button" {...inputProps} {...others} ref={ref}>
-        {formattedValue}
+    <Input.Wrapper __staticSelector="YearPickerInput" {...wrapperProps}>
+      <Input
+        component="button"
+        __staticSelector="YearPickerInput"
+        {...inputProps}
+        {...others}
+        ref={ref}
+      >
+        {formattedValue || <div className={classes.placeholder}>{placeholder}</div>}
       </Input>
       <YearPicker
         {...calendarLevelsProps}
@@ -56,6 +78,10 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
         onChange={setValue}
         yearsListFormat={yearsListFormat}
         locale={locale}
+        classNames={classNames}
+        styles={styles}
+        unstyled={unstyled}
+        __staticSelector="YearPickerInput"
       />
     </Input.Wrapper>
   );
