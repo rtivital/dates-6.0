@@ -1,4 +1,5 @@
 export { CalendarLevels } from './CalendarLevels';
+export { pickCalendarLevelsProps } from './pick-calendar-levels-props/pick-calendar-levels-props';
 export type {
   CalendarLevelSettings,
   CalendarLevelsAriaLabels,

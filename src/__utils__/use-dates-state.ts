@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
 import { DatePickerType, DatePickerBaseProps } from '../types';
+import { useUncontrolledDates } from './use-uncontrolled-dates';
 
 function isInRange(date: Date, range: [Date, Date]) {
   const _range = [...range].sort((a, b) => a.getTime() - b.getTime());
@@ -28,12 +28,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   allowDeselect,
   onMouseLeave,
 }: UseDatesRangeInput<Type>) {
-  const [_value, setValue] = useUncontrolled<any>({
-    value,
-    defaultValue,
-    finalValue: type === 'range' ? [null, null] : type === 'multiple' ? [] : null,
-    onChange,
-  });
+  const [_value, setValue] = useUncontrolledDates({ type, value, defaultValue, onChange });
 
   const [pickedDate, setPickedDate] = useState<Date>(
     type === 'range' ? (_value[0] && !_value[1] ? _value[0] : null) : null
