@@ -5,8 +5,8 @@ export default { title: 'YearPickerInput' };
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
-      <YearPickerInput label="Year picker input" placeholder="Pick year" />
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <YearPickerInput label="Year picker input" placeholder="Pick year" numberOfColumns={3} />
     </div>
   );
 }

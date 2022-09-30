@@ -6,4 +6,8 @@ export default createStyles((theme) => ({
     userSelect: 'none',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
   },
+
+  input: {
+    cursor: 'pointer',
+  },
 }));
