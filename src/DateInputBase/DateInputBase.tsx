@@ -69,6 +69,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
     formattedValue,
     dropdownHandlers,
     dropdownOpened,
+    onClick,
     ...others
   } = useInputProps(props.__staticSelector, defaultProps, props);
 
@@ -93,7 +94,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
         </Modal>
       )}
 
-      <Input.Wrapper __staticSelector={inputProps.__staticSelector} {...wrapperProps}>
+      <Input.Wrapper {...wrapperProps}>
         <Popover
           position="bottom-start"
           opened={dropdownOpened}
@@ -104,8 +105,10 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
           <Popover.Target>
             <Input
               component="button"
-              __staticSelector={inputProps.__staticSelector}
-              onClick={dropdownHandlers.toggle}
+              onClick={(event) => {
+                onClick?.(event);
+                dropdownHandlers.toggle();
+              }}
               {...inputProps}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}

@@ -38,4 +38,34 @@ describe('@mantine/dates/DateInputBase', () => {
     await userEvent.click(document.body);
     expect(close).toHaveBeenCalled();
   });
+
+  it('supports __staticSelector', () => {
+    const { container } = render(
+      <DateInputBase {...defaultProps} __staticSelector="TestStaticSelector" />
+    );
+    expect(container.firstChild).toHaveClass('mantine-TestStaticSelector-root');
+    expect(screen.getByText('test-value')).toHaveClass('mantine-TestStaticSelector-input');
+  });
+
+  it('changes between Popover and Modal based on dropdownType prop', () => {
+    const { rerender, container } = render(
+      <DateInputBase {...defaultProps} dropdownOpened dropdownType="popover" />
+    );
+
+    expect(container.querySelector('.mantine-Popover-dropdown')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-Modal-root')).not.toBeInTheDocument();
+    expect(screen.getByText('test-children')).toBeInTheDocument();
+
+    rerender(<DateInputBase {...defaultProps} dropdownOpened dropdownType="modal" />);
+    expect(container.querySelector('.mantine-Popover-dropdown')).not.toBeInTheDocument();
+    expect(container.querySelector('.mantine-Modal-root')).toBeInTheDocument();
+    expect(screen.getByText('test-children')).toBeInTheDocument();
+  });
+
+  it('supports onClick handler', async () => {
+    const spy = jest.fn();
+    render(<DateInputBase {...defaultProps} onClick={spy} />);
+    await userEvent.click(screen.getByText('test-value'));
+    expect(spy).toHaveBeenCalled();
+  });
 });
