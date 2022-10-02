@@ -10,12 +10,14 @@ import {
   Modal,
   InputStylesNames,
   InputWrapperStylesNames,
+  PopoverProps,
+  ModalProps,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useDatesInput } from '../__utils__/use-dates-input';
 import { pickCalendarLevelsProps, CalendarLevelsStylesNames } from '../CalendarLevels';
 import { YearPicker, YearPickerBaseProps } from '../YearPicker';
-import { DatePickerType, DatesPopoverProps } from '../types';
+import { DatePickerType } from '../types';
 import useStyles from './YearPickerInput.styles';
 
 export type YearPickerInputStylesNames =
@@ -37,7 +39,10 @@ export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
   dropdownType?: 'popover' | 'modal';
 
   /** Props added to Popover component */
-  popoverProps?: DatesPopoverProps;
+  popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
+
+  /** Props added to Modal component */
+  modalProps?: Partial<Omit<ModalProps, 'children'>>;
 }
 
 type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
@@ -65,6 +70,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     styles,
     unstyled,
     popoverProps,
+    modalProps,
     closeOnChange,
     dropdownType,
     ...rest
@@ -103,7 +109,13 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
   return (
     <>
       {dropdownType === 'modal' && (
-        <Modal opened={dropdownOpened} onClose={dropdownHandlers.close} withCloseButton={false}>
+        <Modal
+          opened={dropdownOpened}
+          onClose={dropdownHandlers.close}
+          withCloseButton={false}
+          size="auto"
+          {...modalProps}
+        >
           <YearPicker
             {...calendarLevelsProps}
             type={type}
@@ -124,6 +136,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
           position="bottom-start"
           opened={dropdownOpened}
           onClose={dropdownHandlers.close}
+          disabled={dropdownType === 'modal'}
           {...popoverProps}
         >
           <Popover.Target>
