@@ -1,3 +1,4 @@
+import { useDisclosure } from '@mantine/hooks';
 import { DatePickerType, DatePickerValue } from '../types';
 import { useDatesContext } from '../DatesProvider';
 import { useUncontrolledDates } from './use-uncontrolled-dates';
@@ -21,7 +22,10 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   format,
 }: UseDatesInput<Type>) {
   const ctx = useDatesContext();
-  const [_value, setValue] = useUncontrolledDates({
+
+  const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
+
+  const [_value, _setValue] = useUncontrolledDates({
     type,
     value,
     defaultValue,
@@ -35,9 +39,23 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     format,
   });
 
+  const setValue = (val: any) => {
+    if (type === 'default') {
+      dropdownHandlers.close();
+    }
+
+    if (type === 'range' && val[0] && val[1]) {
+      dropdownHandlers.close();
+    }
+
+    _setValue(val);
+  };
+
   return {
     _value,
     setValue,
     formattedValue,
+    dropdownOpened,
+    dropdownHandlers,
   };
 }

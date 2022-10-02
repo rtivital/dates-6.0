@@ -37,7 +37,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
 
   const onDateChange = (date: Date) => {
     if (type === 'range') {
-      if (pickedDate instanceof Date) {
+      if (pickedDate instanceof Date && !_value[1]) {
         if (dayjs(date).isSame(pickedDate, level) && !allowSingleDateInRange) {
           setPickedDate(null);
           setHoveredDate(null);
@@ -52,7 +52,12 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
         return;
       }
 
-      if (_value[0] && dayjs(date).isSame(_value[0], level) && !allowSingleDateInRange) {
+      if (
+        _value[0] &&
+        !_value[1] &&
+        dayjs(date).isSame(_value[0], level) &&
+        !allowSingleDateInRange
+      ) {
         setPickedDate(null);
         setHoveredDate(null);
         setValue([null, null]);
@@ -148,7 +153,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
     return { selected: dayjs(_value).isSame(date, level) };
   };
 
-  const onHoveredDateChange = type === 'range' ? setHoveredDate : () => {};
+  const onHoveredDateChange = type === 'range' && pickedDate ? setHoveredDate : () => {};
 
   return {
     onDateChange,
