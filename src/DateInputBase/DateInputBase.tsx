@@ -82,15 +82,6 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
 
   const inputRef = useRef<HTMLButtonElement>();
 
-  const handleDropdownKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (
-      event.target.hasAttribute('data-picker-control') &&
-      (event.key === ' ' || event.key === 'Enter')
-    ) {
-      setTimeout(() => inputRef.current?.focus(), 0);
-    }
-  };
-
   return (
     <>
       {dropdownType === 'modal' && (
@@ -130,7 +121,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
             </Input>
           </Popover.Target>
 
-          <Popover.Dropdown onKeyDownCapture={handleDropdownKeyDown}>{children}</Popover.Dropdown>
+          <Popover.Dropdown>{children}</Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
     </>

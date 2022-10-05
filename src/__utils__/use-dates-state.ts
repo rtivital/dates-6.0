@@ -150,7 +150,8 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       };
     }
 
-    return { selected: dayjs(_value).isSame(date, level) };
+    const selected = dayjs(_value).isSame(date, level);
+    return { selected, 'data-autofocus': selected || undefined };
   };
 
   const onHoveredDateChange = type === 'range' && pickedDate ? setHoveredDate : () => {};
