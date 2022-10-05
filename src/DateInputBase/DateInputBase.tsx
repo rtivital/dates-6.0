@@ -103,6 +103,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
           onClose={dropdownHandlers.close}
           disabled={dropdownType === 'modal'}
           trapFocus
+          returnFocus
           {...popoverProps}
         >
           <Popover.Target>
