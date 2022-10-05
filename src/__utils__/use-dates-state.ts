@@ -139,6 +139,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
         inRange: isDateInRange(date),
         firstInRange: isFirstInRange(date),
         lastInRange: isLastInRange(date),
+        'data-autofocus': (!!_value[0] && dayjs(_value[0]).isSame(date, level)) || undefined,
       };
     }
 
@@ -147,6 +148,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
         selected: _value.some(
           (selection: Date) => selection && dayjs(selection).isSame(date, level)
         ),
+        'data-autofocus': (!!_value[0] && dayjs(_value[0]).isSame(date, level)) || undefined,
       };
     }
 
