@@ -60,6 +60,7 @@ export const CalendarPickerControl = forwardRef<HTMLButtonElement, CalendarPicke
         className={cx(classes.calendarPickerControl, className)}
         ref={ref}
         unstyled={unstyled}
+        data-picker-control
         data-selected={(selected && !disabled) || undefined}
         data-disabled={disabled || undefined}
         data-in-range={(inRange && !disabled && !selected) || undefined}

@@ -16,7 +16,7 @@ const defaultProps: DateInputBaseProps = {
 };
 
 describe('@mantine/dates/DateInputBase', () => {
-  it('opens toggles dropdown when ', async () => {
+  it('opens/toggles dropdown with click events', async () => {
     const toggle = jest.fn();
     const close = jest.fn();
     const { rerender } = render(
@@ -67,5 +67,18 @@ describe('@mantine/dates/DateInputBase', () => {
     render(<DateInputBase {...defaultProps} onClick={spy} />);
     await userEvent.click(screen.getByText('test-value'));
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('displays placeholder if formattedValue is not provided', () => {
+    const { rerender } = render(
+      <DateInputBase {...defaultProps} formattedValue={null} placeholder="test-placeholder" />
+    );
+
+    expect(screen.getByText('test-placeholder')).toBeInTheDocument();
+    rerender(
+      <DateInputBase {...defaultProps} formattedValue="test-value" placeholder="test-placeholder" />
+    );
+    expect(screen.getByText('test-value')).toBeInTheDocument();
+    expect(screen.queryAllByText('test-placeholder')).toHaveLength(0);
   });
 });

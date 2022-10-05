@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import {
   Input,
   useInputProps,
@@ -13,7 +13,7 @@ import {
   PopoverProps,
   ModalProps,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useMergedRef } from '@mantine/hooks';
 import { CalendarLevelsStylesNames } from '../CalendarLevels';
 import useStyles from './DateInputBase.styles';
 
@@ -80,6 +80,17 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
     name: inputProps.__staticSelector,
   });
 
+  const inputRef = useRef<HTMLButtonElement>();
+
+  const handleDropdownKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (
+      event.target.hasAttribute('data-picker-control') &&
+      (event.key === ' ' || event.key === 'Enter')
+    ) {
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  };
+
   return (
     <>
       {dropdownType === 'modal' && (
@@ -100,6 +111,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
           opened={dropdownOpened}
           onClose={dropdownHandlers.close}
           disabled={dropdownType === 'modal'}
+          trapFocus
           {...popoverProps}
         >
           <Popover.Target>
@@ -110,15 +122,15 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
                 dropdownHandlers.toggle();
               }}
               {...inputProps}
+              ref={useMergedRef(ref, inputRef)}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}
-              ref={ref}
             >
               {formattedValue || <div className={classes.placeholder}>{placeholder}</div>}
             </Input>
           </Popover.Target>
 
-          <Popover.Dropdown>{children}</Popover.Dropdown>
+          <Popover.Dropdown onKeyDownCapture={handleDropdownKeyDown}>{children}</Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
     </>
