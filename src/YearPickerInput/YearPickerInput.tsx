@@ -63,6 +63,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
         {...calendarLevelsProps}
         type={type}
         value={_value}
+        defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}
         onChange={setValue}
         yearsListFormat={yearsListFormat}
         locale={locale}
