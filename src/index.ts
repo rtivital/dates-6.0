@@ -15,4 +15,5 @@ export * from './components/WeekdaysRow';
 export * from './components/YearLevel';
 export * from './components/YearLevelGroup';
 export * from './components/YearPicker';
+export * from './components/YearPickerInput';
 export * from './components/YearsList';
