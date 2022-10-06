@@ -1,7 +1,7 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import { DatesProvider } from '../DatesProvider';
+import { DatesProvider } from '../components/DatesProvider';
 
 export function expectWeekdaysNames(names: string[]) {
   expect(screen.getAllByRole('columnheader').map((th) => th.textContent)).toStrictEqual(names);

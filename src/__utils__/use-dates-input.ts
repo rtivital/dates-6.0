@@ -1,6 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
 import { DatePickerType, DatePickerValue } from '../types';
-import { useDatesContext } from '../DatesProvider';
+import { useDatesContext } from '../components/DatesProvider';
 import { useUncontrolledDates } from './use-uncontrolled-dates';
 import { getFormattedDate } from './get-formatted-date';
 

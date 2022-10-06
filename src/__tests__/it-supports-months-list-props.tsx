@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
 import { render } from '@testing-library/react';
-import { DatesProvider } from '../DatesProvider';
+import { DatesProvider } from '../components/DatesProvider';
 
 export interface MonthsListProps {
   locale?: string;

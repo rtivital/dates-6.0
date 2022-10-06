@@ -4,7 +4,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { itSupportsWeekdaysProps, WeekdaysTestProps } from './it-supports-weekdays-props';
-import { DatesProvider } from '../DatesProvider';
+import { DatesProvider } from '../components/DatesProvider';
 
 export interface MonthTestProps extends WeekdaysTestProps {
   weekendDays?: number[];
