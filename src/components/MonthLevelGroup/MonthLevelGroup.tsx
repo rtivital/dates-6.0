@@ -2,7 +2,7 @@ import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
 import dayjs from 'dayjs';
 import { MonthLevel, MonthLevelStylesNames, MonthLevelSettings } from '../MonthLevel';
-import { handleControlKeyDown } from '../../__utils__/handle-control-key-down';
+import { handleControlKeyDown } from '../../utils/handle-control-key-down';
 import useStyles from './MonthLevelGroup.styles';
 
 export type MonthLevelGroupStylesNames = Selectors<typeof useStyles> | MonthLevelStylesNames;

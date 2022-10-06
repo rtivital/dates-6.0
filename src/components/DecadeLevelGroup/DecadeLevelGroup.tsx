@@ -2,7 +2,7 @@ import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DecadeLevel, DecadeLevelStylesNames, DecadeLevelSettings } from '../DecadeLevel';
-import { handleControlKeyDown } from '../../__utils__/handle-control-key-down';
+import { handleControlKeyDown } from '../../utils/handle-control-key-down';
 import useStyles from './DecadeLevelGroup.styles';
 
 export type DecadeLevelGroupStylesNames = Selectors<typeof useStyles> | DecadeLevelStylesNames;
