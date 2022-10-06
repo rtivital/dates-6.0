@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import { YearPickerInput } from './YearPickerInput';
 
@@ -36,6 +37,26 @@ export function Multiple() {
   return (
     <div style={{ padding: 40 }}>
       <YearPickerInput type="multiple" label="Year picker input" />
+    </div>
+  );
+}
+
+export function SelectedDisabledYear() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearPickerInput
+        label="Year picker input"
+        defaultValue={new Date()}
+        getYearControlProps={(date) => ({ disabled: dayjs(date).isSame(new Date(), 'year') })}
+      />
+    </div>
+  );
+}
+
+export function WithMaxDate() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearPickerInput label="Year picker input" maxDate={new Date()} />
     </div>
   );
 }

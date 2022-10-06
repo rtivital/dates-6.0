@@ -28,7 +28,7 @@ function focusOnNextFocusableControl({
     ? payload.cellIndex
     : payload.cellIndex + (direction === 'right' ? count : -count);
 
-  const controlToFocus = controlsRef.current[index][rowIndex][cellIndex];
+  const controlToFocus = controlsRef.current[index][rowIndex]?.[cellIndex];
 
   if (!controlToFocus) {
     return;
