@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { DatesProvider } from '../components/DatesProvider';
 
-export interface MonthsListProps {
+export interface YearsListProps {
   locale?: string;
   yearsListFormat?: string;
   decade?: Date;
@@ -58,7 +58,7 @@ function expectYearNames(container: HTMLElement, monthNames: string[]) {
 }
 
 export function itSupportsYearsListProps(
-  Component: React.FC<MonthsListProps>,
+  Component: React.FC<YearsListProps>,
   requiredProps?: Record<string, any>
 ) {
   it('renders correct years list', () => {
@@ -89,7 +89,11 @@ export function itSupportsYearsListProps(
 
   it('disables years if they are before minDate', () => {
     const { container } = render(
-      <Component decade={new Date(2022, 3, 11)} minDate={new Date(2023, 4, 11)} />
+      <Component
+        {...requiredProps}
+        decade={new Date(2022, 3, 11)}
+        minDate={new Date(2023, 4, 11)}
+      />
     );
     const years = container.querySelectorAll('table button');
     expect(years[0]).toBeDisabled();
@@ -101,9 +105,13 @@ export function itSupportsYearsListProps(
 
   it('disables years if they are after minDate', () => {
     const { container } = render(
-      <Component decade={new Date(2022, 3, 11)} maxDate={new Date(2023, 4, 11)} />
+      <Component
+        {...requiredProps}
+        decade={new Date(2022, 3, 11)}
+        maxDate={new Date(2023, 4, 11)}
+      />
     );
-    const years = container.querySelectorAll('table button');
+    const years = container.querySelectorAll('[data-picker-control]');
     expect(years[0]).not.toBeDisabled();
     expect(years[3]).not.toBeDisabled();
     expect(years[4]).toBeDisabled();
@@ -120,7 +128,7 @@ export function itSupportsYearsListProps(
       />
     );
 
-    const years = container.querySelectorAll('table button');
+    const years = container.querySelectorAll('[data-picker-control]');
     expect(years[1]).not.toHaveAttribute('data-selected');
     expect(years[2]).toHaveAttribute('data-selected');
     expect(years[3]).not.toHaveAttribute('data-selected');

@@ -70,8 +70,8 @@ export const YearPicker: YearPickerComponent = forwardRef(
           onYearSelect?.(date);
         }}
         getYearControlProps={(date) => ({
-          ...getYearControlProps?.(date),
           ...getControlProps(date),
+          ...getYearControlProps?.(date),
         })}
         {...others}
       />

@@ -1,11 +1,20 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { itSupportsYearsListProps, itHandlesControlsKeyboardEvents } from '../../tests';
 import { YearPicker } from './YearPicker';
 
 const defaultProps = {};
 
 describe('@mantine/dates/YearPicker', () => {
+  itSupportsYearsListProps(YearPicker, defaultProps);
+  itHandlesControlsKeyboardEvents(
+    YearPicker,
+    'decade',
+    '.mantine-YearPicker-yearsList',
+    defaultProps
+  );
+
   it('can be uncontrolled (type="default")', async () => {
     const { container } = render(<YearPicker {...defaultProps} date={new Date(2022, 3, 11)} />);
     expect(container.querySelector('[data-selected]')).toBe(null);
