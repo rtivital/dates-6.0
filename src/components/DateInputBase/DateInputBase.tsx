@@ -113,6 +113,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
           onClose={dropdownHandlers.close}
           withCloseButton={false}
           size="auto"
+          data-dates-modal
           {...modalProps}
         >
           {children}
@@ -131,6 +132,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
         >
           <Popover.Target>
             <Input
+              data-dates-input
               component="button"
               onClick={(event) => {
                 onClick?.(event);
@@ -146,7 +148,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
             </Input>
           </Popover.Target>
 
-          <Popover.Dropdown>{children}</Popover.Dropdown>
+          <Popover.Dropdown data-dates-dropdown>{children}</Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
     </>
