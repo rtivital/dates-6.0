@@ -83,4 +83,84 @@ describe('@mantine/dates/DateInputBase', () => {
     expect(screen.getByText('test-value')).toBeInTheDocument();
     expect(screen.queryAllByText('test-placeholder')).toHaveLength(0);
   });
+
+  it('renders clear button if both clearable and shouldClear props are set', () => {
+    const { rerender } = render(
+      <DateInputBase
+        {...defaultProps}
+        clearable
+        shouldClear
+        clearButtonProps={{ 'aria-label': 'test-clear' }}
+      />
+    );
+
+    expect(screen.getByLabelText('test-clear')).toBeInTheDocument();
+
+    rerender(
+      <DateInputBase
+        {...defaultProps}
+        clearable={false}
+        shouldClear
+        clearButtonProps={{ 'aria-label': 'test-clear' }}
+      />
+    );
+
+    expect(screen.queryAllByLabelText('test-clear')).toHaveLength(0);
+
+    rerender(
+      <DateInputBase
+        {...defaultProps}
+        clearable
+        shouldClear={false}
+        clearButtonProps={{ 'aria-label': 'test-clear' }}
+      />
+    );
+
+    expect(screen.queryAllByLabelText('test-clear')).toHaveLength(0);
+  });
+
+  it('calls onClear when clear button is clicked', async () => {
+    const spy = jest.fn();
+
+    render(
+      <DateInputBase
+        {...defaultProps}
+        clearable
+        shouldClear
+        onClear={spy}
+        clearButtonProps={{ 'aria-label': 'test-clear' }}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-clear'));
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('supports clearButtonProps', () => {
+    render(
+      <DateInputBase
+        {...defaultProps}
+        clearable
+        shouldClear
+        clearButtonProps={{ 'aria-label': 'test-clear', 'data-test-attr': true } as any}
+      />
+    );
+
+    expect(screen.getByLabelText('test-clear')).toHaveAttribute('data-test-attr');
+  });
+
+  it('renders given rightSection instead of clear button', () => {
+    render(
+      <DateInputBase
+        {...defaultProps}
+        clearable
+        shouldClear
+        clearButtonProps={{ 'aria-label': 'test-clear' }}
+        rightSection={<span>test-right-section</span>}
+      />
+    );
+
+    expect(screen.queryAllByLabelText('test-clear')).toHaveLength(0);
+    expect(screen.getByText('test-right-section')).toBeInTheDocument();
+  });
 });
