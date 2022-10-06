@@ -38,7 +38,15 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
 
   const { calendarLevelsProps, others } = pickCalendarLevelsProps(rest);
 
-  const { _value, setValue, formattedValue, dropdownHandlers, dropdownOpened } = useDatesInput({
+  const {
+    _value,
+    setValue,
+    formattedValue,
+    dropdownHandlers,
+    dropdownOpened,
+    onClear,
+    shouldClear,
+  } = useDatesInput({
     type,
     value,
     defaultValue,
@@ -57,6 +65,8 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
       unstyled={unstyled}
       __staticSelector="YearPickerInput"
       ref={ref}
+      onClear={onClear}
+      shouldClear={shouldClear}
       {...others}
     >
       <YearPicker

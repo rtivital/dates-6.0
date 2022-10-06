@@ -60,3 +60,13 @@ export function WithMaxDate() {
     </div>
   );
 }
+
+export function Clearable() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearPickerInput label="Default" clearable />
+      <YearPickerInput label="Multiple" type="multiple" clearable />
+      <YearPickerInput label="Range" type="range" clearable />
+    </div>
+  );
+}

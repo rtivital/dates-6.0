@@ -51,9 +51,15 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     _setValue(val);
   };
 
+  const onClear = () => setValue(type === 'range' ? [null, null] : type === 'multiple' ? [] : null);
+  const shouldClear =
+    type === 'range' ? !!_value[0] : type === 'multiple' ? _value.length > 0 : _value !== null;
+
   return {
     _value,
     setValue,
+    onClear,
+    shouldClear,
     formattedValue,
     dropdownOpened,
     dropdownHandlers,

@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef } from 'react';
 import {
   Input,
   useInputProps,
@@ -12,8 +12,9 @@ import {
   InputWrapperStylesNames,
   PopoverProps,
   ModalProps,
+  CloseButton,
 } from '@mantine/core';
-import { useDisclosure, useMergedRef } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import { CalendarLevelsStylesNames } from '../CalendarLevels';
 import useStyles from './DateInputBase.styles';
 
@@ -39,6 +40,12 @@ export interface DateInputSharedProps
 
   /** Props added to Modal component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
+
+  /** Determines whether input value can be cleared, adds clear button to right section, false by default */
+  clearable?: boolean;
+
+  /** Props added to clear button */
+  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 }
 
 export interface DateInputBaseProps extends DateInputSharedProps {
@@ -47,6 +54,8 @@ export interface DateInputBaseProps extends DateInputSharedProps {
   formattedValue: string;
   dropdownHandlers: ReturnType<typeof useDisclosure>[1];
   dropdownOpened: boolean;
+  onClear(): void;
+  shouldClear: boolean;
 }
 
 const defaultProps: Partial<DateInputBaseProps> = {
@@ -70,6 +79,11 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
     dropdownHandlers,
     dropdownOpened,
     onClick,
+    clearable,
+    onClear,
+    clearButtonProps,
+    rightSection,
+    shouldClear,
     ...others
   } = useInputProps(props.__staticSelector, defaultProps, props);
 
@@ -80,7 +94,16 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
     name: inputProps.__staticSelector,
   });
 
-  const inputRef = useRef<HTMLButtonElement>();
+  const _rightSection =
+    rightSection ||
+    (clearable && shouldClear ? (
+      <CloseButton
+        variant="transparent"
+        onClick={onClear}
+        unstyled={unstyled}
+        {...clearButtonProps}
+      />
+    ) : null);
 
   return (
     <>
@@ -113,8 +136,9 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
                 onClick?.(event);
                 dropdownHandlers.toggle();
               }}
+              rightSection={_rightSection}
               {...inputProps}
-              ref={useMergedRef(ref, inputRef)}
+              ref={ref}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}
             >
