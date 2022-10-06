@@ -7,7 +7,7 @@ import {
   itSupportsOnControlKeydown,
   itSupportsOnControlClick,
   itSupportsOnControlMouseEnter,
-} from '../../__tests__';
+} from '../../tests';
 import { MonthsList, MonthsListProps } from './MonthsList';
 
 const defaultProps: MonthsListProps = {

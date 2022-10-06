@@ -5,7 +5,7 @@ import {
   itSupportsGetDayRef,
   itSupportsOnDayKeydown,
   itSupportsOnDayClick,
-} from '../../__tests__';
+} from '../../tests';
 import { Month, MonthProps } from './Month';
 
 const defaultProps: MonthProps = {

@@ -10,7 +10,7 @@ import {
   itSupportsGetControlRef,
   itSupportsOnControlClick,
   itSupportsOnControlMouseEnter,
-} from '../../__tests__';
+} from '../../tests';
 
 function expectLabel(label: string) {
   expect(screen.getByLabelText('level-control')).toHaveTextContent(label);

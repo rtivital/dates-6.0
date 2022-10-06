@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { itSupportsHeaderProps, itSupportsWithNextPrevious } from '../../__tests__';
+import { itSupportsHeaderProps, itSupportsWithNextPrevious } from '../../tests';
 import { CalendarHeader, CalendarHeaderProps } from './CalendarHeader';
 
 const defaultProps: CalendarHeaderProps = {

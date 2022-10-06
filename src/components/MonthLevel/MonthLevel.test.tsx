@@ -9,7 +9,7 @@ import {
   itSupportsWithNextPrevious,
   itSupportsOnDayKeydown,
   itSupportsOnDayClick,
-} from '../../__tests__';
+} from '../../tests';
 
 function expectLabel(label: string) {
   expect(screen.getByLabelText('level-control')).toHaveTextContent(label);

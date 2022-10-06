@@ -7,7 +7,7 @@ import {
   itSupportsOnControlClick,
   itHandlesControlsKeyboardEvents,
   itSupportsOnControlMouseEnter,
-} from '../../__tests__';
+} from '../../tests';
 
 const defaultProps: YearLevelGroupProps = {
   year: new Date(2022, 3, 11),

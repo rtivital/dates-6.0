@@ -2,7 +2,7 @@ import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { WeekdaysRow, WeekdaysRowProps } from './WeekdaysRow';
-import { itSupportsWeekdaysProps } from '../../__tests__';
+import { itSupportsWeekdaysProps } from '../../tests';
 
 const defaultProps: WeekdaysRowProps = {};
 

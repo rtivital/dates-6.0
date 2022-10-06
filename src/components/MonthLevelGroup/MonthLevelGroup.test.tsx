@@ -6,7 +6,7 @@ import {
   itSupportsHeaderProps,
   itSupportsOnDayClick,
   itHandlesMonthKeyboardEvents,
-} from '../../__tests__';
+} from '../../tests';
 
 const defaultProps: MonthLevelGroupProps = {
   month: new Date(2022, 3, 11),
