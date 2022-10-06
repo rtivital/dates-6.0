@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
-import { useDatesState } from '../../utils/use-dates-state';
+import { useDatesState } from '../../hooks';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { DatePickerBaseProps, DatePickerType } from '../../types';
 import {

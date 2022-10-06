@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
-import { useDatesInput } from '../../utils/use-dates-input';
+import { useDatesInput } from '../../hooks';
 import { pickCalendarLevelsProps } from '../CalendarLevels';
 import { YearPicker, YearPickerBaseProps } from '../YearPicker';
 import { DatePickerType } from '../../types';

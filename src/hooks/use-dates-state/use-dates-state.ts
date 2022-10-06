@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { DatePickerType, DatePickerBaseProps } from '../types';
-import { useUncontrolledDates } from './use-uncontrolled-dates';
+import { DatePickerType, DatePickerBaseProps } from '../../types';
+import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
 
 function isInRange(date: Date, range: [Date, Date]) {
   const _range = [...range].sort((a, b) => a.getTime() - b.getTime());

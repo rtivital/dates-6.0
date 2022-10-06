@@ -1,5 +1,5 @@
 import { useUncontrolled } from '@mantine/hooks';
-import { DatePickerType, DatePickerValue } from '../types';
+import { DatePickerType, DatePickerValue } from '../../types';
 
 interface UseUncontrolledDates<Type extends DatePickerType = 'default'> {
   type: Type;
