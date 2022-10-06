@@ -13,3 +13,4 @@ export { itSupportsOnDayClick } from './it-supports-on-day-click';
 export { itHandlesMonthKeyboardEvents } from './it-handles-month-keyboard-events';
 export { itHandlesControlsKeyboardEvents } from './it-handles-controls-keyboard-events';
 export { itSupportsOnControlMouseEnter } from './it-supports-on-control-mouse-enter';
+export { itSupportsClearableProps } from './it-supports-clearable-props';

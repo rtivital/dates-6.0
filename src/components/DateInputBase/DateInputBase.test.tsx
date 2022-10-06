@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { itSupportsClearableProps } from '../../tests';
 import { DateInputBase, DateInputBaseProps } from './DateInputBase';
 
 const noop = () => {};
@@ -14,10 +15,12 @@ const defaultProps: DateInputBaseProps = {
   modalProps: { withinPortal: false, transitionDuration: 0 },
   popoverProps: { transitionDuration: 0 },
   onClear: noop,
-  shouldClear: false,
+  shouldClear: true,
 };
 
 describe('@mantine/dates/DateInputBase', () => {
+  itSupportsClearableProps(DateInputBase, defaultProps);
+
   it('opens/toggles dropdown with click events', async () => {
     const toggle = jest.fn();
     const close = jest.fn();
@@ -134,33 +137,5 @@ describe('@mantine/dates/DateInputBase', () => {
 
     await userEvent.click(screen.getByLabelText('test-clear'));
     expect(spy).toHaveBeenCalled();
-  });
-
-  it('supports clearButtonProps', () => {
-    render(
-      <DateInputBase
-        {...defaultProps}
-        clearable
-        shouldClear
-        clearButtonProps={{ 'aria-label': 'test-clear', 'data-test-attr': true } as any}
-      />
-    );
-
-    expect(screen.getByLabelText('test-clear')).toHaveAttribute('data-test-attr');
-  });
-
-  it('renders given rightSection instead of clear button', () => {
-    render(
-      <DateInputBase
-        {...defaultProps}
-        clearable
-        shouldClear
-        clearButtonProps={{ 'aria-label': 'test-clear' }}
-        rightSection={<span>test-right-section</span>}
-      />
-    );
-
-    expect(screen.queryAllByLabelText('test-clear')).toHaveLength(0);
-    expect(screen.getByText('test-right-section')).toBeInTheDocument();
   });
 });
