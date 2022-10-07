@@ -1,12 +1,17 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { itSupportsMonthsListProps, itHandlesControlsKeyboardEvents } from '../../tests';
+import {
+  itSupportsMonthsListProps,
+  itHandlesControlsKeyboardEvents,
+  itSupportsYearsListProps,
+} from '../../tests';
 import { MonthPicker } from './MonthPicker';
 
 const defaultProps = {};
 
 describe('@mantine/dates/MonthPicker', () => {
+  itSupportsYearsListProps(MonthPicker, { ...defaultProps, defaultLevel: 'decade' });
   itSupportsMonthsListProps(MonthPicker, defaultProps);
   itHandlesControlsKeyboardEvents(
     MonthPicker,
