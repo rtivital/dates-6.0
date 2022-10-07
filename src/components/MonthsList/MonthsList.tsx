@@ -71,7 +71,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     const cells = monthsRow.map((month, cellIndex) => {
       const controlProps = getMonthControlProps?.(month);
       return (
-        <td key={cellIndex}>
+        <td key={cellIndex} className={classes.monthsListCell}>
           <CalendarPickerControl
             classNames={classNames}
             styles={styles}
@@ -99,7 +99,11 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
       );
     });
 
-    return <tr key={rowIndex}>{cells}</tr>;
+    return (
+      <tr key={rowIndex} className={classes.monthsListRow}>
+        {cells}
+      </tr>
+    );
   });
 
   return (

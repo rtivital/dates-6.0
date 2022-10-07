@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
 import { useDatesState } from '../../hooks';
 import { DecadeLevelSettings } from '../DecadeLevel';
+import { YearLevelSettings } from '../YearLevel';
 import { DatePickerBaseProps, DatePickerType } from '../../types';
 import {
   CalendarLevels,
@@ -9,26 +10,27 @@ import {
   CalendarLevelsSystemProps,
 } from '../CalendarLevels';
 
-export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
+export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
   extends DatePickerBaseProps<Type>,
     DecadeLevelSettings,
+    YearLevelSettings,
     CalendarLevelsBaseProps {}
 
-export interface YearPickerProps<Type extends DatePickerType = 'default'>
-  extends YearPickerBaseProps<Type>,
+export interface MonthPickerProps<Type extends DatePickerType = 'default'>
+  extends MonthPickerBaseProps<Type>,
     CalendarLevelsSystemProps {}
 
-const defaultProps: Partial<YearPickerProps> = {
+const defaultProps: Partial<MonthPickerProps> = {
   type: 'default',
 };
 
-type YearPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: YearPickerProps<Type>
+type MonthPickerComponent = (<Type extends DatePickerType = 'default'>(
+  props: MonthPickerProps<Type>
 ) => JSX.Element) & { displayName?: string };
 
-export const YearPicker: YearPickerComponent = forwardRef(
+export const MonthPicker: MonthPickerComponent = forwardRef(
   <Type extends DatePickerType = 'default'>(
-    props: YearPickerProps<Type>,
+    props: MonthPickerProps<Type>,
     ref: React.ForwardedRef<HTMLDivElement>
   ) => {
     const {
@@ -37,18 +39,18 @@ export const YearPicker: YearPickerComponent = forwardRef(
       value,
       onChange,
       __staticSelector,
-      getYearControlProps,
+      getMonthControlProps,
       allowSingleDateInRange,
       allowDeselect,
       onMouseLeave,
-      onYearSelect,
+      onMonthSelect,
       ...others
-    } = useComponentDefaultProps('YearsPicker', defaultProps, props as any);
+    } = useComponentDefaultProps('MonthPicker', defaultProps, props as any);
 
     const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } =
       useDatesState<Type>({
         type,
-        level: 'year',
+        level: 'month',
         allowDeselect,
         allowSingleDateInRange,
         value,
@@ -60,18 +62,18 @@ export const YearPicker: YearPickerComponent = forwardRef(
     return (
       <CalendarLevels
         ref={ref}
-        minLevel="decade"
-        __updateDateOnYearSelect={false}
-        __staticSelector={__staticSelector || 'YearPicker'}
+        minLevel="year"
+        __updateDateOnMonthSelect={false}
+        __staticSelector={__staticSelector || 'MonthPicker'}
         onMouseLeave={onRootMouseLeave}
-        onYearMouseEnter={(_event, date) => onHoveredDateChange(date)}
-        onYearSelect={(date) => {
+        onMonthMouseEnter={(_event, date) => onHoveredDateChange(date)}
+        onMonthSelect={(date) => {
           onDateChange(date);
-          onYearSelect?.(date);
+          onMonthSelect?.(date);
         }}
-        getYearControlProps={(date) => ({
+        getMonthControlProps={(date) => ({
           ...getControlProps(date),
-          ...getYearControlProps?.(date),
+          ...getMonthControlProps?.(date),
         })}
         {...others}
       />
@@ -79,4 +81,4 @@ export const YearPicker: YearPickerComponent = forwardRef(
   }
 );
 
-YearPicker.displayName = '@mantine/dates/YearPicker';
+MonthPicker.displayName = '@mantine/dates/MonthPicker';

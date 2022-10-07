@@ -10,6 +10,7 @@ export * from './components/DecadeLevelGroup';
 export * from './components/Month';
 export * from './components/MonthLevel';
 export * from './components/MonthLevelGroup';
+export * from './components/MonthPicker';
 export * from './components/MonthsList';
 export * from './components/WeekdaysRow';
 export * from './components/YearLevel';
