@@ -40,6 +40,10 @@ export function pickCalendarLevelsProps<T extends Record<string, any>>(props: T)
     getYearControlProps,
     decadeLabelFormat,
 
+    // External picker props
+    allowSingleDateInRange,
+    allowDeselect,
+
     // Other props
     minDate,
     maxDate,
@@ -88,6 +92,10 @@ export function pickCalendarLevelsProps<T extends Record<string, any>>(props: T)
       yearsListFormat,
       getYearControlProps,
       decadeLabelFormat,
+
+      // External picker props
+      allowSingleDateInRange,
+      allowDeselect,
 
       // Other props
       minDate,

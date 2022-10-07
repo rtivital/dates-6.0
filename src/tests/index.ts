@@ -1,3 +1,5 @@
+export * from './date-input-test-helpers';
+
 export { itSupportsWeekdaysProps, expectWeekdaysNames } from './it-supports-weekdays-props';
 export { itSupportsMonthProps } from './it-supports-month-props';
 export { itSupportsHeaderProps } from './it-support-header-props';
@@ -14,3 +16,4 @@ export { itHandlesMonthKeyboardEvents } from './it-handles-month-keyboard-events
 export { itHandlesControlsKeyboardEvents } from './it-handles-controls-keyboard-events';
 export { itSupportsOnControlMouseEnter } from './it-supports-on-control-mouse-enter';
 export { itSupportsClearableProps } from './it-supports-clearable-props';
+export { itSupportsDateInputProps } from './it-supports-date-input-props';

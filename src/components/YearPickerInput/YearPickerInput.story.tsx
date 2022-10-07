@@ -12,6 +12,7 @@ export function Usage() {
         placeholder="Pick year"
         numberOfColumns={3}
         closeOnChange={false}
+        allowDeselect
       />
     </div>
   );
