@@ -9,8 +9,12 @@ const defaultProps = {
   modalProps: { withinPortal: false, transitionDuration: 0 },
 };
 
+function getInputValue(container: HTMLElement) {
+  return container.querySelector('[data-dates-input]').textContent;
+}
+
 function expectValue(container: HTMLElement, value: string) {
-  expect(container.querySelector('[data-dates-input]').textContent).toBe(value);
+  expect(getInputValue(container)).toBe(value);
 }
 
 function clickInput(container: HTMLElement) {
@@ -92,6 +96,20 @@ describe('@mantine/dates/YearPickerInput', () => {
     expectNoPopover(container);
   });
 
+  it('does not close dropdown when date is selected (type="multiple")', async () => {
+    const { container } = render(<YearPickerInput {...defaultProps} type="multiple" />);
+    expectNoPopover(container);
+
+    await clickInput(container);
+    expectOpenedPopover(container);
+
+    await clickControl(container, 0);
+    expectOpenedPopover(container);
+
+    await clickControl(container, 3);
+    expectOpenedPopover(container);
+  });
+
   it('does not close dropdown when date is selected if closeOnChange is set to false (type="default")', async () => {
     const { container } = render(
       <YearPickerInput {...defaultProps} type="default" closeOnChange={false} />
@@ -137,5 +155,98 @@ describe('@mantine/dates/YearPickerInput', () => {
     await clickInput(container);
     await clickControl(container, 3);
     expectValue(container, '2023');
+  });
+
+  it('supports uncontrolled state (type="range")', async () => {
+    const { container } = render(
+      <YearPickerInput {...defaultProps} type="range" placeholder="test-placeholder" />
+    );
+    expectValue(container, 'test-placeholder');
+
+    await clickInput(container);
+    await clickControl(container, 0);
+    expectValue(container, '2020 – ');
+
+    await clickControl(container, 3);
+    expectValue(container, '2020 – 2023');
+  });
+
+  it('supports uncontrolled state (type="multiple")', async () => {
+    const { container } = render(
+      <YearPickerInput {...defaultProps} type="multiple" placeholder="test-placeholder" />
+    );
+    expectValue(container, 'test-placeholder');
+
+    await clickInput(container);
+    await clickControl(container, 0);
+    expectValue(container, '2020');
+
+    await clickControl(container, 3);
+    expectValue(container, '2020, 2023');
+
+    await clickControl(container, 5);
+    expectValue(container, '2020, 2023, 2025');
+  });
+
+  it('supports controlled state (type="default")', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        type="default"
+        value={new Date(2022, 3, 11)}
+        onChange={spy}
+      />
+    );
+
+    const initialValue = getInputValue(container);
+    expect(initialValue).not.toBe('');
+
+    await clickInput(container);
+    await clickControl(container, 0);
+    expect(spy).toHaveBeenCalledWith(expect.any(Date));
+    expect(getInputValue(container)).toBe(initialValue);
+  });
+
+  it('supports controlled state (type="range")', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        type="range"
+        value={[new Date(2022, 3, 11), null]}
+        onChange={spy}
+      />
+    );
+
+    const initialValue = getInputValue(container);
+    expect(initialValue).not.toBe('');
+
+    await clickInput(container);
+    await clickControl(container, 0);
+    expect(spy).toHaveBeenCalledWith(expect.arrayContaining([expect.any(Date)]));
+    expect(spy).toHaveBeenCalledWith(expect.not.arrayContaining([null]));
+    expect(getInputValue(container)).toBe(initialValue);
+  });
+
+  it('supports controlled state (type="multiple")', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        type="multiple"
+        value={[new Date(2022, 3, 11)]}
+        onChange={spy}
+      />
+    );
+
+    const initialValue = getInputValue(container);
+    expect(initialValue).not.toBe('');
+
+    await clickInput(container);
+    await clickControl(container, 0);
+    expect(spy).toHaveBeenCalledWith(expect.arrayContaining([expect.any(Date)]));
+    expect(spy).toHaveBeenCalledWith(expect.not.arrayContaining([null]));
+    expect(getInputValue(container)).toBe(initialValue);
   });
 });
