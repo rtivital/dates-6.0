@@ -11,7 +11,7 @@ export function Usage() {
         label="Year picker input"
         placeholder="Pick year"
         numberOfColumns={3}
-        popoverProps={{ transitionDuration: 0 }}
+        closeOnChange={false}
       />
     </div>
   );

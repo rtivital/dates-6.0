@@ -58,9 +58,7 @@ export interface DateInputBaseProps extends DateInputSharedProps {
   shouldClear: boolean;
 }
 
-const defaultProps: Partial<DateInputBaseProps> = {
-  closeOnChange: true,
-};
+const defaultProps: Partial<DateInputBaseProps> = {};
 
 export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((props, ref) => {
   const {
@@ -72,7 +70,6 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
     unstyled,
     popoverProps,
     modalProps,
-    closeOnChange,
     dropdownType,
     children,
     formattedValue,

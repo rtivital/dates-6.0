@@ -33,6 +33,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     classNames,
     styles,
     unstyled,
+    closeOnChange,
     ...rest
   } = useComponentDefaultProps('YearPickerInput', defaultProps, props);
 
@@ -53,6 +54,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     onChange,
     locale,
     format: yearsListFormat,
+    closeOnChange,
   });
 
   return (

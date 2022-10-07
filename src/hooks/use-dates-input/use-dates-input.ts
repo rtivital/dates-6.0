@@ -11,6 +11,7 @@ interface UseDatesInput<Type extends DatePickerType = 'default'> {
   onChange(value: DatePickerValue<Type>): void;
   locale: string;
   format: string;
+  closeOnChange: boolean;
 }
 
 export function useDatesInput<Type extends DatePickerType = 'default'>({
@@ -20,6 +21,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   onChange,
   locale,
   format,
+  closeOnChange,
 }: UseDatesInput<Type>) {
   const ctx = useDatesContext();
 
@@ -40,12 +42,14 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   });
 
   const setValue = (val: any) => {
-    if (type === 'default') {
-      dropdownHandlers.close();
-    }
+    if (closeOnChange) {
+      if (type === 'default') {
+        dropdownHandlers.close();
+      }
 
-    if (type === 'range' && val[0] && val[1]) {
-      dropdownHandlers.close();
+      if (type === 'range' && val[0] && val[1]) {
+        dropdownHandlers.close();
+      }
     }
 
     _setValue(val);
