@@ -11,7 +11,7 @@ export type DatePickerInputStylesNames = DateInputBaseStylesNames;
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends DateInputSharedProps,
     DatePickerBaseProps<Type> {
-  /** Dayjs format to display input value, "MMMM YYYY" by default  */
+  /** Dayjs format to display input value, "MMMM D, YYYY" by default  */
   valueFormat?: string;
 }
 
