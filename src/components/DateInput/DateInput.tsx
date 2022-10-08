@@ -143,7 +143,13 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   return (
     <Input.Wrapper {...wrapperProps}>
-      <Popover opened={dropdownOpened} trapFocus={false} position="bottom-start" {...popoverProps}>
+      <Popover
+        opened={dropdownOpened}
+        trapFocus={false}
+        position="bottom-start"
+        disabled={readOnly}
+        {...popoverProps}
+      >
         <Popover.Target>
           <Input
             autoComplete="off"
@@ -153,6 +159,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
             onBlur={handleInputBlur}
             onFocus={handleInputFocus}
             onClick={handleInputClick}
+            readOnly={readOnly}
             {...inputProps}
             {...others}
           />
