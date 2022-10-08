@@ -44,6 +44,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
     hideWeekdays,
     getDayAriaLabel,
     __onDayClick,
+    __onDayMouseEnter,
 
     // CalendarHeader settings
     __preventFocus,
@@ -92,6 +93,7 @@ export const MonthLevelGroup = forwardRef<HTMLDivElement, MonthLevelGroupProps>(
           withPrevious={monthIndex === 0}
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
+          __onDayMouseEnter={__onDayMouseEnter}
           __onDayKeyDown={(event, payload) =>
             handleControlKeyDown({
               index: monthIndex,

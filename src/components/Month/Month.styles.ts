@@ -6,13 +6,12 @@ export default createStyles((theme) => ({
   monthTbody: {},
 
   monthCell: {
-    padding: 0,
+    padding: 0.5,
   },
 
   month: {
     ...theme.fn.fontStyles(),
     borderCollapse: 'collapse',
-    // width: fullWidth ? '100%' : 'auto',
     tableLayout: 'fixed',
 
     '& *': {

@@ -142,6 +142,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     hideWeekdays,
     getDayAriaLabel,
     monthLabelFormat,
+    __onDayClick,
+    __onDayMouseEnter,
 
     // YearLevelGroup props
     monthsListFormat,
@@ -221,6 +223,8 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
           nextLabel={ariaLabels?.nextMonth}
           previousLabel={ariaLabels?.previousMonth}
           monthLabelFormat={monthLabelFormat}
+          __onDayClick={__onDayClick}
+          __onDayMouseEnter={__onDayMouseEnter}
           {...stylesApiProps}
         />
       )}

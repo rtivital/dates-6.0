@@ -21,6 +21,9 @@ export interface MonthSettings {
   /** Called when day is clicked with click event and date */
   __onDayClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
 
+  /** Called when mouse enters day */
+  __onDayMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
+
   /** Called when any keydown event is registered on day, used for arrows navigation */
   __onDayKeyDown?(
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -106,6 +109,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     __getDayRef,
     __onDayKeyDown,
     __onDayClick,
+    __onDayMouseEnter,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -157,9 +161,13 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
               dayProps?.onKeyDown?.(event);
               __onDayKeyDown?.(event, { rowIndex, cellIndex, date });
             }}
+            onMouseEnter={(event) => {
+              dayProps?.onMouseEnter?.(event);
+              __onDayMouseEnter?.(event, date);
+            }}
             onClick={(event) => {
               dayProps?.onClick?.(event);
-              __onDayClick?.(event, month);
+              __onDayClick?.(event, date);
             }}
           />
         </td>
