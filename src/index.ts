@@ -3,6 +3,8 @@ export * from './types';
 export * from './components/CalendarHeader';
 export * from './components/Calendar';
 export * from './components/CalendarPickerControl';
+export * from './components/DateInputBase';
+export * from './components/DatePicker';
 export * from './components/DatesProvider';
 export * from './components/Day';
 export * from './components/DecadeLevel';
