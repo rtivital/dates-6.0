@@ -10,6 +10,7 @@ export * from './components/DatesProvider';
 export * from './components/Day';
 export * from './components/DecadeLevel';
 export * from './components/DecadeLevelGroup';
+export * from './components/HiddenDatesInput';
 export * from './components/Month';
 export * from './components/MonthLevel';
 export * from './components/MonthLevelGroup';
