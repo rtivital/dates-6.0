@@ -9,5 +9,9 @@ export default createStyles((theme) => ({
 
   input: {
     cursor: 'pointer',
+
+    '&[data-read-only]': {
+      cursor: 'default',
+    },
   },
 }));

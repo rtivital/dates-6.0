@@ -17,6 +17,29 @@ export function Usage() {
   );
 }
 
+export function ReadOnly() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput label="Default read only" placeholder="Pick date" readOnly />
+      <DatePickerInput
+        mt="md"
+        label="Read only with value"
+        placeholder="Pick date"
+        defaultValue={new Date(2022, 3, 11)}
+        clearable
+        readOnly
+      />
+      <DatePickerInput
+        mt="md"
+        label="Read only with modal"
+        placeholder="Pick date"
+        dropdownType="modal"
+        readOnly
+      />
+    </div>
+  );
+}
+
 export function Disabled() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>

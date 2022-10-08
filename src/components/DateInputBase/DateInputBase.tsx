@@ -46,6 +46,9 @@ export interface DateInputSharedProps
 
   /** Props added to clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+
+  /** Determines whether the user can modify the value */
+  readOnly?: boolean;
 }
 
 export interface DateInputBaseProps extends DateInputSharedProps {
@@ -81,6 +84,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
     clearButtonProps,
     rightSection,
     shouldClear,
+    readOnly,
     ...others
   } = useInputProps(props.__staticSelector, defaultProps, props);
 
@@ -93,7 +97,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
 
   const _rightSection =
     rightSection ||
-    (clearable && shouldClear ? (
+    (clearable && shouldClear && !readOnly ? (
       <CloseButton
         variant="transparent"
         onClick={onClear}
@@ -104,7 +108,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
 
   return (
     <>
-      {dropdownType === 'modal' && (
+      {dropdownType === 'modal' && !readOnly && (
         <Modal
           opened={dropdownOpened}
           onClose={dropdownHandlers.close}
@@ -122,7 +126,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
           position="bottom-start"
           opened={dropdownOpened}
           onClose={dropdownHandlers.close}
-          disabled={dropdownType === 'modal'}
+          disabled={dropdownType === 'modal' || readOnly}
           trapFocus
           returnFocus
           {...popoverProps}
@@ -130,6 +134,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
           <Popover.Target>
             <Input
               data-dates-input
+              data-read-only={readOnly || undefined}
               component="button"
               onClick={(event) => {
                 onClick?.(event);
