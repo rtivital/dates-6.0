@@ -3,34 +3,36 @@ import { useComponentDefaultProps } from '@mantine/core';
 import { useDatesState } from '../../hooks';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { YearLevelSettings } from '../YearLevel';
-import { DatePickerBaseProps, DatePickerType } from '../../types';
+import { MonthLevelSettings } from '../MonthLevel';
+import { PickerBaseProps, DatePickerType } from '../../types';
 import {
   CalendarLevels,
   CalendarLevelsBaseProps,
   CalendarLevelsSystemProps,
 } from '../CalendarLevels';
 
-export interface CalendarBaseProps<Type extends DatePickerType = 'default'>
-  extends DatePickerBaseProps<Type>,
+export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
+  extends PickerBaseProps<Type>,
+    CalendarLevelsBaseProps,
     DecadeLevelSettings,
     YearLevelSettings,
-    CalendarLevelsBaseProps {}
+    MonthLevelSettings {}
 
-export interface CalendarProps<Type extends DatePickerType = 'default'>
-  extends CalendarBaseProps<Type>,
+export interface DatePickerProps<Type extends DatePickerType = 'default'>
+  extends DatePickerBaseProps<Type>,
     CalendarLevelsSystemProps {}
 
-const defaultProps: Partial<CalendarProps> = {
+const defaultProps: Partial<DatePickerProps> = {
   type: 'default',
 };
 
-type CalendarComponent = (<Type extends DatePickerType = 'default'>(
-  props: CalendarProps<Type>
+type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
+  props: DatePickerProps<Type>
 ) => JSX.Element) & { displayName?: string };
 
-export const Calendar: CalendarComponent = forwardRef(
+export const DatePicker: DatePickerComponent = forwardRef(
   <Type extends DatePickerType = 'default'>(
-    props: CalendarProps<Type>,
+    props: DatePickerProps<Type>,
     ref: React.ForwardedRef<HTMLDivElement>
   ) => {
     const {
@@ -45,7 +47,7 @@ export const Calendar: CalendarComponent = forwardRef(
       onMouseLeave,
       onMonthSelect,
       ...others
-    } = useComponentDefaultProps('Calendar', defaultProps, props as any);
+    } = useComponentDefaultProps('DatePicker', defaultProps, props as any);
 
     const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } =
       useDatesState<Type>({
@@ -64,7 +66,7 @@ export const Calendar: CalendarComponent = forwardRef(
         ref={ref}
         minLevel="month"
         __updateDateOnMonthSelect={false}
-        __staticSelector={__staticSelector || 'Calendar'}
+        __staticSelector={__staticSelector || 'DatePicker'}
         onMouseLeave={onRootMouseLeave}
         __onDayMouseEnter={(_event, date) => onHoveredDateChange(date)}
         __onDayClick={(_event, date) => onDateChange(date)}
@@ -78,4 +80,4 @@ export const Calendar: CalendarComponent = forwardRef(
   }
 );
 
-Calendar.displayName = '@mantine/dates/Calendar';
+DatePicker.displayName = '@mantine/dates/DatePicker';

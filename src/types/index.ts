@@ -1,4 +1,4 @@
 export * from './ControlsGroupSettings';
-export * from './DatePickerBaseProps';
+export * from './PickerBaseProps';
 export * from './DatePickerValue';
 export * from './GeneralTypes';

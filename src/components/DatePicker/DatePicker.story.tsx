@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { DatesRangeValue } from '../../types';
-import { Calendar } from './Calendar';
+import { DatePicker } from './DatePicker';
 
-export default { title: 'Calendar' };
+export default { title: 'DatePicker' };
 
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Calendar />
+      <DatePicker />
     </div>
   );
 }
@@ -15,7 +15,7 @@ export function Usage() {
 export function Multiple() {
   return (
     <div style={{ padding: 40 }}>
-      <Calendar type="multiple" />
+      <DatePicker type="multiple" />
     </div>
   );
 }
@@ -23,7 +23,7 @@ export function Multiple() {
 export function Range() {
   return (
     <div style={{ padding: 40 }}>
-      <Calendar type="range" />
+      <DatePicker type="range" />
     </div>
   );
 }
@@ -31,7 +31,7 @@ export function Range() {
 export function AllowDeselect() {
   return (
     <div style={{ padding: 40 }}>
-      <Calendar allowDeselect />
+      <DatePicker allowDeselect />
     </div>
   );
 }
@@ -40,7 +40,7 @@ export function Controlled() {
   const [value, setValue] = useState<Date | null>(null);
   return (
     <div style={{ padding: 40 }}>
-      <Calendar value={value} onChange={setValue} numberOfColumns={3} columnsToScroll={1} />
+      <DatePicker value={value} onChange={setValue} numberOfColumns={3} columnsToScroll={1} />
       {value?.toISOString()}
     </div>
   );
@@ -50,7 +50,7 @@ export function ControlledRange() {
   const [value, setValue] = useState<DatesRangeValue>([null, null]);
   return (
     <div style={{ padding: 40 }}>
-      <Calendar
+      <DatePicker
         type="range"
         value={value}
         onChange={setValue}
@@ -66,7 +66,7 @@ export function ControlledMultiple() {
   const [value, setValue] = useState<Date[]>([]);
   return (
     <div style={{ padding: 40 }}>
-      <Calendar
+      <DatePicker
         type="multiple"
         value={value}
         onChange={setValue}

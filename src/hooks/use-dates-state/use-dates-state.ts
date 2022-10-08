@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { DatePickerType, DatePickerBaseProps } from '../../types';
+import { DatePickerType, PickerBaseProps } from '../../types';
 import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
 
 function isInRange(date: Date, range: [Date, Date]) {
@@ -12,7 +12,7 @@ function isInRange(date: Date, range: [Date, Date]) {
 }
 
 interface UseDatesRangeInput<Type extends DatePickerType = 'default'>
-  extends DatePickerBaseProps<Type> {
+  extends PickerBaseProps<Type> {
   level: 'year' | 'month' | 'day';
   type: Type;
   onMouseLeave?(event: React.MouseEvent<HTMLDivElement>): void;
