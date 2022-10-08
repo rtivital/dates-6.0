@@ -29,6 +29,9 @@ export interface MonthsListProps
     React.ComponentPropsWithoutRef<'table'> {
   __staticSelector?: string;
 
+  /** Prevents focus shift when buttons are clicked */
+  __preventFocus?: boolean;
+
   /** Year for which months list should be displayed */
   year: Date;
 }
@@ -54,6 +57,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
     __onControlKeyDown,
     __onControlClick,
     __onControlMouseEnter,
+    __preventFocus,
     ...others
   } = useComponentDefaultProps('MonthsList', defaultProps, props);
   const { classes, cx } = useStyles(null, {
@@ -91,6 +95,10 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
             onMouseEnter={(event) => {
               controlProps?.onMouseEnter?.(event);
               __onControlMouseEnter?.(event, month);
+            }}
+            onMouseDown={(event) => {
+              controlProps?.onMouseDown?.(event);
+              __preventFocus && event.preventDefault();
             }}
           >
             {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}

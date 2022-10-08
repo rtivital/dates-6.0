@@ -16,6 +16,9 @@ import useStyles from './YearsList.styles';
 export type YearsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface YearsListSettings extends ControlsGroupSettings {
+  /** Prevents focus shift when buttons are clicked */
+  __preventFocus?: boolean;
+
   /** dayjs format for years list  */
   yearsListFormat?: string;
 
@@ -54,6 +57,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
     __onControlKeyDown,
     __onControlClick,
     __onControlMouseEnter,
+    __preventFocus,
     ...others
   } = useComponentDefaultProps('YearsList', defaultProps, props);
 
@@ -92,6 +96,10 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
             onMouseEnter={(event) => {
               controlProps?.onMouseEnter?.(event);
               __onControlMouseEnter?.(event, year);
+            }}
+            onMouseDown={(event) => {
+              controlProps?.onMouseDown?.(event);
+              __preventFocus && event.preventDefault();
             }}
           >
             {dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat)}

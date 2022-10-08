@@ -67,6 +67,9 @@ export interface CalendarSystemProps
 export interface CalendarBaseProps {
   __staticSelector?: string;
 
+  /** Prevents focus shift when buttons are clicked */
+  __preventFocus?: boolean;
+
   /** Determines whether date should be updated when year control is clicked */
   __updateDateOnYearSelect?: boolean;
 
@@ -161,6 +164,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
     styles,
     __staticSelector,
     unstyled,
+    __preventFocus,
     ...others
   } = useComponentDefaultProps('Calendar', defaultProps, props);
 
@@ -222,6 +226,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
+          __preventFocus={__preventFocus}
           {...stylesApiProps}
         />
       )}
@@ -249,6 +254,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
             setLevel(clampLevel('month', minLevel, maxLevel));
             onMonthSelect?.(payload);
           }}
+          __preventFocus={__preventFocus}
           {...stylesApiProps}
         />
       )}
@@ -287,6 +293,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
             setLevel(clampLevel('year', minLevel, maxLevel));
             onYearSelect?.(payload);
           }}
+          __preventFocus={__preventFocus}
           {...stylesApiProps}
         />
       )}

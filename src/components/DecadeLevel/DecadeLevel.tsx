@@ -154,6 +154,7 @@ export const DecadeLevel = forwardRef<HTMLDivElement, DecadeLevelProps>((props, 
         __onControlKeyDown={__onControlKeyDown}
         __onControlClick={__onControlClick}
         __onControlMouseEnter={__onControlMouseEnter}
+        __preventFocus={__preventFocus}
         {...stylesApiProps}
       />
     </Box>

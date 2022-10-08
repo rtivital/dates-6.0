@@ -18,6 +18,9 @@ export type MonthStylesNames =
   | DayStylesNames;
 
 export interface MonthSettings {
+  /** Prevents focus shift when buttons are clicked */
+  __preventFocus?: boolean;
+
   /** Called when day is clicked with click event and date */
   __onDayClick?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
 
@@ -110,6 +113,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     __onDayKeyDown,
     __onDayClick,
     __onDayMouseEnter,
+    __preventFocus,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -168,6 +172,10 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             onClick={(event) => {
               dayProps?.onClick?.(event);
               __onDayClick?.(event, date);
+            }}
+            onMouseDown={(event) => {
+              dayProps?.onMouseDown?.(event);
+              __preventFocus && event.preventDefault();
             }}
           />
         </td>

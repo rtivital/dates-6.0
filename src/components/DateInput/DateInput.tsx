@@ -142,9 +142,10 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
             onFocus={handleInputFocus}
           />
         </Popover.Target>
-        <Popover.Dropdown>
+        <Popover.Dropdown onMouseDown={(event) => event.preventDefault()}>
           <Calendar
             {...calendarProps}
+            __preventFocus
             minDate={minDate}
             maxDate={maxDate}
             locale={locale}

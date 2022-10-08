@@ -160,6 +160,7 @@ export const MonthLevel = forwardRef<HTMLDivElement, MonthLevelProps>((props, re
         __onDayKeyDown={__onDayKeyDown}
         __onDayClick={__onDayClick}
         __onDayMouseEnter={__onDayMouseEnter}
+        __preventFocus={__preventFocus}
         {...stylesApiProps}
       />
     </Box>
