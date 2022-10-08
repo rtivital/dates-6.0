@@ -61,7 +61,6 @@ export interface DateInputProps
 
 const defaultProps: Partial<DateInputProps> = {
   valueFormat: 'MMMM D, YYYY',
-  dateParser: (value) => dayjs(value).toDate(),
   fixOnBlur: true,
 };
 
@@ -88,6 +87,10 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
+  const defaultDateParser = (val: string) =>
+    dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
+
+  const _dateParser = dateParser || defaultDateParser;
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -105,7 +108,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value;
     setInputValue(val);
-    const dateValue = dateParser(val);
+    const dateValue = _dateParser(val);
     const valid = isDateValid({ date: dateValue, minDate, maxDate });
 
     if (valid) {
@@ -125,7 +128,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   };
 
   useDidUpdate(() => {
-    !inputFocused && setInputValue(formatValue(value));
+    !inputFocused && value && setInputValue(formatValue(value));
   }, [value, inputFocused]);
 
   return (
