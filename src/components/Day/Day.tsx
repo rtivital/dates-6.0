@@ -92,7 +92,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {
       data-disabled={disabled || undefined}
       data-weekend={(!disabled && !outside && weekend) || undefined}
       data-outside={(!disabled && outside) || undefined}
-      data-selected={(!disabled && !outside && selected) || undefined}
+      data-selected={(!disabled && selected) || undefined}
       data-in-range={(inRange && !disabled) || undefined}
       data-first-in-range={(firstInRange && !disabled) || undefined}
       data-last-in-range={(lastInRange && !disabled) || undefined}

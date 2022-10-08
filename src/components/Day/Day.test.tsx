@@ -80,12 +80,6 @@ describe('@mantine/dates/Day', () => {
     expect(screen.getByRole('button')).toHaveTextContent('2022');
   });
 
-  it('does not add data-selected attribute when outside prop is true', () => {
-    render(<Day {...defaultProps} selected outside />);
-    expect(screen.getByRole('button')).toHaveAttribute('data-outside');
-    expect(screen.getByRole('button')).not.toHaveAttribute('data-selected');
-  });
-
   it('does not add data-weekend attribute when outside prop is true', () => {
     render(<Day {...defaultProps} weekend outside />);
     expect(screen.getByRole('button')).toHaveAttribute('data-outside');
