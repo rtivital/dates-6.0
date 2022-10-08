@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   getInputValue,
   clickInput,
@@ -20,6 +20,9 @@ export interface DateInputTestProps {
   placeholder?: string;
   allowDeselect?: boolean;
   allowSingleDateInRange?: boolean;
+  readOnly?: boolean;
+  clearable?: boolean;
+  clearButtonProps?: Record<string, any>;
 }
 
 export function itSupportsDateInputProps(
@@ -284,5 +287,51 @@ export function itSupportsDateInputProps(
 
     await clickControl(container, 0);
     expect(getInputValue(container)).toBe('test-placeholder');
+  });
+
+  it('does not open popover if readOnly prop is set', async () => {
+    const { container } = render(<Component {...requiredProps} readOnly />);
+    expectNoPopover(container);
+    expectNoModal(container);
+
+    await clickInput(container);
+    expectNoPopover(container);
+    expectNoModal(container);
+  });
+
+  it('does not open modal if readOnly prop is set', async () => {
+    const { container } = render(<Component {...requiredProps} readOnly dropdownType="modal" />);
+    expectNoPopover(container);
+    expectNoModal(container);
+
+    await clickInput(container);
+    expectNoPopover(container);
+    expectNoModal(container);
+  });
+
+  it('does not render clear button if readOnly is set', async () => {
+    const { rerender } = render(
+      <Component
+        {...requiredProps}
+        value={new Date(2022, 3, 11)}
+        clearable
+        readOnly
+        clearButtonProps={{ 'aria-label': 'clear-button' }}
+      />
+    );
+
+    expect(screen.queryAllByLabelText('clear-button')).toHaveLength(0);
+
+    rerender(
+      <Component
+        {...requiredProps}
+        value={new Date(2022, 3, 11)}
+        clearable
+        readOnly={false}
+        clearButtonProps={{ 'aria-label': 'clear-button' }}
+      />
+    );
+
+    expect(screen.getByLabelText('clear-button')).toBeInTheDocument();
   });
 }
