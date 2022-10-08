@@ -1,7 +1,7 @@
 export * from './types';
 
 export * from './components/CalendarHeader';
-export * from './components/CalendarLevels';
+export * from './components/Calendar';
 export * from './components/CalendarPickerControl';
 export * from './components/DatesProvider';
 export * from './components/Day';

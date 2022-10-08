@@ -1,4 +1,4 @@
-export function pickCalendarLevelsProps<T extends Record<string, any>>(props: T) {
+export function pickCalendarProps<T extends Record<string, any>>(props: T) {
   const {
     maxLevel,
     minLevel,
@@ -52,7 +52,7 @@ export function pickCalendarLevelsProps<T extends Record<string, any>>(props: T)
   } = props;
 
   return {
-    calendarLevelsProps: {
+    calendarProps: {
       maxLevel,
       minLevel,
       defaultLevel,

@@ -149,11 +149,11 @@ describe('@mantine/dates/MonthPicker', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<MonthPicker {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-MonthPicker-calendarLevels');
+    expect(container.firstChild).toHaveClass('mantine-MonthPicker-calendar');
   });
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<MonthPicker {...defaultProps} __staticSelector="Calendar" />);
-    expect(container.firstChild).toHaveClass('mantine-Calendar-calendarLevels');
+    expect(container.firstChild).toHaveClass('mantine-Calendar-calendar');
   });
 });

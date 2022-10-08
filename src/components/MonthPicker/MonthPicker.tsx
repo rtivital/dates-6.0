@@ -4,21 +4,17 @@ import { useDatesState } from '../../hooks';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { PickerBaseProps, DatePickerType } from '../../types';
-import {
-  CalendarLevels,
-  CalendarLevelsBaseProps,
-  CalendarLevelsSystemProps,
-} from '../CalendarLevels';
+import { Calendar, CalendarBaseProps, CalendarSystemProps } from '../Calendar';
 
 export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type>,
     DecadeLevelSettings,
     YearLevelSettings,
-    CalendarLevelsBaseProps {}
+    CalendarBaseProps {}
 
 export interface MonthPickerProps<Type extends DatePickerType = 'default'>
   extends MonthPickerBaseProps<Type>,
-    CalendarLevelsSystemProps {}
+    CalendarSystemProps {}
 
 const defaultProps: Partial<MonthPickerProps> = {
   type: 'default',
@@ -60,7 +56,7 @@ export const MonthPicker: MonthPickerComponent = forwardRef(
       });
 
     return (
-      <CalendarLevels
+      <Calendar
         ref={ref}
         minLevel="year"
         __updateDateOnMonthSelect={false}

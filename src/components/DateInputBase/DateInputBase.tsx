@@ -15,11 +15,11 @@ import {
   CloseButton,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { CalendarLevelsStylesNames } from '../CalendarLevels';
+import { CalendarStylesNames } from '../Calendar';
 import useStyles from './DateInputBase.styles';
 
 export type DateInputBaseStylesNames =
-  | CalendarLevelsStylesNames
+  | CalendarStylesNames
   | InputStylesNames
   | InputWrapperStylesNames
   | Selectors<typeof useStyles>;

@@ -144,11 +144,11 @@ describe('@mantine/dates/YearPicker', () => {
 
   it('has correct default __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} />);
-    expect(container.firstChild).toHaveClass('mantine-YearPicker-calendarLevels');
+    expect(container.firstChild).toHaveClass('mantine-YearPicker-calendar');
   });
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearPicker {...defaultProps} __staticSelector="Calendar" />);
-    expect(container.firstChild).toHaveClass('mantine-Calendar-calendarLevels');
+    expect(container.firstChild).toHaveClass('mantine-Calendar-calendar');
   });
 });

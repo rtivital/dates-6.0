@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
 import { useDatesInput } from '../../hooks';
-import { pickCalendarLevelsProps } from '../CalendarLevels';
+import { pickCalendarProps } from '../Calendar';
 import { MonthPicker, MonthPickerBaseProps } from '../MonthPicker';
 import { DatePickerType } from '../../types';
 import { DateInputBase, DateInputSharedProps, DateInputBaseStylesNames } from '../DateInputBase';
@@ -40,7 +40,7 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
     ...rest
   } = useComponentDefaultProps('MonthPickerInput', defaultProps, props);
 
-  const { calendarLevelsProps, others } = pickCalendarLevelsProps(rest);
+  const { calendarProps, others } = pickCalendarProps(rest);
 
   const {
     _value,
@@ -75,7 +75,7 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
       {...others}
     >
       <MonthPicker
-        {...calendarLevelsProps}
+        {...calendarProps}
         type={type}
         value={_value}
         defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}

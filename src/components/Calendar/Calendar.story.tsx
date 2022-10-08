@@ -1,12 +1,12 @@
 import React from 'react';
-import { CalendarLevels } from './CalendarLevels';
+import { Calendar } from './Calendar';
 
-export default { title: 'CalendarLevels' };
+export default { title: 'Calendar' };
 
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <CalendarLevels />
+      <Calendar />
     </div>
   );
 }
@@ -14,7 +14,7 @@ export function Usage() {
 export function MaxLevel() {
   return (
     <div style={{ padding: 40 }}>
-      <CalendarLevels maxLevel="year" />
+      <Calendar maxLevel="year" />
     </div>
   );
 }
@@ -22,7 +22,7 @@ export function MaxLevel() {
 export function MinLevel() {
   return (
     <div style={{ padding: 40 }}>
-      <CalendarLevels minLevel="year" />
+      <Calendar minLevel="year" />
     </div>
   );
 }
@@ -31,13 +31,13 @@ export function NumberOfColumns() {
   return (
     <div style={{ padding: 40 }}>
       <div>1 column</div>
-      <CalendarLevels mb={50} mt="xs" />
+      <Calendar mb={50} mt="xs" />
 
       <div>2 columns</div>
-      <CalendarLevels numberOfColumns={2} mb={50} mt="xs" />
+      <Calendar numberOfColumns={2} mb={50} mt="xs" />
 
       <div>3 columns</div>
-      <CalendarLevels numberOfColumns={3} mb={50} mt="xs" />
+      <Calendar numberOfColumns={3} mb={50} mt="xs" />
     </div>
   );
 }
@@ -45,7 +45,7 @@ export function NumberOfColumns() {
 export function InitialLevelYear() {
   return (
     <div style={{ padding: 40 }}>
-      <CalendarLevels defaultLevel="year" />
+      <Calendar defaultLevel="year" />
     </div>
   );
 }
@@ -53,7 +53,7 @@ export function InitialLevelYear() {
 export function InitialLevelDecade() {
   return (
     <div style={{ padding: 40 }}>
-      <CalendarLevels defaultLevel="decade" />
+      <Calendar defaultLevel="decade" />
     </div>
   );
 }

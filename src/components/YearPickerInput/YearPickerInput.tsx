@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/core';
 import { useDatesInput } from '../../hooks';
-import { pickCalendarLevelsProps } from '../CalendarLevels';
+import { pickCalendarProps } from '../Calendar';
 import { YearPicker, YearPickerBaseProps } from '../YearPicker';
 import { DatePickerType } from '../../types';
 import { DateInputBase, DateInputSharedProps, DateInputBaseStylesNames } from '../DateInputBase';
@@ -40,7 +40,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     ...rest
   } = useComponentDefaultProps('YearPickerInput', defaultProps, props);
 
-  const { calendarLevelsProps, others } = pickCalendarLevelsProps(rest);
+  const { calendarProps, others } = pickCalendarProps(rest);
 
   const {
     _value,
@@ -75,7 +75,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
       {...others}
     >
       <YearPicker
-        {...calendarLevelsProps}
+        {...calendarProps}
         type={type}
         value={_value}
         defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}

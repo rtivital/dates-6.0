@@ -8,18 +8,18 @@ import { YearLevelGroup, YearLevelGroupStylesNames } from '../YearLevelGroup';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { CalendarLevel } from '../../types';
 import { clampLevel } from './clamp-level/clamp-level';
-import useStyles from './CalendarLevels.styles';
+import useStyles from './Calendar.styles';
 import { MonthLevelSettings } from '../MonthLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { DecadeLevelSettings } from '../DecadeLevel';
 
-export type CalendarLevelsStylesNames =
+export type CalendarStylesNames =
   | Selectors<typeof useStyles>
   | DecadeLevelGroupStylesNames
   | YearLevelGroupStylesNames
   | MonthLevelGroupStylesNames;
 
-export interface CalendarLevelsAriaLabels {
+export interface CalendarAriaLabels {
   monthLevelControl?: string;
   yearLevelControl?: string;
   decadeLevelControl?: string;
@@ -34,7 +34,7 @@ export interface CalendarLevelsAriaLabels {
   previousDecade?: string;
 }
 
-export interface CalendarLevelSettings
+export interface CalendarSettings
   extends DecadeLevelSettings,
     YearLevelSettings,
     MonthLevelSettings {
@@ -60,11 +60,11 @@ export interface CalendarLevelSettings
   onMonthMouseEnter?(event: React.MouseEvent<HTMLButtonElement>, date: Date): void;
 }
 
-export interface CalendarLevelsSystemProps
-  extends DefaultProps<CalendarLevelsStylesNames>,
+export interface CalendarSystemProps
+  extends DefaultProps<CalendarStylesNames>,
     Omit<React.ComponentPropsWithRef<'div'>, 'value' | 'defaultValue' | 'onChange'> {}
 
-export interface CalendarLevelsBaseProps {
+export interface CalendarBaseProps {
   __staticSelector?: string;
 
   /** Determines whether date should be updated when year control is clicked */
@@ -89,13 +89,10 @@ export interface CalendarLevelsBaseProps {
   columnsToScroll?: number;
 
   /** aria-label attributes for controls on different levels */
-  ariaLabels?: CalendarLevelsAriaLabels;
+  ariaLabels?: CalendarAriaLabels;
 }
 
-export interface CalendarLevelsProps
-  extends CalendarLevelSettings,
-    CalendarLevelsBaseProps,
-    CalendarLevelsSystemProps {
+export interface CalendarProps extends CalendarSettings, CalendarBaseProps, CalendarSystemProps {
   /** Max level that user can go up to (decade, year, month), defaults to decade */
   maxLevel?: CalendarLevel;
 
@@ -103,14 +100,14 @@ export interface CalendarLevelsProps
   minLevel?: CalendarLevel;
 }
 
-const defaultProps: Partial<CalendarLevelsProps> = {
+const defaultProps: Partial<CalendarProps> = {
   maxLevel: 'decade',
   minLevel: 'month',
   __updateDateOnYearSelect: true,
   __updateDateOnMonthSelect: true,
 };
 
-export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((props, ref) => {
+export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
   const {
     // CalendarLevel props
     maxLevel,
@@ -165,13 +162,13 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     __staticSelector,
     unstyled,
     ...others
-  } = useComponentDefaultProps('CalendarLevels', defaultProps, props);
+  } = useComponentDefaultProps('Calendar', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
     classNames,
     styles,
     unstyled,
-    name: ['CalendarLevels', __staticSelector],
+    name: ['Calendar', __staticSelector],
   });
 
   const [_level, setLevel] = useUncontrolled({
@@ -192,13 +189,13 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
     styles,
     classNames,
     unstyled,
-    __staticSelector: __staticSelector || 'CalendarLevels',
+    __staticSelector: __staticSelector || 'Calendar',
   };
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
 
   return (
-    <Box className={cx(classes.calendarLevels, className)} ref={ref} {...others}>
+    <Box className={cx(classes.calendar, className)} ref={ref} {...others}>
       {_level === 'month' && (
         <MonthLevelGroup
           month={_date}
@@ -297,4 +294,4 @@ export const CalendarLevels = forwardRef<HTMLDivElement, CalendarLevelsProps>((p
   );
 });
 
-CalendarLevels.displayName = '@mantine/dates/CalendarLevels';
+Calendar.displayName = '@mantine/dates/Calendar';
