@@ -5,6 +5,7 @@ export * from './components/Calendar';
 export * from './components/CalendarPickerControl';
 export * from './components/DateInputBase';
 export * from './components/DatePicker';
+export * from './components/DatePickerInput';
 export * from './components/DatesProvider';
 export * from './components/Day';
 export * from './components/DecadeLevel';

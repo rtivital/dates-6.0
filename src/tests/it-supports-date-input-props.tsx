@@ -230,11 +230,11 @@ export function itSupportsDateInputProps(
 
     expectValue(container, 'test-placeholder');
     await clickInput(container);
-    await clickControl(container, 0);
+    await clickControl(container, 8);
     expect(getInputValue(container)).not.toBe('test-placeholder');
 
     await clickInput(container);
-    await clickControl(container, 0);
+    await clickControl(container, 8);
     expectValue(container, 'test-placeholder');
   });
 
