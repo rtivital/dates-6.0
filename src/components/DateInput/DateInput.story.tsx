@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import React, { useState } from 'react';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { TextInput } from '@mantine/core';
 import { DateInput } from './DateInput';
 
 dayjs.extend(customParseFormat);
@@ -11,6 +12,14 @@ export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" minDate={new Date(2020, 0, 1)} />
+    </div>
+  );
+}
+export function FocusShift() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput placeholder="Enter date" />
+      <TextInput placeholder="Should have focus once Tab is pressed" mt="md" />
     </div>
   );
 }

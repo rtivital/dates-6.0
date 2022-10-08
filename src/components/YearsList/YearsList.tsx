@@ -101,6 +101,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
               controlProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
+            tabIndex={__preventFocus ? -1 : 0}
           >
             {dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat)}
           </CalendarPickerControl>

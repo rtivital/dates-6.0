@@ -100,6 +100,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
               controlProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
+            tabIndex={__preventFocus ? -1 : 0}
           >
             {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
           </CalendarPickerControl>

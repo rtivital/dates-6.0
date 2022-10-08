@@ -177,6 +177,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
               dayProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
+            tabIndex={__preventFocus ? -1 : 0}
           />
         </td>
       );

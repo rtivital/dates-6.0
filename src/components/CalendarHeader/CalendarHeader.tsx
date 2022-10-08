@@ -120,6 +120,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
           onMouseDown={preventFocus}
           disabled={previousDisabled}
           data-disabled={previousDisabled || undefined}
+          tabIndex={__preventFocus ? -1 : 0}
         >
           {previousIcon || (
             <Chevron
@@ -140,6 +141,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
         disabled={!hasNextLevel}
         data-static={!hasNextLevel || undefined}
         aria-label={levelControlAriaLabel}
+        tabIndex={__preventFocus ? -1 : 0}
       >
         {label}
       </UnstyledButton>
@@ -154,6 +156,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>((p
           onMouseDown={preventFocus}
           disabled={nextDisabled}
           data-disabled={nextDisabled || undefined}
+          tabIndex={__preventFocus ? -1 : 0}
         >
           {nextIcon || (
             <Chevron className={classes.calendarHeaderControlIcon} direction="next" data-next />
