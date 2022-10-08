@@ -9,6 +9,7 @@ import {
   useInputProps,
   Input,
   PopoverProps,
+  Popover,
 } from '@mantine/core';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
@@ -129,30 +130,36 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   return (
     <Input.Wrapper {...wrapperProps}>
-      <Input
-        {...inputProps}
-        {...others}
-        ref={ref}
-        value={inputValue}
-        onChange={handleInputChange}
-        onBlur={handleInputBlur}
-        onFocus={handleInputFocus}
-      />
-      <Calendar
-        {...calendarProps}
-        minDate={minDate}
-        maxDate={maxDate}
-        locale={locale}
-        date={_value || undefined}
-        getDayProps={(date) => ({
-          ...getDayProps?.(date),
-          selected: dayjs(_value).isSame(date, 'day'),
-          onClick: () => {
-            setValue(date);
-            setInputValue(formatValue(date));
-          },
-        })}
-      />
+      <Popover opened={inputFocused} trapFocus={false} position="bottom-start" {...popoverProps}>
+        <Popover.Target>
+          <Input
+            {...inputProps}
+            {...others}
+            ref={ref}
+            value={inputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            onFocus={handleInputFocus}
+          />
+        </Popover.Target>
+        <Popover.Dropdown>
+          <Calendar
+            {...calendarProps}
+            minDate={minDate}
+            maxDate={maxDate}
+            locale={locale}
+            defaultDate={_value || undefined}
+            getDayProps={(date) => ({
+              ...getDayProps?.(date),
+              selected: dayjs(_value).isSame(date, 'day'),
+              onClick: () => {
+                setValue(date);
+                setInputValue(formatValue(date));
+              },
+            })}
+          />
+        </Popover.Dropdown>
+      </Popover>
     </Input.Wrapper>
   );
 });
