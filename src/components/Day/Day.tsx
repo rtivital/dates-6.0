@@ -51,7 +51,7 @@ export interface DayProps
 }
 
 const defaultProps: Partial<DayProps> = {
-  tabIndex: -1,
+  tabIndex: 0,
 };
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>((props, ref) => {

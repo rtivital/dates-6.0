@@ -23,7 +23,7 @@ export function Multiple() {
 export function Range() {
   return (
     <div style={{ padding: 40 }}>
-      <DatePicker type="range" />
+      <DatePicker type="range" defaultValue={[new Date(2022, 3, 11), null]} />
     </div>
   );
 }
