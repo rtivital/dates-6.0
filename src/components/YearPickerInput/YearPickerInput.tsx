@@ -10,7 +10,10 @@ export type YearPickerInputStylesNames = DateInputBaseStylesNames;
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
   extends DateInputSharedProps,
-    YearPickerBaseProps<Type> {}
+    YearPickerBaseProps<Type> {
+  /** Dayjs format to display input value  */
+  valueFormat?: string;
+}
 
 type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
   props: YearPickerInputProps<Type>
@@ -18,7 +21,7 @@ type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 
 const defaultProps: Partial<YearPickerInputProps> = {
   type: 'default',
-  yearsListFormat: 'YYYY',
+  valueFormat: 'YYYY',
   closeOnChange: true,
 };
 
@@ -28,7 +31,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     value,
     defaultValue,
     onChange,
-    yearsListFormat,
+    valueFormat,
     locale,
     classNames,
     styles,
@@ -53,7 +56,7 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
     defaultValue,
     onChange,
     locale,
-    format: yearsListFormat,
+    format: valueFormat,
     closeOnChange,
   });
 
@@ -77,7 +80,6 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
         value={_value}
         defaultDate={Array.isArray(_value) ? _value[0] || undefined : _value || undefined}
         onChange={setValue}
-        yearsListFormat={yearsListFormat}
         locale={locale}
         classNames={classNames}
         styles={styles}

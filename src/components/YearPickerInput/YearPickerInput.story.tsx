@@ -18,6 +18,14 @@ export function Usage() {
   );
 }
 
+export function Disabled() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <YearPickerInput label="Year picker input" placeholder="Pick year" disabled />
+    </div>
+  );
+}
+
 export function DropdownModal() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
