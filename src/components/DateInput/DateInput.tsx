@@ -83,6 +83,8 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     fixOnBlur,
     onFocus,
     onBlur,
+    onClick,
+    readOnly,
     ...rest
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
@@ -104,6 +106,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   const [inputValue, setInputValue] = useState(formatValue(_value));
   const [inputFocused, setInputFocused] = useState(false);
+  const [dropdownOpened, setDropdownOpened] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value;
@@ -119,12 +122,19 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
     setInputFocused(false);
+    setDropdownOpened(false);
     fixOnBlur && setInputValue(formatValue(_value));
   };
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     onFocus?.(event);
     setInputFocused(true);
+    setDropdownOpened(true);
+  };
+
+  const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    onClick?.(event);
+    setDropdownOpened(true);
   };
 
   useDidUpdate(() => {
@@ -133,16 +143,18 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   return (
     <Input.Wrapper {...wrapperProps}>
-      <Popover opened={inputFocused} trapFocus={false} position="bottom-start" {...popoverProps}>
+      <Popover opened={dropdownOpened} trapFocus={false} position="bottom-start" {...popoverProps}>
         <Popover.Target>
           <Input
-            {...inputProps}
-            {...others}
+            autoComplete="off"
             ref={ref}
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onFocus={handleInputFocus}
+            onClick={handleInputClick}
+            {...inputProps}
+            {...others}
           />
         </Popover.Target>
         <Popover.Dropdown onMouseDown={(event) => event.preventDefault()}>
@@ -159,6 +171,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
               onClick: () => {
                 setValue(date);
                 setInputValue(formatValue(date));
+                setDropdownOpened(false);
               },
             })}
           />

@@ -15,6 +15,14 @@ export function Usage() {
   );
 }
 
+export function ReadOnly() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput placeholder="Enter date" readOnly />
+    </div>
+  );
+}
+
 export function ValueFormat() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
