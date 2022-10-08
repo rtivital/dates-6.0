@@ -20,6 +20,7 @@ export interface DatePickerProps<Type extends DatePickerType = 'default'>
 
 const defaultProps: Partial<DatePickerProps> = {
   type: 'default',
+  numberOfColumns: 1,
 };
 
 type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
@@ -42,6 +43,7 @@ export const DatePicker: DatePickerComponent = forwardRef(
       allowDeselect,
       onMouseLeave,
       onMonthSelect,
+      numberOfColumns,
       ...others
     } = useComponentDefaultProps('DatePicker', defaultProps, props as any);
 
@@ -64,6 +66,8 @@ export const DatePicker: DatePickerComponent = forwardRef(
         __updateDateOnMonthSelect={false}
         __staticSelector={__staticSelector || 'DatePicker'}
         onMouseLeave={onRootMouseLeave}
+        hideOutsideDates={numberOfColumns !== 1}
+        numberOfColumns={numberOfColumns}
         __onDayMouseEnter={(_event, date) => onHoveredDateChange(date)}
         __onDayClick={(_event, date) => onDateChange(date)}
         getDayProps={(date) => ({
