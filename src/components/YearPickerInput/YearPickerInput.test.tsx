@@ -48,4 +48,55 @@ describe('@mantine/dates/YearPickerInput', () => {
     );
     expectValue(container, '22 – 24');
   });
+
+  it('has correct default __staticSelector', () => {
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+      />
+    );
+    expect(container.firstChild).toHaveClass('mantine-YearPickerInput-root');
+    expect(container.querySelector('[data-dates-input]')).toHaveClass(
+      'mantine-YearPickerInput-input'
+    );
+
+    expect(container.querySelector('table button')).toHaveClass(
+      'mantine-YearPickerInput-calendarPickerControl'
+    );
+  });
+
+  it('has supports styles api (classNames)', () => {
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        classNames={{
+          root: 'test-root',
+          input: 'test-input',
+          calendarPickerControl: 'test-control',
+        }}
+      />
+    );
+    expect(container.firstChild).toHaveClass('test-root');
+    expect(container.querySelector('[data-dates-input]')).toHaveClass('test-input');
+    expect(container.querySelector('table button')).toHaveClass('test-control');
+  });
+
+  it('has supports styles api (styles)', () => {
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        styles={{
+          root: { borderColor: '#CCEE45' },
+          input: { borderColor: '#EB4522' },
+          calendarPickerControl: { borderColor: '#EE4533' },
+        }}
+      />
+    );
+    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
+    expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
+    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
+  });
 });
