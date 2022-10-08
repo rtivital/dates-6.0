@@ -1,3 +1,4 @@
+import 'dayjs/locale/ru';
 import React, { useState } from 'react';
 import { DatesRangeValue } from '../../types';
 import { DatePicker } from './DatePicker';
@@ -8,6 +9,14 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <DatePicker />
+    </div>
+  );
+}
+
+export function RuLocale() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker locale="ru" />
     </div>
   );
 }
