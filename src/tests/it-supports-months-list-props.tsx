@@ -93,7 +93,7 @@ export function itSupportsMonthsListProps(
 
   it('disables months if they are before minDate', () => {
     const { container } = render(
-      <Component year={new Date(2022, 3, 11)} minDate={new Date(2022, 4, 11)} />
+      <Component {...requiredProps} year={new Date(2022, 3, 11)} minDate={new Date(2022, 4, 11)} />
     );
     const months = container.querySelectorAll('table button');
     expect(months[0]).toBeDisabled();
@@ -105,7 +105,7 @@ export function itSupportsMonthsListProps(
 
   it('disables months if they are after minDate', () => {
     const { container } = render(
-      <Component year={new Date(2022, 3, 11)} maxDate={new Date(2022, 4, 11)} />
+      <Component {...requiredProps} year={new Date(2022, 3, 11)} maxDate={new Date(2022, 4, 11)} />
     );
     const months = container.querySelectorAll('table button');
     expect(months[0]).not.toBeDisabled();
