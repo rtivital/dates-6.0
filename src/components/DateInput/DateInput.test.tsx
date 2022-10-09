@@ -7,6 +7,8 @@ import {
   expectValue,
   clickControl,
   itSupportsClearableProps,
+  itSupportsYearsListProps,
+  itSupportsMonthsListProps,
 } from '../../tests';
 import { DateInput, DateInputProps } from './DateInput';
 
@@ -32,6 +34,18 @@ function getInput(container: HTMLElement) {
 
 describe('@mantine/dates/DateInput', () => {
   itSupportsClearableProps(DateInput, { ...defaultProps, defaultValue: new Date(2022, 3, 11) });
+  itSupportsYearsListProps(DateInput, {
+    ...defaultProps,
+    defaultLevel: 'decade',
+    defaultValue: new Date(2022, 3, 11),
+    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+  });
+  itSupportsMonthsListProps(DateInput, {
+    ...defaultProps,
+    defaultLevel: 'year',
+    defaultValue: new Date(2022, 3, 11),
+    popoverProps: { opened: true, withinPortal: false, transitionDuration: 0 },
+  });
 
   it('opens/closes dropdown when input is focused/blurred', async () => {
     const { container } = render(<DateInput {...defaultProps} />);
@@ -43,6 +57,13 @@ describe('@mantine/dates/DateInput', () => {
 
     await userEvent.tab();
     expect(document.body).toHaveFocus();
+    expectNoPopover(container);
+  });
+
+  it('does not open popover if readOnly prop is set', async () => {
+    const { container } = render(<DateInput {...defaultProps} readOnly />);
+    expectNoPopover(container);
+    await userEvent.tab();
     expectNoPopover(container);
   });
 
@@ -179,5 +200,27 @@ describe('@mantine/dates/DateInput', () => {
     await userEvent.tab();
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenLastCalledWith(null);
+  });
+
+  it('calls onClick when input is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(<DateInput {...defaultProps} onClick={spy} />);
+    await userEvent.click(getInput(container));
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('render hidden input with given value', () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        value={new Date(2022, 3, 11)}
+        name="hidden-name"
+        form="hidden-form"
+      />
+    );
+    const input = container.querySelector('input[type="hidden"]');
+    expect(input).toHaveValue(new Date(2022, 3, 11).toISOString());
+    expect(input).toHaveAttribute('name', 'hidden-name');
+    expect(input).toHaveAttribute('form', 'hidden-form');
   });
 });
