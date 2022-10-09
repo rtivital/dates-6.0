@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import React from 'react';
+import { Button } from '@mantine/core';
 import { YearPickerInput } from './YearPickerInput';
 
 export default { title: 'YearPickerInput' };
@@ -15,6 +16,22 @@ export function Usage() {
         allowDeselect
       />
     </div>
+  );
+}
+
+export function UncontrolledFormValues() {
+  return (
+    <form
+      style={{ padding: 40, maxWidth: 400 }}
+      onSubmit={(event) => {
+        event.preventDefault();
+        // eslint-disable-next-line no-console
+        console.log(Object.fromEntries(new FormData(event.currentTarget) as any));
+      }}
+    >
+      <YearPickerInput label="Year picker input" placeholder="Pick year" name="year-input" />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }
 

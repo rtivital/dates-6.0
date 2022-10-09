@@ -144,6 +144,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
               data-dates-input
               data-read-only={readOnly || undefined}
               component="button"
+              type="button"
               onClick={(event) => {
                 onClick?.(event);
                 dropdownHandlers.toggle();
