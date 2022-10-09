@@ -24,13 +24,13 @@ describe('@mantine/dates/YearsList', () => {
   it('has correct default __staticSelector', () => {
     render(<YearsList {...defaultProps} />);
     expect(screen.getByRole('table')).toHaveClass('mantine-YearsList-yearsList');
-    expect(screen.getAllByRole('button')[0]).toHaveClass('mantine-YearsList-calendarPickerControl');
+    expect(screen.getAllByRole('button')[0]).toHaveClass('mantine-YearsList-pickerControl');
   });
 
   it('supports custom __staticSelector', () => {
     render(<YearsList {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByRole('table')).toHaveClass('mantine-Calendar-yearsList');
-    expect(screen.getAllByRole('button')[0]).toHaveClass('mantine-Calendar-calendarPickerControl');
+    expect(screen.getAllByRole('button')[0]).toHaveClass('mantine-Calendar-pickerControl');
   });
 
   it('supports styles api (styles)', () => {
@@ -39,7 +39,7 @@ describe('@mantine/dates/YearsList', () => {
         {...defaultProps}
         styles={{
           yearsList: { borderColor: '#331156' },
-          calendarPickerControl: { borderColor: '#123123' },
+          pickerControl: { borderColor: '#123123' },
         }}
       />
     );
@@ -52,7 +52,7 @@ describe('@mantine/dates/YearsList', () => {
     render(
       <YearsList
         {...defaultProps}
-        classNames={{ yearsList: 'test-years-list', calendarPickerControl: 'test-control' }}
+        classNames={{ yearsList: 'test-years-list', pickerControl: 'test-control' }}
       />
     );
     expect(screen.getByRole('table')).toHaveClass('test-years-list');

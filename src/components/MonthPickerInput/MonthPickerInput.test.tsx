@@ -69,7 +69,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
     );
 
     expect(container.querySelector('table button')).toHaveClass(
-      'mantine-MonthPickerInput-calendarPickerControl'
+      'mantine-MonthPickerInput-pickerControl'
     );
   });
 
@@ -81,7 +81,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
         classNames={{
           root: 'test-root',
           input: 'test-input',
-          calendarPickerControl: 'test-control',
+          pickerControl: 'test-control',
         }}
       />
     );
@@ -98,7 +98,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
         styles={{
           root: { borderColor: '#CCEE45' },
           input: { borderColor: '#EB4522' },
-          calendarPickerControl: { borderColor: '#EE4533' },
+          pickerControl: { borderColor: '#EE4533' },
         }}
       />
     );

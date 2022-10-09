@@ -24,15 +24,13 @@ describe('@mantine/dates/MonthsList', () => {
   it('has correct default __staticSelector', () => {
     render(<MonthsList {...defaultProps} />);
     expect(screen.getByRole('table')).toHaveClass('mantine-MonthsList-monthsList');
-    expect(screen.getAllByRole('button')[0]).toHaveClass(
-      'mantine-MonthsList-calendarPickerControl'
-    );
+    expect(screen.getAllByRole('button')[0]).toHaveClass('mantine-MonthsList-pickerControl');
   });
 
   it('supports custom __staticSelector', () => {
     render(<MonthsList {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByRole('table')).toHaveClass('mantine-Calendar-monthsList');
-    expect(screen.getAllByRole('button')[0]).toHaveClass('mantine-Calendar-calendarPickerControl');
+    expect(screen.getAllByRole('button')[0]).toHaveClass('mantine-Calendar-pickerControl');
   });
 
   it('supports styles api (styles)', () => {
@@ -41,7 +39,7 @@ describe('@mantine/dates/MonthsList', () => {
         {...defaultProps}
         styles={{
           monthsList: { borderColor: '#331156' },
-          calendarPickerControl: { borderColor: '#123123' },
+          pickerControl: { borderColor: '#123123' },
         }}
       />
     );
@@ -54,7 +52,7 @@ describe('@mantine/dates/MonthsList', () => {
     render(
       <MonthsList
         {...defaultProps}
-        classNames={{ monthsList: 'test-months-list', calendarPickerControl: 'test-control' }}
+        classNames={{ monthsList: 'test-months-list', pickerControl: 'test-control' }}
       />
     );
     expect(screen.getByRole('table')).toHaveClass('test-months-list');

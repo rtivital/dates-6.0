@@ -2,25 +2,21 @@
 import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
-import {
-  CalendarPickerControl,
-  CalendarPickerControlStylesNames,
-  CalendarPickerControlProps,
-} from '../CalendarPickerControl';
+import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
 import { ControlsGroupSettings } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { getMonthsData } from './get-months-data/get-months-data';
 import { isMonthDisabled } from './is-month-disabled/is-month-disabled';
 import useStyles from './MonthsList.styles';
 
-export type MonthsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
+export type MonthsListStylesNames = PickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface MonthsListSettings extends ControlsGroupSettings {
   /** dayjs format for months list  */
   monthsListFormat?: string;
 
   /** Adds props to month picker control based on date */
-  getMonthControlProps?(date: Date): Partial<CalendarPickerControlProps>;
+  getMonthControlProps?(date: Date): Partial<PickerControlProps>;
 }
 
 export interface MonthsListProps
@@ -76,7 +72,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
       const controlProps = getMonthControlProps?.(month);
       return (
         <td key={cellIndex} className={classes.monthsListCell}>
-          <CalendarPickerControl
+          <PickerControl
             classNames={classNames}
             styles={styles}
             unstyled={unstyled}
@@ -103,7 +99,7 @@ export const MonthsList = forwardRef<HTMLTableElement, MonthsListProps>((props, 
             tabIndex={__preventFocus ? -1 : 0}
           >
             {dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
-          </CalendarPickerControl>
+          </PickerControl>
         </td>
       );
     });

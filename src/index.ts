@@ -2,7 +2,7 @@ export * from './types';
 
 export * from './components/CalendarHeader';
 export * from './components/Calendar';
-export * from './components/CalendarPickerControl';
+export * from './components/PickerControl';
 export * from './components/DateInput';
 export * from './components/PickerInputBase';
 export * from './components/DatePicker';

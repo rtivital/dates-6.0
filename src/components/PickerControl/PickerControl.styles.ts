@@ -5,7 +5,7 @@ export default createStyles((theme) => {
   const lightColors = theme.fn.variant({ variant: 'light' });
 
   return {
-    calendarPickerControl: {
+    pickerControl: {
       padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
       fontSize: theme.fontSizes.sm,
       display: 'flex',

@@ -2,18 +2,14 @@
 import dayjs from 'dayjs';
 import React, { forwardRef } from 'react';
 import { DefaultProps, Box, Selectors, useComponentDefaultProps } from '@mantine/core';
-import {
-  CalendarPickerControl,
-  CalendarPickerControlStylesNames,
-  CalendarPickerControlProps,
-} from '../CalendarPickerControl';
+import { PickerControl, PickerControlStylesNames, PickerControlProps } from '../PickerControl';
 import { ControlsGroupSettings } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { getYearsData } from './get-years-data/get-years-data';
 import { isYearDisabled } from './is-year-disabled/is-year-disabled';
 import useStyles from './YearsList.styles';
 
-export type YearsListStylesNames = CalendarPickerControlStylesNames | Selectors<typeof useStyles>;
+export type YearsListStylesNames = PickerControlStylesNames | Selectors<typeof useStyles>;
 
 export interface YearsListSettings extends ControlsGroupSettings {
   /** Prevents focus shift when buttons are clicked */
@@ -23,7 +19,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   yearsListFormat?: string;
 
   /** Adds props to year picker control based on date */
-  getYearControlProps?(date: Date): Partial<CalendarPickerControlProps>;
+  getYearControlProps?(date: Date): Partial<PickerControlProps>;
 }
 
 export interface YearsListProps
@@ -77,7 +73,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
       const controlProps = getYearControlProps?.(year);
       return (
         <td key={cellIndex} className={classes.yearsListCell}>
-          <CalendarPickerControl
+          <PickerControl
             classNames={classNames}
             styles={styles}
             unstyled={unstyled}
@@ -104,7 +100,7 @@ export const YearsList = forwardRef<HTMLTableElement, YearsListProps>((props, re
             tabIndex={__preventFocus ? -1 : 0}
           >
             {dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat)}
-          </CalendarPickerControl>
+          </PickerControl>
         </td>
       );
     });

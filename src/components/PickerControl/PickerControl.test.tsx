@@ -1,80 +1,70 @@
 import React from 'react';
 import lodash from 'lodash';
 import { render, screen } from '@testing-library/react';
-import { CalendarPickerControl, CalendarPickerControlProps } from './CalendarPickerControl';
+import { PickerControl, PickerControlProps } from './PickerControl';
 
-const defaultProps: CalendarPickerControlProps = {};
+const defaultProps: PickerControlProps = {};
 
 function validateDataAttribute(prop: string) {
   const attr = `data-${lodash.kebabCase(prop)}`;
   it(`sets ${attr} prop when ${prop} prop is set`, () => {
-    const { rerender } = render(<CalendarPickerControl {...defaultProps} />);
+    const { rerender } = render(<PickerControl {...defaultProps} />);
     expect(screen.getByRole('button')).not.toHaveAttribute(attr);
 
-    rerender(<CalendarPickerControl {...defaultProps} {...{ [prop]: true }} />);
+    rerender(<PickerControl {...defaultProps} {...{ [prop]: true }} />);
     expect(screen.getByRole('button')).toHaveAttribute(attr);
 
-    rerender(<CalendarPickerControl {...defaultProps} {...{ [prop]: true }} disabled />);
+    rerender(<PickerControl {...defaultProps} {...{ [prop]: true }} disabled />);
     expect(screen.getByRole('button')).not.toHaveAttribute(attr);
   });
 }
 
-describe('@mantine/dates/CalendarPickerControl', () => {
+describe('@mantine/dates/PickerControl', () => {
   validateDataAttribute('inRange');
   validateDataAttribute('firstInRange');
   validateDataAttribute('lastInRange');
 
   it('sets correct attributes when disabled prop is set', () => {
-    const { rerender } = render(<CalendarPickerControl {...defaultProps} />);
+    const { rerender } = render(<PickerControl {...defaultProps} />);
     expect(screen.getByRole('button')).not.toHaveAttribute('disabled');
     expect(screen.getByRole('button')).not.toHaveAttribute('data-disabled');
 
-    rerender(<CalendarPickerControl {...defaultProps} disabled />);
+    rerender(<PickerControl {...defaultProps} disabled />);
     expect(screen.getByRole('button')).toHaveAttribute('disabled');
     expect(screen.getByRole('button')).toHaveAttribute('data-disabled');
   });
 
   it('correctly handles selected attribute', () => {
-    const { rerender } = render(<CalendarPickerControl {...defaultProps} />);
+    const { rerender } = render(<PickerControl {...defaultProps} />);
     expect(screen.getByRole('button')).not.toHaveAttribute('data-selected');
 
-    rerender(<CalendarPickerControl {...defaultProps} selected />);
+    rerender(<PickerControl {...defaultProps} selected />);
     expect(screen.getByRole('button')).toHaveAttribute('data-selected');
 
-    rerender(<CalendarPickerControl {...defaultProps} selected disabled />);
+    rerender(<PickerControl {...defaultProps} selected disabled />);
     expect(screen.getByRole('button')).not.toHaveAttribute('data-selected');
   });
 
   it('has correct default __staticSelector', () => {
-    render(<CalendarPickerControl {...defaultProps} />);
-    expect(screen.getByRole('button')).toHaveClass(
-      'mantine-CalendarPickerControl-calendarPickerControl'
-    );
+    render(<PickerControl {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveClass('mantine-PickerControl-pickerControl');
   });
 
   it('supports custom __staticSelector', () => {
-    render(<CalendarPickerControl {...defaultProps} __staticSelector="Calendar" />);
-    expect(screen.getByRole('button')).toHaveClass('mantine-Calendar-calendarPickerControl');
+    render(<PickerControl {...defaultProps} __staticSelector="Calendar" />);
+    expect(screen.getByRole('button')).toHaveClass('mantine-Calendar-pickerControl');
   });
 
   it('supports styles api (styles)', () => {
     render(
-      <CalendarPickerControl
-        {...defaultProps}
-        styles={{ calendarPickerControl: { borderColor: '#999124' } }}
-      />
+      <PickerControl {...defaultProps} styles={{ pickerControl: { borderColor: '#999124' } }} />
     );
 
     expect(screen.getByRole('button')).toHaveStyle({ borderColor: '#999124' });
   });
 
   it('supports styles api (classNames)', () => {
-    render(
-      <CalendarPickerControl
-        {...defaultProps}
-        classNames={{ calendarPickerControl: 'test-control' }}
-      />
-    );
+    render(<PickerControl {...defaultProps} classNames={{ pickerControl: 'test-control' }} />);
 
     expect(screen.getByRole('button')).toHaveClass('test-control');
   });

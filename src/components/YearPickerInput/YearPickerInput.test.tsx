@@ -62,7 +62,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     );
 
     expect(container.querySelector('table button')).toHaveClass(
-      'mantine-YearPickerInput-calendarPickerControl'
+      'mantine-YearPickerInput-pickerControl'
     );
   });
 
@@ -74,7 +74,7 @@ describe('@mantine/dates/YearPickerInput', () => {
         classNames={{
           root: 'test-root',
           input: 'test-input',
-          calendarPickerControl: 'test-control',
+          pickerControl: 'test-control',
         }}
       />
     );
@@ -91,7 +91,7 @@ describe('@mantine/dates/YearPickerInput', () => {
         styles={{
           root: { borderColor: '#CCEE45' },
           input: { borderColor: '#EB4522' },
-          calendarPickerControl: { borderColor: '#EE4533' },
+          pickerControl: { borderColor: '#EE4533' },
         }}
       />
     );

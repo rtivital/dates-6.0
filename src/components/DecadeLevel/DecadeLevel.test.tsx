@@ -59,7 +59,7 @@ describe('@mantine/dates/DecadeLevel', () => {
     const { container } = render(<DecadeLevel {...defaultProps} />);
     expect(container.firstChild).toHaveClass('mantine-DecadeLevel-decadeLevel');
     expect(container.querySelector('table td button')).toHaveClass(
-      'mantine-DecadeLevel-calendarPickerControl'
+      'mantine-DecadeLevel-pickerControl'
     );
     expect(screen.getByLabelText('level-control')).toHaveClass(
       'mantine-DecadeLevel-calendarHeaderLevel'
@@ -70,7 +70,7 @@ describe('@mantine/dates/DecadeLevel', () => {
     const { container } = render(<DecadeLevel {...defaultProps} __staticSelector="Calendar" />);
     expect(container.firstChild).toHaveClass('mantine-Calendar-decadeLevel');
     expect(container.querySelector('table td button')).toHaveClass(
-      'mantine-Calendar-calendarPickerControl'
+      'mantine-Calendar-pickerControl'
     );
     expect(screen.getByLabelText('level-control')).toHaveClass(
       'mantine-Calendar-calendarHeaderLevel'
@@ -83,7 +83,7 @@ describe('@mantine/dates/DecadeLevel', () => {
         {...defaultProps}
         styles={{
           decadeLevel: { borderColor: '#343436' },
-          calendarPickerControl: { borderColor: '#232324' },
+          pickerControl: { borderColor: '#232324' },
           calendarHeaderLevel: { borderColor: '#121214' },
         }}
       />
@@ -100,7 +100,7 @@ describe('@mantine/dates/DecadeLevel', () => {
         {...defaultProps}
         classNames={{
           decadeLevel: 'test-decade-level',
-          calendarPickerControl: 'test-picker-control',
+          pickerControl: 'test-picker-control',
           calendarHeaderLevel: 'test-level',
         }}
       />

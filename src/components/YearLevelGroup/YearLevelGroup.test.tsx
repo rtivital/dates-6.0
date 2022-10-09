@@ -65,16 +65,14 @@ describe('@mantine/dates/YearLevelGroup', () => {
     const { container } = render(<YearLevelGroup {...defaultProps} />);
     expect(container.firstChild).toHaveClass('mantine-YearLevelGroup-yearLevelGroup');
     expect(container.querySelector('table button')).toHaveClass(
-      'mantine-YearLevelGroup-calendarPickerControl'
+      'mantine-YearLevelGroup-pickerControl'
     );
   });
 
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearLevelGroup {...defaultProps} __staticSelector="Calendar" />);
     expect(container.firstChild).toHaveClass('mantine-Calendar-yearLevelGroup');
-    expect(container.querySelector('table button')).toHaveClass(
-      'mantine-Calendar-calendarPickerControl'
-    );
+    expect(container.querySelector('table button')).toHaveClass('mantine-Calendar-pickerControl');
   });
 
   it('supports styles api (styles)', () => {
@@ -83,7 +81,7 @@ describe('@mantine/dates/YearLevelGroup', () => {
         {...defaultProps}
         styles={{
           yearLevelGroup: { borderColor: '#CCEE45' },
-          calendarPickerControl: { borderColor: '#443443' },
+          pickerControl: { borderColor: '#443443' },
         }}
       />
     );
@@ -96,7 +94,7 @@ describe('@mantine/dates/YearLevelGroup', () => {
     const { container } = render(
       <YearLevelGroup
         {...defaultProps}
-        classNames={{ yearLevelGroup: 'test-group', calendarPickerControl: 'test-control' }}
+        classNames={{ yearLevelGroup: 'test-group', pickerControl: 'test-control' }}
       />
     );
 
