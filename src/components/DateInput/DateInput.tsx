@@ -59,6 +59,9 @@ export interface DateInputProps
 
   /** Determines whether input value should be reverted to last known valid value on blur, true by default */
   fixOnBlur?: boolean;
+
+  /** Determines whether value can be deselected when the user clicks on the selected date in the calendar or erases content of the input, true if clearable prop is set, false by default */
+  allowDeselect?: boolean;
 }
 
 const defaultProps: Partial<DateInputProps> = {
@@ -93,6 +96,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     unstyled,
     classNames,
     styles,
+    allowDeselect,
     ...rest
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
@@ -101,6 +105,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
 
   const _dateParser = dateParser || defaultDateParser;
+  const _allowDeselect = clearable || allowDeselect;
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -119,11 +124,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value;
     setInputValue(val);
-    const dateValue = _dateParser(val);
-    const valid = isDateValid({ date: dateValue, minDate, maxDate });
 
-    if (valid) {
-      setValue(dateValue);
+    if (val.trim() === '' && _allowDeselect) {
+      setValue(null);
+    } else {
+      const dateValue = _dateParser(val);
+      isDateValid({ date: dateValue, minDate, maxDate }) && setValue(dateValue);
     }
   };
 
@@ -145,10 +151,6 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     setDropdownOpened(true);
   };
 
-  useDidUpdate(() => {
-    !inputFocused && value && setInputValue(formatValue(value));
-  }, [value, inputFocused]);
-
   const _rightSection =
     rightSection ||
     (clearable && _value && !readOnly ? (
@@ -163,6 +165,10 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
         {...clearButtonProps}
       />
     ) : null);
+
+  useDidUpdate(() => {
+    !inputFocused && value && setInputValue(formatValue(value));
+  }, [value, inputFocused]);
 
   return (
     <>
@@ -206,8 +212,13 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
                 ...getDayProps?.(date),
                 selected: dayjs(_value).isSame(date, 'day'),
                 onClick: () => {
-                  setValue(date);
-                  setInputValue(formatValue(date));
+                  const val = _allowDeselect
+                    ? dayjs(_value).isSame(date, 'day')
+                      ? null
+                      : date
+                    : date;
+                  setValue(val);
+                  setInputValue(formatValue(val));
                   setDropdownOpened(false);
                 },
               })}

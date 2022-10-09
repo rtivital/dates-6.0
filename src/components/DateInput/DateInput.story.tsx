@@ -15,6 +15,16 @@ export function Usage() {
     </div>
   );
 }
+
+export function AllowDeselect() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput placeholder="Allow deselect" allowDeselect />
+      <DateInput placeholder="Clearable" clearable mt="md" />
+    </div>
+  );
+}
+
 export function FocusShift() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
