@@ -10,6 +10,7 @@ import {
   Input,
   PopoverProps,
   Popover,
+  CloseButton,
 } from '@mantine/core';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
@@ -88,6 +89,10 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     readOnly,
     name,
     form,
+    rightSection,
+    unstyled,
+    classNames,
+    styles,
     ...rest
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
@@ -144,6 +149,21 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     !inputFocused && value && setInputValue(formatValue(value));
   }, [value, inputFocused]);
 
+  const _rightSection =
+    rightSection ||
+    (clearable && _value && !readOnly ? (
+      <CloseButton
+        variant="transparent"
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => {
+          setValue(null);
+          setInputValue('');
+        }}
+        unstyled={unstyled}
+        {...clearButtonProps}
+      />
+    ) : null);
+
   return (
     <>
       <Input.Wrapper {...wrapperProps}>
@@ -156,6 +176,8 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
         >
           <Popover.Target>
             <Input
+              data-dates-input
+              data-read-only={readOnly || undefined}
               autoComplete="off"
               ref={ref}
               value={inputValue}
@@ -164,13 +186,17 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
               onFocus={handleInputFocus}
               onClick={handleInputClick}
               readOnly={readOnly}
+              rightSection={_rightSection}
               {...inputProps}
               {...others}
             />
           </Popover.Target>
-          <Popover.Dropdown onMouseDown={(event) => event.preventDefault()}>
+          <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
             <Calendar
               {...calendarProps}
+              classNames={classNames}
+              styles={styles}
+              unstyled={unstyled}
               __preventFocus
               minDate={minDate}
               maxDate={maxDate}

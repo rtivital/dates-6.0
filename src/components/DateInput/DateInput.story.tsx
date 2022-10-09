@@ -40,6 +40,14 @@ export function ValueFormat() {
   );
 }
 
+export function Clearable() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput placeholder="Enter date" clearable />
+    </div>
+  );
+}
+
 export function Controlled() {
   const [value, setValue] = useState(new Date(2022, 3, 11));
   return (
