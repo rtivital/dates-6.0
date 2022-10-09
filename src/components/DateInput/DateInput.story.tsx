@@ -69,6 +69,17 @@ export function Controlled() {
   );
 }
 
+export function ControlledFixedValue() {
+  const [value, setValue] = useState(new Date(2022, 3, 11));
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput placeholder="Enter date" value={value} />
+      <Button onClick={() => setValue(new Date(2022, 7, 11))}>Set value</Button>
+      <Button onClick={() => setValue(null)}>Set null</Button>
+    </div>
+  );
+}
+
 export function UncontrolledFormValues() {
   return (
     <form

@@ -75,4 +75,25 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenCalledWith(new Date(2022, 3, 1));
   });
+
+  it('supports uncontrolled state (free input)', async () => {
+    const { container } = render(<DateInput {...defaultProps} />);
+    await userEvent.tab();
+    await userEvent.type(getInput(container), 'April 1, 2022');
+    await userEvent.tab();
+    expectValue(container, 'April 1, 2022');
+  });
+
+  it('supports controlled state (free input)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput {...defaultProps} value={new Date(2022, 3, 11)} onChange={spy} />
+    );
+    await userEvent.tab();
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), 'April 1, 2022');
+    await userEvent.tab();
+    expectValue(container, 'April 11, 2022');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 1));
+  });
 });
