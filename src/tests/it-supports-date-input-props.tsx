@@ -23,6 +23,8 @@ export interface DateInputTestProps {
   readOnly?: boolean;
   clearable?: boolean;
   clearButtonProps?: Record<string, any>;
+  name?: string;
+  form?: string;
 }
 
 export function itSupportsDateInputProps(
@@ -333,5 +335,21 @@ export function itSupportsDateInputProps(
     );
 
     expect(screen.getByLabelText('clear-button')).toBeInTheDocument();
+  });
+
+  it('renders hidden input with given name, form and value attributes', () => {
+    const { container } = render(
+      <Component
+        {...requiredProps}
+        name="name-hidden"
+        form="form-hidden"
+        value={new Date(2022, 3, 11)}
+      />
+    );
+
+    const input = container.querySelector('input[type="hidden"]');
+    expect(input).toHaveAttribute('name', 'name-hidden');
+    expect(input).toHaveAttribute('form', 'form-hidden');
+    expect(input.getAttribute('value')).not.toBe('');
   });
 }

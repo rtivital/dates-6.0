@@ -72,6 +72,8 @@ export const YearPickerInput: YearPickerInputComponent = forwardRef((props, ref)
       ref={ref}
       onClear={onClear}
       shouldClear={shouldClear}
+      value={_value}
+      type={type}
       {...others}
     >
       <YearPicker

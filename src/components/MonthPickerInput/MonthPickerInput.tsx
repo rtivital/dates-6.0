@@ -72,6 +72,8 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
       ref={ref}
       onClear={onClear}
       shouldClear={shouldClear}
+      value={_value}
+      type={type}
       {...others}
     >
       <MonthPicker

@@ -16,6 +16,8 @@ const defaultProps: DateInputBaseProps = {
   popoverProps: { transitionDuration: 0 },
   onClear: noop,
   shouldClear: true,
+  type: 'default',
+  value: null,
 };
 
 describe('@mantine/dates/DateInputBase', () => {

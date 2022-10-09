@@ -15,8 +15,10 @@ import {
   CloseButton,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
 import { CalendarStylesNames } from '../Calendar';
 import useStyles from './DateInputBase.styles';
+import { DatePickerType } from '../../types';
 
 export type DateInputBaseStylesNames =
   | CalendarStylesNames
@@ -59,6 +61,8 @@ export interface DateInputBaseProps extends DateInputSharedProps {
   dropdownOpened: boolean;
   onClear(): void;
   shouldClear: boolean;
+  value: HiddenDatesInputValue;
+  type: DatePickerType;
 }
 
 const defaultProps: Partial<DateInputBaseProps> = {};
@@ -85,6 +89,10 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
     rightSection,
     shouldClear,
     readOnly,
+    value,
+    name,
+    form,
+    type,
     ...others
   } = useInputProps(props.__staticSelector, defaultProps, props);
 
@@ -153,6 +161,7 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
           <Popover.Dropdown data-dates-dropdown>{children}</Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
+      <HiddenDatesInput value={value} name={name} form={form} type={type} />
     </>
   );
 });
