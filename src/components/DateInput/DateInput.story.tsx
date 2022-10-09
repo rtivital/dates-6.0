@@ -11,7 +11,7 @@ export default { title: 'DateInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput placeholder="Enter date" minDate={new Date(2020, 0, 1)} />
+      <DateInput placeholder="Enter date" defaultDate={new Date(2022, 3, 11)} />
     </div>
   );
 }
@@ -63,6 +63,8 @@ export function Controlled() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" value={value} onChange={setValue} />
+      <Button onClick={() => setValue(new Date(2022, 7, 11))}>Set value</Button>
+      <Button onClick={() => setValue(null)}>Set null</Button>
     </div>
   );
 }

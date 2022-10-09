@@ -1,7 +1,8 @@
 import userEvent from '@testing-library/user-event';
 
 export function getInputValue(container: HTMLElement) {
-  return container.querySelector('[data-dates-input]').textContent;
+  const element = container.querySelector('[data-dates-input]');
+  return element instanceof HTMLButtonElement ? element.textContent : element.getAttribute('value');
 }
 
 export function expectValue(container: HTMLElement, value: string) {

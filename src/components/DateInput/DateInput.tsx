@@ -107,7 +107,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = clearable || allowDeselect;
 
-  const [_value, setValue] = useUncontrolled({
+  const [_value, setValue, controlled] = useUncontrolled({
     value,
     defaultValue,
     finalValue: null,
@@ -118,7 +118,6 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
 
   const [inputValue, setInputValue] = useState(formatValue(_value));
-  const [inputFocused, setInputFocused] = useState(false);
   const [dropdownOpened, setDropdownOpened] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,14 +134,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
-    setInputFocused(false);
     setDropdownOpened(false);
     fixOnBlur && setInputValue(formatValue(_value));
   };
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     onFocus?.(event);
-    setInputFocused(true);
     setDropdownOpened(true);
   };
 
@@ -150,6 +147,17 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     onClick?.(event);
     setDropdownOpened(true);
   };
+
+  const _getDayProps = (date: Date) => ({
+    ...getDayProps?.(date),
+    selected: dayjs(_value).isSame(date, 'day'),
+    onClick: () => {
+      const val = _allowDeselect ? (dayjs(_value).isSame(date, 'day') ? null : date) : date;
+      setValue(val);
+      !controlled && setInputValue(formatValue(val));
+      setDropdownOpened(false);
+    },
+  });
 
   const _rightSection =
     rightSection ||
@@ -167,8 +175,8 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     ) : null);
 
   useDidUpdate(() => {
-    !inputFocused && value && setInputValue(formatValue(value));
-  }, [value, inputFocused]);
+    value !== undefined && setInputValue(formatValue(value));
+  }, [value]);
 
   return (
     <>
@@ -199,6 +207,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
           </Popover.Target>
           <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
             <Calendar
+              defaultDate={_value || undefined}
               {...calendarProps}
               classNames={classNames}
               styles={styles}
@@ -207,21 +216,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
               minDate={minDate}
               maxDate={maxDate}
               locale={locale}
-              defaultDate={_value || undefined}
-              getDayProps={(date) => ({
-                ...getDayProps?.(date),
-                selected: dayjs(_value).isSame(date, 'day'),
-                onClick: () => {
-                  const val = _allowDeselect
-                    ? dayjs(_value).isSame(date, 'day')
-                      ? null
-                      : date
-                    : date;
-                  setValue(val);
-                  setInputValue(formatValue(val));
-                  setDropdownOpened(false);
-                },
-              })}
+              getDayProps={_getDayProps}
             />
           </Popover.Dropdown>
         </Popover>
