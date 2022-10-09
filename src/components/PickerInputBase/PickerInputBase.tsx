@@ -17,17 +17,17 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
 import { CalendarStylesNames } from '../Calendar';
-import useStyles from './DateInputBase.styles';
+import useStyles from './PickerInputBase.styles';
 import { DatePickerType } from '../../types';
 
-export type DateInputBaseStylesNames =
+export type PickerInputBaseStylesNames =
   | CalendarStylesNames
   | InputStylesNames
   | InputWrapperStylesNames
   | Selectors<typeof useStyles>;
 
 export interface DateInputSharedProps
-  extends DefaultProps<DateInputBaseStylesNames>,
+  extends DefaultProps<PickerInputBaseStylesNames>,
     InputSharedProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithRef<'button'>, 'defaultValue' | 'value' | 'onChange' | 'type'> {
@@ -53,7 +53,7 @@ export interface DateInputSharedProps
   readOnly?: boolean;
 }
 
-export interface DateInputBaseProps extends DateInputSharedProps {
+export interface PickerInputBaseProps extends DateInputSharedProps {
   __staticSelector: string;
   children: React.ReactNode;
   formattedValue: string;
@@ -65,9 +65,9 @@ export interface DateInputBaseProps extends DateInputSharedProps {
   type: DatePickerType;
 }
 
-const defaultProps: Partial<DateInputBaseProps> = {};
+const defaultProps: Partial<PickerInputBaseProps> = {};
 
-export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((props, ref) => {
+export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProps>((props, ref) => {
   const {
     inputProps,
     wrapperProps,
@@ -167,4 +167,4 @@ export const DateInputBase = forwardRef<HTMLButtonElement, DateInputBaseProps>((
   );
 });
 
-DateInputBase.displayName = '@mantine/dates/DateInputBase';
+PickerInputBase.displayName = '@mantine/dates/PickerInputBase';

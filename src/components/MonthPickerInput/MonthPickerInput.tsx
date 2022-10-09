@@ -4,9 +4,13 @@ import { useDatesInput } from '../../hooks';
 import { pickCalendarProps } from '../Calendar';
 import { MonthPicker, MonthPickerBaseProps } from '../MonthPicker';
 import { DatePickerType } from '../../types';
-import { DateInputBase, DateInputSharedProps, DateInputBaseStylesNames } from '../DateInputBase';
+import {
+  PickerInputBase,
+  DateInputSharedProps,
+  PickerInputBaseStylesNames,
+} from '../PickerInputBase';
 
-export type MonthPickerInputStylesNames = DateInputBaseStylesNames;
+export type MonthPickerInputStylesNames = PickerInputBaseStylesNames;
 
 export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
   extends DateInputSharedProps,
@@ -61,7 +65,7 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
   });
 
   return (
-    <DateInputBase
+    <PickerInputBase
       formattedValue={formattedValue}
       dropdownOpened={dropdownOpened}
       dropdownHandlers={dropdownHandlers}
@@ -88,7 +92,7 @@ export const MonthPickerInput: MonthPickerInputComponent = forwardRef((props, re
         unstyled={unstyled}
         __staticSelector="MonthPickerInput"
       />
-    </DateInputBase>
+    </PickerInputBase>
   );
 });
 

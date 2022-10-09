@@ -4,9 +4,13 @@ import { useDatesInput } from '../../hooks';
 import { pickCalendarProps } from '../Calendar';
 import { DatePicker, DatePickerBaseProps } from '../DatePicker';
 import { DatePickerType } from '../../types';
-import { DateInputBase, DateInputSharedProps, DateInputBaseStylesNames } from '../DateInputBase';
+import {
+  PickerInputBase,
+  DateInputSharedProps,
+  PickerInputBaseStylesNames,
+} from '../PickerInputBase';
 
-export type DatePickerInputStylesNames = DateInputBaseStylesNames;
+export type DatePickerInputStylesNames = PickerInputBaseStylesNames;
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends DateInputSharedProps,
@@ -61,7 +65,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
   });
 
   return (
-    <DateInputBase
+    <PickerInputBase
       formattedValue={formattedValue}
       dropdownOpened={dropdownOpened}
       dropdownHandlers={dropdownHandlers}
@@ -88,7 +92,7 @@ export const DatePickerInput: DatePickerInputComponent = forwardRef((props, ref)
         unstyled={unstyled}
         __staticSelector="DatePickerInput"
       />
-    </DateInputBase>
+    </PickerInputBase>
   );
 });
 

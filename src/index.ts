@@ -4,7 +4,7 @@ export * from './components/CalendarHeader';
 export * from './components/Calendar';
 export * from './components/CalendarPickerControl';
 export * from './components/DateInput';
-export * from './components/DateInputBase';
+export * from './components/PickerInputBase';
 export * from './components/DatePicker';
 export * from './components/DatePickerInput';
 export * from './components/DatesProvider';

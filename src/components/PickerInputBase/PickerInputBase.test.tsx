@@ -2,15 +2,15 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { itSupportsClearableProps } from '../../tests';
-import { DateInputBase, DateInputBaseProps } from './DateInputBase';
+import { PickerInputBase, PickerInputBaseProps } from './PickerInputBase';
 
 const noop = () => {};
 
-const defaultProps: DateInputBaseProps = {
+const defaultProps: PickerInputBaseProps = {
   dropdownOpened: false,
   dropdownHandlers: { open: noop, close: noop, toggle: noop },
   formattedValue: 'test-value',
-  __staticSelector: 'DateInputBase',
+  __staticSelector: 'PickerInputBase',
   children: 'test-children',
   modalProps: { withinPortal: false, transitionDuration: 0 },
   popoverProps: { transitionDuration: 0 },
@@ -20,14 +20,14 @@ const defaultProps: DateInputBaseProps = {
   value: null,
 };
 
-describe('@mantine/dates/DateInputBase', () => {
-  itSupportsClearableProps(DateInputBase, defaultProps);
+describe('@mantine/dates/PickerInputBase', () => {
+  itSupportsClearableProps(PickerInputBase, defaultProps);
 
   it('opens/toggles dropdown with click events', async () => {
     const toggle = jest.fn();
     const close = jest.fn();
     const { rerender } = render(
-      <DateInputBase {...defaultProps} dropdownHandlers={{ toggle, close, open: noop }} />
+      <PickerInputBase {...defaultProps} dropdownHandlers={{ toggle, close, open: noop }} />
     );
 
     await userEvent.click(screen.getByText('test-value'));
@@ -35,7 +35,7 @@ describe('@mantine/dates/DateInputBase', () => {
     expect(close).not.toHaveBeenCalled();
 
     rerender(
-      <DateInputBase
+      <PickerInputBase
         {...defaultProps}
         dropdownOpened
         dropdownHandlers={{ toggle, close, open: noop }}
@@ -48,7 +48,7 @@ describe('@mantine/dates/DateInputBase', () => {
 
   it('supports __staticSelector', () => {
     const { container } = render(
-      <DateInputBase {...defaultProps} __staticSelector="TestStaticSelector" />
+      <PickerInputBase {...defaultProps} __staticSelector="TestStaticSelector" />
     );
     expect(container.firstChild).toHaveClass('mantine-TestStaticSelector-root');
     expect(screen.getByText('test-value')).toHaveClass('mantine-TestStaticSelector-input');
@@ -56,14 +56,14 @@ describe('@mantine/dates/DateInputBase', () => {
 
   it('changes between Popover and Modal based on dropdownType prop', () => {
     const { rerender, container } = render(
-      <DateInputBase {...defaultProps} dropdownOpened dropdownType="popover" />
+      <PickerInputBase {...defaultProps} dropdownOpened dropdownType="popover" />
     );
 
     expect(container.querySelector('.mantine-Popover-dropdown')).toBeInTheDocument();
     expect(container.querySelector('.mantine-Modal-root')).not.toBeInTheDocument();
     expect(screen.getByText('test-children')).toBeInTheDocument();
 
-    rerender(<DateInputBase {...defaultProps} dropdownOpened dropdownType="modal" />);
+    rerender(<PickerInputBase {...defaultProps} dropdownOpened dropdownType="modal" />);
     expect(container.querySelector('.mantine-Popover-dropdown')).not.toBeInTheDocument();
     expect(container.querySelector('.mantine-Modal-root')).toBeInTheDocument();
     expect(screen.getByText('test-children')).toBeInTheDocument();
@@ -71,19 +71,23 @@ describe('@mantine/dates/DateInputBase', () => {
 
   it('supports onClick handler', async () => {
     const spy = jest.fn();
-    render(<DateInputBase {...defaultProps} onClick={spy} />);
+    render(<PickerInputBase {...defaultProps} onClick={spy} />);
     await userEvent.click(screen.getByText('test-value'));
     expect(spy).toHaveBeenCalled();
   });
 
   it('displays placeholder if formattedValue is not provided', () => {
     const { rerender } = render(
-      <DateInputBase {...defaultProps} formattedValue={null} placeholder="test-placeholder" />
+      <PickerInputBase {...defaultProps} formattedValue={null} placeholder="test-placeholder" />
     );
 
     expect(screen.getByText('test-placeholder')).toBeInTheDocument();
     rerender(
-      <DateInputBase {...defaultProps} formattedValue="test-value" placeholder="test-placeholder" />
+      <PickerInputBase
+        {...defaultProps}
+        formattedValue="test-value"
+        placeholder="test-placeholder"
+      />
     );
     expect(screen.getByText('test-value')).toBeInTheDocument();
     expect(screen.queryAllByText('test-placeholder')).toHaveLength(0);
@@ -91,7 +95,7 @@ describe('@mantine/dates/DateInputBase', () => {
 
   it('renders clear button if both clearable and shouldClear props are set', () => {
     const { rerender } = render(
-      <DateInputBase
+      <PickerInputBase
         {...defaultProps}
         clearable
         shouldClear
@@ -102,7 +106,7 @@ describe('@mantine/dates/DateInputBase', () => {
     expect(screen.getByLabelText('test-clear')).toBeInTheDocument();
 
     rerender(
-      <DateInputBase
+      <PickerInputBase
         {...defaultProps}
         clearable={false}
         shouldClear
@@ -113,7 +117,7 @@ describe('@mantine/dates/DateInputBase', () => {
     expect(screen.queryAllByLabelText('test-clear')).toHaveLength(0);
 
     rerender(
-      <DateInputBase
+      <PickerInputBase
         {...defaultProps}
         clearable
         shouldClear={false}
@@ -128,7 +132,7 @@ describe('@mantine/dates/DateInputBase', () => {
     const spy = jest.fn();
 
     render(
-      <DateInputBase
+      <PickerInputBase
         {...defaultProps}
         clearable
         shouldClear
