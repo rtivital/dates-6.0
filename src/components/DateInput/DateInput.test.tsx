@@ -223,4 +223,48 @@ describe('@mantine/dates/DateInput', () => {
     expect(input).toHaveAttribute('name', 'hidden-name');
     expect(input).toHaveAttribute('form', 'hidden-form');
   });
+
+  it('supports custom value format', () => {
+    const { container } = render(
+      <DateInput {...defaultProps} defaultValue={new Date(2022, 3, 11)} valueFormat="DD/MM/YYYY" />
+    );
+    expectValue(container, '11/04/2022');
+  });
+
+  it('does not update value on blur if fixOnBlur={false}', async () => {
+    const { container } = render(
+      <DateInput {...defaultProps} fixOnBlur={false} defaultValue={new Date(2022, 3, 11)} />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), 'invalid value');
+    await userEvent.tab();
+    expectValue(container, 'invalid value');
+  });
+
+  it('updates value on blur if fixOnBlur={true}', async () => {
+    const { container } = render(
+      <DateInput {...defaultProps} fixOnBlur defaultValue={new Date(2022, 3, 11)} />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), 'invalid value');
+    await userEvent.tab();
+    expectValue(container, 'April 11, 2022');
+  });
+
+  it('supports custom date parser', async () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        dateParser={(input) => (input === 'secret-date' ? new Date(2022, 3, 11) : null)}
+      />
+    );
+
+    await userEvent.type(getInput(container), 'secret-date');
+    await userEvent.tab();
+    expectValue(container, 'April 11, 2022');
+  });
 });
