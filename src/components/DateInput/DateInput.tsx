@@ -165,6 +165,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
       <CloseButton
         variant="transparent"
         onMouseDown={(event) => event.preventDefault()}
+        tabIndex={-1}
         onClick={() => {
           setValue(null);
           !controlled && setInputValue('');

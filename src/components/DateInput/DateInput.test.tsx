@@ -53,6 +53,14 @@ describe('@mantine/dates/DateInput', () => {
     expectNoPopover(container);
   });
 
+  it('opens popover when input is clicked', async () => {
+    const { container } = render(<DateInput {...defaultProps} />);
+    await userEvent.tab();
+    await clickControl(container, 10);
+    await userEvent.click(getInput(container));
+    expectOpenedPopover(container);
+  });
+
   it('allows changing levels in popover', async () => {
     const { container } = render(<DateInput {...defaultProps} />);
     await userEvent.tab();
@@ -134,6 +142,41 @@ describe('@mantine/dates/DateInput', () => {
 
     expectValue(container, 'April 11, 2022');
     await userEvent.click(screen.getByLabelText('clear-button'));
+    expectValue(container, 'April 11, 2022');
+    expect(spy).toHaveBeenLastCalledWith(null);
+  });
+
+  it('allows to clear input value when allowDeselect is set (uncontrolled)', async () => {
+    const { container } = render(
+      <DateInput {...defaultProps} allowDeselect defaultValue={new Date(2022, 3, 11)} />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.clear(getInput(container));
+    await userEvent.tab();
+    expectValue(container, '');
+  });
+
+  it('does not allow to clear input value when allowDeselect is set (uncontrolled)', async () => {
+    const { container } = render(
+      <DateInput {...defaultProps} allowDeselect={false} defaultValue={new Date(2022, 3, 11)} />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.clear(getInput(container));
+    await userEvent.tab();
+    expectValue(container, 'April 11, 2022');
+  });
+
+  it('allows to clear input value when allowDeselect is set (controlled)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput {...defaultProps} allowDeselect value={new Date(2022, 3, 11)} onChange={spy} />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.clear(getInput(container));
+    await userEvent.tab();
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenLastCalledWith(null);
   });
