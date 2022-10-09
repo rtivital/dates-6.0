@@ -38,6 +38,13 @@ export function ReadOnly() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" readOnly />
+      <DateInput
+        placeholder="Enter date"
+        readOnly
+        defaultValue={new Date(2022, 3, 11)}
+        clearable
+        mt="md"
+      />
     </div>
   );
 }
@@ -62,7 +69,7 @@ export function Controlled() {
   const [value, setValue] = useState(new Date(2022, 3, 11));
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput placeholder="Enter date" value={value} onChange={setValue} />
+      <DateInput placeholder="Enter date" value={value} onChange={setValue} clearable />
       <Button onClick={() => setValue(new Date(2022, 7, 11))}>Set value</Button>
       <Button onClick={() => setValue(null)}>Set null</Button>
     </div>
@@ -73,7 +80,7 @@ export function ControlledFixedValue() {
   const [value, setValue] = useState(new Date(2022, 3, 11));
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput placeholder="Enter date" value={value} />
+      <DateInput placeholder="Enter date" value={value} clearable />
       <Button onClick={() => setValue(new Date(2022, 7, 11))}>Set value</Button>
       <Button onClick={() => setValue(null)}>Set null</Button>
     </div>

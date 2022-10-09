@@ -1,7 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { expectNoPopover, expectOpenedPopover, expectValue, clickControl } from '../../tests';
+import {
+  expectNoPopover,
+  expectOpenedPopover,
+  expectValue,
+  clickControl,
+  itSupportsClearableProps,
+} from '../../tests';
 import { DateInput, DateInputProps } from './DateInput';
 
 const defaultProps: DateInputProps = {
@@ -25,6 +31,8 @@ function getInput(container: HTMLElement) {
 }
 
 describe('@mantine/dates/DateInput', () => {
+  itSupportsClearableProps(DateInput, { ...defaultProps, defaultValue: new Date(2022, 3, 11) });
+
   it('opens/closes dropdown when input is focused/blurred', async () => {
     const { container } = render(<DateInput {...defaultProps} />);
     expectNoPopover(container);
@@ -95,5 +103,38 @@ describe('@mantine/dates/DateInput', () => {
     await userEvent.tab();
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 1));
+  });
+
+  it('clears input when clear button is clicked (uncontrolled)', async () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        clearable
+        defaultValue={new Date(2022, 3, 11)}
+        clearButtonProps={{ 'aria-label': 'clear-button' }}
+      />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.click(screen.getByLabelText('clear-button'));
+    expectValue(container, '');
+  });
+
+  it('clears input when clear button is clicked (controlled)', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        clearable
+        value={new Date(2022, 3, 11)}
+        onChange={spy}
+        clearButtonProps={{ 'aria-label': 'clear-button' }}
+      />
+    );
+
+    expectValue(container, 'April 11, 2022');
+    await userEvent.click(screen.getByLabelText('clear-button'));
+    expectValue(container, 'April 11, 2022');
+    expect(spy).toHaveBeenLastCalledWith(null);
   });
 });

@@ -167,7 +167,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => {
           setValue(null);
-          setInputValue('');
+          !controlled && setInputValue('');
         }}
         unstyled={unstyled}
         {...clearButtonProps}
