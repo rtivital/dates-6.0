@@ -16,6 +16,7 @@ import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } f
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { MonthLevelSettings } from '../MonthLevel';
+import { HiddenDatesInput } from '../HiddenDatesInput';
 import { DateValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { isDateValid } from './is-date-valid/is-date-valid';
@@ -85,6 +86,8 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     onBlur,
     onClick,
     readOnly,
+    name,
+    form,
     ...rest
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
@@ -142,48 +145,51 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
   }, [value, inputFocused]);
 
   return (
-    <Input.Wrapper {...wrapperProps}>
-      <Popover
-        opened={dropdownOpened}
-        trapFocus={false}
-        position="bottom-start"
-        disabled={readOnly}
-        {...popoverProps}
-      >
-        <Popover.Target>
-          <Input
-            autoComplete="off"
-            ref={ref}
-            value={inputValue}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            onFocus={handleInputFocus}
-            onClick={handleInputClick}
-            readOnly={readOnly}
-            {...inputProps}
-            {...others}
-          />
-        </Popover.Target>
-        <Popover.Dropdown onMouseDown={(event) => event.preventDefault()}>
-          <Calendar
-            {...calendarProps}
-            __preventFocus
-            minDate={minDate}
-            maxDate={maxDate}
-            locale={locale}
-            defaultDate={_value || undefined}
-            getDayProps={(date) => ({
-              ...getDayProps?.(date),
-              selected: dayjs(_value).isSame(date, 'day'),
-              onClick: () => {
-                setValue(date);
-                setInputValue(formatValue(date));
-                setDropdownOpened(false);
-              },
-            })}
-          />
-        </Popover.Dropdown>
-      </Popover>
-    </Input.Wrapper>
+    <>
+      <Input.Wrapper {...wrapperProps}>
+        <Popover
+          opened={dropdownOpened}
+          trapFocus={false}
+          position="bottom-start"
+          disabled={readOnly}
+          {...popoverProps}
+        >
+          <Popover.Target>
+            <Input
+              autoComplete="off"
+              ref={ref}
+              value={inputValue}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onClick={handleInputClick}
+              readOnly={readOnly}
+              {...inputProps}
+              {...others}
+            />
+          </Popover.Target>
+          <Popover.Dropdown onMouseDown={(event) => event.preventDefault()}>
+            <Calendar
+              {...calendarProps}
+              __preventFocus
+              minDate={minDate}
+              maxDate={maxDate}
+              locale={locale}
+              defaultDate={_value || undefined}
+              getDayProps={(date) => ({
+                ...getDayProps?.(date),
+                selected: dayjs(_value).isSame(date, 'day'),
+                onClick: () => {
+                  setValue(date);
+                  setInputValue(formatValue(date));
+                  setDropdownOpened(false);
+                },
+              })}
+            />
+          </Popover.Dropdown>
+        </Popover>
+      </Input.Wrapper>
+      <HiddenDatesInput name={name} form={form} value={_value} type="default" />
+    </>
   );
 });

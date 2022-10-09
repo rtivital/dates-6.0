@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { TextInput } from '@mantine/core';
+import { TextInput, Button } from '@mantine/core';
 import { DateInput } from './DateInput';
 
 dayjs.extend(customParseFormat);
@@ -46,5 +46,21 @@ export function Controlled() {
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" value={value} onChange={setValue} />
     </div>
+  );
+}
+
+export function UncontrolledFormValues() {
+  return (
+    <form
+      style={{ padding: 40, maxWidth: 400 }}
+      onSubmit={(event) => {
+        event.preventDefault();
+        // eslint-disable-next-line no-console
+        console.log(Object.fromEntries(new FormData(event.currentTarget) as any));
+      }}
+    >
+      <DateInput label="Date input" placeholder="Pick year" name="year-input" />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }
