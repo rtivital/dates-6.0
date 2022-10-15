@@ -163,10 +163,10 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             submitButtonProps?.onClick(event);
             dropdownHandlers.close();
           }}
+          // eslint-disable-next-line react/no-children-prop
+          children={<CheckIcon width={12} />}
           {...submitButtonProps}
-        >
-          <CheckIcon width={12} />
-        </ActionIcon>
+        />
       </div>
     </PickerInputBase>
   );
