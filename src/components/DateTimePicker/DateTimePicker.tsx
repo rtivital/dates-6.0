@@ -180,6 +180,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             withSeconds={withSeconds}
             ref={timeInputRef}
             onKeyDown={handleTimeInputKeyDown}
+            unstyled={unstyled}
             {...timeInputProps}
           />
 
@@ -192,6 +193,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             }}
             // eslint-disable-next-line react/no-children-prop
             children={<CheckIcon width={12} />}
+            unstyled={unstyled}
             {...submitButtonProps}
           />
         </div>

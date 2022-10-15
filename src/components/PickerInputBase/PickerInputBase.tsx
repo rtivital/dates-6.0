@@ -123,6 +123,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
           withCloseButton={false}
           size="auto"
           data-dates-modal
+          unstyled={unstyled}
           {...modalProps}
         >
           {children}
@@ -137,6 +138,7 @@ export const PickerInputBase = forwardRef<HTMLButtonElement, PickerInputBaseProp
           disabled={dropdownType === 'modal' || readOnly}
           trapFocus
           returnFocus
+          unstyled={unstyled}
           {...popoverProps}
         >
           <Popover.Target>

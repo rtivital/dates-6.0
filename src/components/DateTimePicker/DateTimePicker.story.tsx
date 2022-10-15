@@ -27,7 +27,7 @@ export function WithinModal() {
 export function Unstyled() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" unstyled />
+      <DateTimePicker placeholder="Date time picker" dropdownType="modal" unstyled />
     </div>
   );
 }
