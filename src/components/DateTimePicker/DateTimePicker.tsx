@@ -69,6 +69,8 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     timeInputProps,
     submitButtonProps,
     withSeconds,
+    level,
+    defaultLevel,
     ...rest
   } = useComponentDefaultProps('DateTimePicker', defaultProps, props);
 
@@ -95,6 +97,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
   const [timeValue, setTimeValue] = useState(formatTime(_value));
+  const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
   const formattedValue = _value
@@ -160,31 +163,39 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
         styles={styles}
         unstyled={unstyled}
         __staticSelector="DateTimePicker"
+        level={level}
+        defaultLevel={defaultLevel}
+        onLevelChange={(_level) => {
+          setCurrentLevel(_level);
+          calendarProps.onLevelChange?.(_level);
+        }}
       />
 
-      <div className={classes.timeWrapper}>
-        <TimeInput
-          className={cx(classes.timeInput, timeInputProps?.className)}
-          value={timeValue}
-          onChange={handleTimeChange}
-          withSeconds={withSeconds}
-          ref={timeInputRef}
-          onKeyDown={handleTimeInputKeyDown}
-          {...timeInputProps}
-        />
+      {currentLevel === 'month' && (
+        <div className={classes.timeWrapper}>
+          <TimeInput
+            className={cx(classes.timeInput, timeInputProps?.className)}
+            value={timeValue}
+            onChange={handleTimeChange}
+            withSeconds={withSeconds}
+            ref={timeInputRef}
+            onKeyDown={handleTimeInputKeyDown}
+            {...timeInputProps}
+          />
 
-        <ActionIcon<'button'>
-          variant="default"
-          size={36}
-          onClick={(event) => {
-            submitButtonProps?.onClick(event);
-            dropdownHandlers.close();
-          }}
-          // eslint-disable-next-line react/no-children-prop
-          children={<CheckIcon width={12} />}
-          {...submitButtonProps}
-        />
-      </div>
+          <ActionIcon<'button'>
+            variant="default"
+            size={36}
+            onClick={(event) => {
+              submitButtonProps?.onClick(event);
+              dropdownHandlers.close();
+            }}
+            // eslint-disable-next-line react/no-children-prop
+            children={<CheckIcon width={12} />}
+            {...submitButtonProps}
+          />
+        </div>
+      )}
     </PickerInputBase>
   );
 });

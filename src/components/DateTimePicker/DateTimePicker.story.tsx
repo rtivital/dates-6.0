@@ -7,7 +7,7 @@ export default { title: 'DateTimePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" />
+      <DateTimePicker placeholder="Date time picker" defaultLevel="year" />
     </div>
   );
 }
