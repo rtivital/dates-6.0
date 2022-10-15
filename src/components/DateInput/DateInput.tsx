@@ -192,7 +192,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
 
   return (
     <>
-      <Input.Wrapper {...wrapperProps}>
+      <Input.Wrapper {...wrapperProps} __staticSelector="DateInput">
         <Popover
           opened={dropdownOpened}
           trapFocus={false}
@@ -215,10 +215,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
               rightSection={_rightSection}
               {...inputProps}
               {...others}
+              __staticSelector="DateInput"
             />
           </Popover.Target>
           <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
             <Calendar
+              __staticSelector="DateInput"
               defaultDate={_value || undefined}
               {...calendarProps}
               classNames={classNames}
