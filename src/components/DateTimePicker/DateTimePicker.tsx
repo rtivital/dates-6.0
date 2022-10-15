@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useRef } from 'react';
 import {
   useComponentDefaultProps,
   CheckIcon,
@@ -81,6 +81,8 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
 
   const { classes, cx } = useStyles(null, { name: 'DateTimePicker', classNames, styles, unstyled });
 
+  const timeInputRef = useRef<HTMLInputElement>();
+
   const {
     calendarProps: { allowSingleDateInRange, ...calendarProps },
     others,
@@ -120,6 +122,14 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
 
   const handleDateChange = (date: Date) => {
     setValue(assignTime(_value, date));
+    timeInputRef.current?.focus();
+  };
+
+  const handleTimeInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      dropdownHandlers.close();
+    }
   };
 
   useDidUpdate(() => {
@@ -163,8 +173,11 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
           value={timeValue}
           onChange={handleTimeChange}
           withSeconds={withSeconds}
+          ref={timeInputRef}
+          onKeyDown={handleTimeInputKeyDown}
           {...timeInputProps}
         />
+
         <ActionIcon<'button'>
           variant="default"
           size={36}

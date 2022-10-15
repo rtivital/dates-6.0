@@ -9,6 +9,7 @@ export default createStyles((theme) => ({
 
   input: {
     cursor: 'pointer',
+    lineHeight: 'unset',
 
     '&[data-read-only]': {
       cursor: 'default',
