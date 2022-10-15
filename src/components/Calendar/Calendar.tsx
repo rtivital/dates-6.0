@@ -185,7 +185,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   const [_date, setDate] = useUncontrolled({
     value: date,
     defaultValue: defaultDate,
-    finalValue: new Date(),
+    finalValue: null,
     onChange: onDateChange,
   });
 
@@ -197,12 +197,13 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
   };
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
+  const currentDate = _date || new Date();
 
   return (
     <Box className={cx(classes.calendar, className)} ref={ref} {...others}>
       {_level === 'month' && (
         <MonthLevelGroup
-          month={_date}
+          month={currentDate}
           minDate={minDate}
           maxDate={maxDate}
           firstDayOfWeek={firstDayOfWeek}
@@ -214,8 +215,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           getDayAriaLabel={getDayAriaLabel}
-          onNext={() => setDate(dayjs(_date).add(_columnsToScroll, 'month').toDate())}
-          onPrevious={() => setDate(dayjs(_date).subtract(_columnsToScroll, 'month').toDate())}
+          onNext={() => setDate(dayjs(currentDate).add(_columnsToScroll, 'month').toDate())}
+          onPrevious={() =>
+            setDate(dayjs(currentDate).subtract(_columnsToScroll, 'month').toDate())
+          }
           hasNextLevel={maxLevel !== 'month'}
           onLevelClick={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
@@ -233,15 +236,15 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
 
       {_level === 'year' && (
         <YearLevelGroup
-          year={_date}
+          year={currentDate}
           numberOfColumns={numberOfColumns}
           minDate={minDate}
           maxDate={maxDate}
           monthsListFormat={monthsListFormat}
           getMonthControlProps={getMonthControlProps}
           locale={locale}
-          onNext={() => setDate(dayjs(_date).add(_columnsToScroll, 'year').toDate())}
-          onPrevious={() => setDate(dayjs(_date).subtract(_columnsToScroll, 'year').toDate())}
+          onNext={() => setDate(dayjs(currentDate).add(_columnsToScroll, 'year').toDate())}
+          onPrevious={() => setDate(dayjs(currentDate).subtract(_columnsToScroll, 'year').toDate())}
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
           onLevelClick={() => setLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
@@ -261,7 +264,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
 
       {_level === 'decade' && (
         <DecadeLevelGroup
-          decade={_date}
+          decade={currentDate}
           minDate={minDate}
           maxDate={maxDate}
           yearsListFormat={yearsListFormat}
@@ -269,14 +272,14 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) =
           locale={locale}
           onNext={() =>
             setDate(
-              dayjs(_date)
+              dayjs(currentDate)
                 .add(10 * _columnsToScroll, 'year')
                 .toDate()
             )
           }
           onPrevious={() =>
             setDate(
-              dayjs(_date)
+              dayjs(currentDate)
                 .subtract(10 * _columnsToScroll, 'year')
                 .toDate()
             )
