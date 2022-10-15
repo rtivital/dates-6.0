@@ -187,7 +187,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
             variant="default"
             size={36}
             onClick={(event) => {
-              submitButtonProps?.onClick(event);
+              submitButtonProps?.onClick?.(event);
               dropdownHandlers.close();
             }}
             // eslint-disable-next-line react/no-children-prop
