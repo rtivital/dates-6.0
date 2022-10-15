@@ -72,7 +72,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     expect(container.querySelector('table button')).toHaveClass('mantine-DatePickerInput-day');
   });
 
-  it('has supports styles api (classNames)', () => {
+  it('supports styles api (classNames)', () => {
     const { container } = render(
       <DatePickerInput
         {...defaultProps}
@@ -89,7 +89,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     expect(container.querySelector('table button')).toHaveClass('test-control');
   });
 
-  it('has supports styles api (styles)', () => {
+  it('supports styles api (styles)', () => {
     const { container } = render(
       <DatePickerInput
         {...defaultProps}

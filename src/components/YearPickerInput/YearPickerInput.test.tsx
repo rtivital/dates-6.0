@@ -66,7 +66,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     );
   });
 
-  it('has supports styles api (classNames)', () => {
+  it('supports styles api (classNames)', () => {
     const { container } = render(
       <YearPickerInput
         {...defaultProps}
@@ -83,7 +83,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     expect(container.querySelector('table button')).toHaveClass('test-control');
   });
 
-  it('has supports styles api (styles)', () => {
+  it('supports styles api (styles)', () => {
     const { container } = render(
       <YearPickerInput
         {...defaultProps}

@@ -60,7 +60,7 @@ describe('@mantine/dates/MonthLevel', () => {
     );
   });
 
-  it('has supports custom __staticSelector', () => {
+  it('supports custom __staticSelector', () => {
     const { container } = render(<MonthLevel {...defaultProps} __staticSelector="Calendar" />);
     expect(container.firstChild).toHaveClass('mantine-Calendar-monthLevel');
     expect(container.querySelector('table td button')).toHaveClass('mantine-Calendar-day');

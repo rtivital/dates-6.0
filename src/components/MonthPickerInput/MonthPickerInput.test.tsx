@@ -73,7 +73,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
     );
   });
 
-  it('has supports styles api (classNames)', () => {
+  it('supports styles api (classNames)', () => {
     const { container } = render(
       <MonthPickerInput
         {...defaultProps}
@@ -90,7 +90,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
     expect(container.querySelector('table button')).toHaveClass('test-control');
   });
 
-  it('has supports styles api (styles)', () => {
+  it('supports styles api (styles)', () => {
     const { container } = render(
       <MonthPickerInput
         {...defaultProps}
