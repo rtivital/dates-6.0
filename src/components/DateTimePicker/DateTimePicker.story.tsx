@@ -7,7 +7,7 @@ export default { title: 'DateTimePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" defaultLevel="year" />
+      <DateTimePicker placeholder="Date time picker" popoverProps={{ opened: true }} />
     </div>
   );
 }
