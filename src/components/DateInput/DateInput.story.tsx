@@ -16,6 +16,58 @@ export function Usage() {
   );
 }
 
+export function WithTime() {
+  const [value, setValue] = useState(null);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput
+        placeholder="Enter date"
+        valueFormat="DD/MM/YYYY HH:mm:ss"
+        value={value}
+        onChange={setValue}
+      />
+      {value && (
+        <div>
+          D: {value.getDate()}
+          <br />
+          H: {value.getHours()}
+          <br />
+          M: {value.getMinutes()}
+          <br />
+          S: {value.getSeconds()}
+          <br />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function WithTimeMeridian() {
+  const [value, setValue] = useState(null);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput
+        placeholder="Enter date"
+        valueFormat="DD/MM/YYYY hh:mm A"
+        value={value}
+        onChange={setValue}
+      />
+      {value && (
+        <div>
+          D: {value.getDate()}
+          <br />
+          H: {value.getHours()}
+          <br />
+          M: {value.getMinutes()}
+          <br />
+          S: {value.getSeconds()}
+          <br />
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function AllowDeselect() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>

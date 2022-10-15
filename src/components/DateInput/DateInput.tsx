@@ -18,6 +18,7 @@ import { DecadeLevelSettings } from '../DecadeLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { MonthLevelSettings } from '../MonthLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
+import { preserveTime } from '../../utils';
 import { DateValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { isDateValid } from './is-date-valid/is-date-valid';
@@ -152,7 +153,11 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     ...getDayProps?.(date),
     selected: dayjs(_value).isSame(date, 'day'),
     onClick: () => {
-      const val = _allowDeselect ? (dayjs(_value).isSame(date, 'day') ? null : date) : date;
+      const val = _allowDeselect
+        ? dayjs(_value).isSame(date, 'day')
+          ? null
+          : preserveTime(_value, date)
+        : preserveTime(_value, date);
       setValue(val);
       !controlled && setInputValue(formatValue(val));
       setDropdownOpened(false);
@@ -176,7 +181,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     ) : null);
 
   useDidUpdate(() => {
-    value !== undefined && setInputValue(formatValue(value));
+    value !== undefined && !dropdownOpened && setInputValue(formatValue(value));
   }, [value]);
 
   return (
