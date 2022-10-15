@@ -18,7 +18,7 @@ import { DecadeLevelSettings } from '../DecadeLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { MonthLevelSettings } from '../MonthLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
-import { preserveTime } from '../../utils';
+import { assignTime } from '../../utils';
 import { DateValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { isDateValid } from './is-date-valid/is-date-valid';
@@ -63,11 +63,15 @@ export interface DateInputProps
 
   /** Determines whether value can be deselected when the user clicks on the selected date in the calendar or erases content of the input, true if clearable prop is set, false by default */
   allowDeselect?: boolean;
+
+  /** Determines whether time (hours, minutes, seconds and milliseconds) should be preserved when new date is picked, true by default */
+  preserveTime?: boolean;
 }
 
 const defaultProps: Partial<DateInputProps> = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
+  preserveTime: true,
 };
 
 export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, ref) => {
@@ -98,6 +102,7 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     classNames,
     styles,
     allowDeselect,
+    preserveTime,
     ...rest
   } = useInputProps('DateInput', defaultProps, props);
   const { calendarProps, others } = pickCalendarProps(rest);
@@ -153,11 +158,12 @@ export const DateInput = forwardRef<HTMLInputElement, DateInputProps>((props, re
     ...getDayProps?.(date),
     selected: dayjs(_value).isSame(date, 'day'),
     onClick: () => {
+      const valueWithTime = preserveTime ? assignTime(_value, date) : date;
       const val = _allowDeselect
         ? dayjs(_value).isSame(date, 'day')
           ? null
-          : preserveTime(_value, date)
-        : preserveTime(_value, date);
+          : valueWithTime
+        : valueWithTime;
       setValue(val);
       !controlled && setInputValue(formatValue(val));
       setDropdownOpened(false);

@@ -1,4 +1,4 @@
-export function preserveTime(originalDate: Date, resultDate: Date) {
+export function assignTime(originalDate: Date, resultDate: Date) {
   if (!originalDate || !resultDate) {
     return resultDate;
   }

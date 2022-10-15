@@ -267,4 +267,36 @@ describe('@mantine/dates/DateInput', () => {
     await userEvent.tab();
     expectValue(container, 'April 11, 2022');
   });
+
+  it('preserves time when new date is selected and preserveTime prop is set', async () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        defaultValue={new Date(2022, 3, 11, 14, 45, 13)}
+        valueFormat="DD/MM/YYYY HH:mm:ss"
+        preserveTime
+      />
+    );
+
+    expectValue(container, '11/04/2022 14:45:13');
+    await userEvent.tab();
+    await userEvent.click(container.querySelectorAll('table button')[6]);
+    expectValue(container, '03/04/2022 14:45:13');
+  });
+
+  it('does not preserve time when new date is selected and preserveTime prop is set to false', async () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        defaultValue={new Date(2022, 3, 11, 14, 45, 13)}
+        valueFormat="DD/MM/YYYY HH:mm:ss"
+        preserveTime={false}
+      />
+    );
+
+    expectValue(container, '11/04/2022 14:45:13');
+    await userEvent.tab();
+    await userEvent.click(container.querySelectorAll('table button')[6]);
+    expectValue(container, '03/04/2022 00:00:00');
+  });
 });
