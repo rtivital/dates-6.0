@@ -20,6 +20,14 @@ export function WithSeconds() {
   );
 }
 
+export function MinDate() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker placeholder="Date time picker" withSeconds minDate={new Date()} />
+    </div>
+  );
+}
+
 export function Controlled() {
   const [value, setValue] = useState(new Date(2022, 3, 11));
   return (

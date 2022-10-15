@@ -94,7 +94,10 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     onChange,
   });
 
-  const [timeValue, setTimeValue] = useState(_value ? dayjs(_value).format('HH:mm:ss') : '');
+  const formatTime = (dateValue: Date) =>
+    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
+
+  const [timeValue, setTimeValue] = useState(formatTime(_value));
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
   const formattedValue = _value
@@ -121,9 +124,9 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
 
   useDidUpdate(() => {
     if (!dropdownOpened) {
-      setTimeValue(value ? dayjs(value).format('HH:mm:ss') : '');
+      setTimeValue(formatTime(_value));
     }
-  }, [value, dropdownOpened]);
+  }, [_value, dropdownOpened]);
 
   return (
     <PickerInputBase
