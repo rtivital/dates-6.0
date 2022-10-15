@@ -11,11 +11,8 @@ import {
 import { useDisclosure, useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { assignTime } from '../../utils';
 import { TimeInput, TimeInputProps } from '../TimeInput';
-import { pickCalendarProps, CalendarBaseProps } from '../Calendar';
+import { pickCalendarProps, CalendarBaseProps, CalendarSettings } from '../Calendar';
 import { DatePicker } from '../DatePicker';
-import { DecadeLevelSettings } from '../DecadeLevel';
-import { YearLevelSettings } from '../YearLevel';
-import { MonthLevelSettings } from '../MonthLevel';
 import {
   PickerInputBase,
   DateInputSharedProps,
@@ -31,9 +28,7 @@ export interface DateTimePickerProps
   extends DefaultProps<DateTimePickerStylesNames>,
     Omit<DateInputSharedProps, 'classNames' | 'styles'>,
     CalendarBaseProps,
-    DecadeLevelSettings,
-    YearLevelSettings,
-    MonthLevelSettings {
+    CalendarSettings {
   /** Dayjs format to display input value, "DD/MM/YYYY HH:mm" by default  */
   valueFormat?: string;
 
