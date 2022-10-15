@@ -21,10 +21,12 @@ const defaultProps: DateTimePickerProps = {
   modalProps: { withinPortal: false, transitionDuration: 0 },
   timeInputProps: { 'aria-label': 'test-time-input' },
   submitButtonProps: { 'aria-label': 'test-submit' },
+  clearButtonProps: { 'aria-label': 'test-clear' },
 };
 
 const getTimeInput = () => screen.getByLabelText('test-time-input');
 const getSubmitButton = () => screen.getByLabelText('test-submit');
+const getClearButton = () => screen.queryAllByLabelText('test-clear')[0];
 
 describe('@mantine/dates/DateTimePicker', () => {
   itSupportsClearableProps(DateTimePicker, { ...defaultProps, defaultValue: new Date() });
@@ -157,5 +159,48 @@ describe('@mantine/dates/DateTimePicker', () => {
     );
 
     expectValue(container, '11 апреля, 2022 02:45:54');
+  });
+
+  it('focuses TimeInput after date was selected', async () => {
+    const { container } = render(<DateTimePicker {...defaultProps} />);
+    await clickInput(container);
+    await userEvent.click(container.querySelector('table button'));
+    expect(getTimeInput()).toHaveFocus();
+  });
+
+  it('renders clear button based on clearable prop and current value', () => {
+    const { rerender } = render(
+      <DateTimePicker {...defaultProps} value={new Date(2022, 3, 11)} clearable />
+    );
+
+    expect(getClearButton()).toBeInTheDocument();
+
+    rerender(<DateTimePicker {...defaultProps} value={new Date(2022, 3, 11)} clearable={false} />);
+    expect(getClearButton()).toBe(undefined);
+
+    rerender(<DateTimePicker {...defaultProps} value={null} clearable />);
+    expect(getClearButton()).toBe(undefined);
+  });
+
+  it('clears input when clear button is clicked', async () => {
+    const { container } = render(
+      <DateTimePicker {...defaultProps} defaultValue={new Date(2022, 3, 11)} clearable />
+    );
+
+    expectValue(container, '11/04/2022 00:00');
+    await userEvent.click(getClearButton());
+    expectValue(container, '');
+  });
+
+  it('calls onChange with null when controlled input is cleared', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateTimePicker {...defaultProps} value={new Date(2022, 3, 11)} clearable onChange={spy} />
+    );
+
+    expectValue(container, '11/04/2022 00:00');
+    await userEvent.click(getClearButton());
+    expectValue(container, '11/04/2022 00:00');
+    expect(spy).toHaveBeenCalledWith(null);
   });
 });
