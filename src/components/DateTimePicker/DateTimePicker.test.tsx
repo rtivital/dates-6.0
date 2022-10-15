@@ -1,6 +1,8 @@
+import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { DatesProvider } from '../DatesProvider';
 import {
   itSupportsMonthsListProps,
   itSupportsYearsListProps,
@@ -101,17 +103,59 @@ describe('@mantine/dates/DateTimePicker', () => {
     const spy = jest.fn();
 
     const { container } = render(
-      <DateTimePicker
-        {...defaultProps}
-        value={new Date(2022, 3, 11, 0, 0, 0, 0)}
-        onChange={spy}
-        withSeconds
-      />
+      <DateTimePicker {...defaultProps} value={new Date(2022, 3, 11)} onChange={spy} />
     );
 
     await clickInput(container);
     await userEvent.click(container.querySelectorAll('table button')[6]);
-    expectValue(container, '11/04/2022 00:00:00');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 3, 0, 0, 0, 0));
+    expectValue(container, '11/04/2022 00:00');
+    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 3));
+  });
+
+  it('displays correct value when withSeconds is set', () => {
+    const { container } = render(
+      <DateTimePicker {...defaultProps} value={new Date(2022, 3, 11, 14, 45, 54)} withSeconds />
+    );
+
+    expectValue(container, '11/04/2022 14:45:54');
+  });
+
+  it('supports custom valueFormat', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        value={new Date(2022, 3, 11, 14, 45, 54)}
+        valueFormat="DD MMMM, YYYY hh:mm:ss A"
+      />
+    );
+
+    expectValue(container, '11 April, 2022 02:45:54 PM');
+  });
+
+  it('supports localization for custom valueFormat', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        value={new Date(2022, 3, 11, 14, 45, 54)}
+        valueFormat="DD MMMM, YYYY hh:mm:ss"
+        locale="ru"
+      />
+    );
+
+    expectValue(container, '11 апреля, 2022 02:45:54');
+  });
+
+  it('supports localization for custom valueFormat om DatesProvider', () => {
+    const { container } = render(
+      <DatesProvider settings={{ locale: 'ru' }}>
+        <DateTimePicker
+          {...defaultProps}
+          value={new Date(2022, 3, 11, 14, 45, 54)}
+          valueFormat="DD MMMM, YYYY hh:mm:ss"
+        />
+      </DatesProvider>
+    );
+
+    expectValue(container, '11 апреля, 2022 02:45:54');
   });
 });
