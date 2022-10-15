@@ -8,7 +8,7 @@ import {
   Selectors,
   DefaultProps,
 } from '@mantine/core';
-import { useDisclosure, useUncontrolled } from '@mantine/hooks';
+import { useDisclosure, useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { assignTime } from '../../utils';
 import { TimeInput, TimeInputProps } from '../TimeInput';
 import { pickCalendarProps, CalendarBaseProps } from '../Calendar';
@@ -118,6 +118,12 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
   const handleDateChange = (date: Date) => {
     setValue(assignTime(_value, date));
   };
+
+  useDidUpdate(() => {
+    if (!dropdownOpened) {
+      setTimeValue(value ? dayjs(value).format('HH:mm:ss') : '');
+    }
+  }, [value, dropdownOpened]);
 
   return (
     <PickerInputBase
