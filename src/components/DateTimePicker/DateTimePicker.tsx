@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import {
   useComponentDefaultProps,
   CheckIcon,
@@ -9,6 +9,7 @@ import {
   DefaultProps,
 } from '@mantine/core';
 import { useDisclosure, useUncontrolled } from '@mantine/hooks';
+import { assignTime } from '../../utils';
 import { TimeInput, TimeInputProps } from '../TimeInput';
 import { pickCalendarProps, CalendarBaseProps } from '../Calendar';
 import { DatePicker } from '../DatePicker';
@@ -88,13 +89,30 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     onChange,
   });
 
+  const [timeValue, setTimeValue] = useState(_value ? dayjs(_value).format('HH:mm:ss') : '');
+
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
   const formattedValue = _value
     ? dayjs(_value).locale(ctx.getLocale(locale)).format(valueFormat)
     : '';
 
-  const handleClear = () => setValue(null);
-  const shouldClear = !!_value;
+  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event.currentTarget.value;
+    setTimeValue(val);
+
+    if (val) {
+      const [hours, minutes, seconds] = val.split(':').map(Number);
+      const timeDate = new Date();
+      timeDate.setHours(hours);
+      timeDate.setMinutes(minutes);
+      seconds !== undefined && timeDate.setSeconds(seconds);
+      setValue(assignTime(timeDate, _value || new Date()));
+    }
+  };
+
+  const handleDateChange = (date: Date) => {
+    setValue(assignTime(_value, date));
+  };
 
   return (
     <PickerInputBase
@@ -106,8 +124,8 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
       unstyled={unstyled}
       __staticSelector="DateTimePicker"
       ref={ref}
-      onClear={handleClear}
-      shouldClear={shouldClear}
+      onClear={() => setValue(null)}
+      shouldClear={!!_value}
       value={_value}
       type="default"
       {...others}
@@ -117,7 +135,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
         type="default"
         value={_value}
         defaultDate={_value}
-        onChange={setValue}
+        onChange={handleDateChange}
         locale={locale}
         classNames={classNames}
         styles={styles}
@@ -128,9 +146,20 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
       <div className={classes.timeWrapper}>
         <TimeInput
           className={cx(classes.timeInput, timeInputProps?.className)}
+          value={timeValue}
+          onChange={handleTimeChange}
+          withSeconds
           {...timeInputProps}
         />
-        <ActionIcon variant="default" size={36} {...submitButtonProps}>
+        <ActionIcon<'button'>
+          variant="default"
+          size={36}
+          onClick={(event) => {
+            submitButtonProps?.onClick(event);
+            dropdownHandlers.close();
+          }}
+          {...submitButtonProps}
+        >
           <CheckIcon width={12} />
         </ActionIcon>
       </div>
