@@ -26,8 +26,8 @@ export type DateTimePickerStylesNames = PickerInputBaseStylesNames | Selectors<t
 
 export interface DateTimePickerProps
   extends DefaultProps<DateTimePickerStylesNames>,
-    Omit<DateInputSharedProps, 'classNames' | 'styles'>,
-    CalendarBaseProps,
+    Omit<DateInputSharedProps, 'classNames' | 'styles' | 'closeOnChange'>,
+    Omit<CalendarBaseProps, 'defaultDate'>,
     CalendarSettings {
   /** Dayjs format to display input value, "DD/MM/YYYY HH:mm" by default  */
   valueFormat?: string;
@@ -51,9 +51,7 @@ export interface DateTimePickerProps
   withSeconds?: boolean;
 }
 
-const defaultProps: Partial<DateTimePickerProps> = {
-  closeOnChange: true,
-};
+const defaultProps: Partial<DateTimePickerProps> = {};
 
 export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>((props, ref) => {
   const {
@@ -65,7 +63,6 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     classNames,
     styles,
     unstyled,
-    closeOnChange,
     timeInputProps,
     submitButtonProps,
     withSeconds,
@@ -105,6 +102,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     : '';
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    timeInputProps?.onChange?.(event);
     const val = event.currentTarget.value;
     setTimeValue(val);
 
@@ -124,6 +122,8 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
   };
 
   const handleTimeInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    timeInputProps?.onKeyDown?.(event);
+
     if (event.key === 'Enter') {
       event.preventDefault();
       dropdownHandlers.close();
@@ -174,14 +174,14 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
       {currentLevel === 'month' && (
         <div className={classes.timeWrapper}>
           <TimeInput
-            className={cx(classes.timeInput, timeInputProps?.className)}
             value={timeValue}
-            onChange={handleTimeChange}
             withSeconds={withSeconds}
             ref={timeInputRef}
-            onKeyDown={handleTimeInputKeyDown}
             unstyled={unstyled}
             {...timeInputProps}
+            className={cx(classes.timeInput, timeInputProps?.className)}
+            onChange={handleTimeChange}
+            onKeyDown={handleTimeInputKeyDown}
           />
 
           <ActionIcon<'button'>

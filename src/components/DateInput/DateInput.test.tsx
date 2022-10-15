@@ -178,7 +178,7 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, '');
   });
 
-  it('does not allow to clear input value when allowDeselect is set (uncontrolled)', async () => {
+  it('does not allow to clear input value when allowDeselect is not set (uncontrolled)', async () => {
     const { container } = render(
       <DateInput {...defaultProps} allowDeselect={false} defaultValue={new Date(2022, 3, 11)} />
     );

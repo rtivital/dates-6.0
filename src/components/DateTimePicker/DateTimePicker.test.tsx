@@ -22,6 +22,17 @@ const defaultProps: DateTimePickerProps = {
   timeInputProps: { 'aria-label': 'test-time-input' },
   submitButtonProps: { 'aria-label': 'test-submit' },
   clearButtonProps: { 'aria-label': 'test-clear' },
+  ariaLabels: {
+    monthLevelControl: 'level-control',
+    yearLevelControl: 'level-control',
+    decadeLevelControl: 'level-control',
+    nextMonth: 'next',
+    previousMonth: 'previous',
+    nextYear: 'next',
+    previousYear: 'previous',
+    nextDecade: 'next',
+    previousDecade: 'previous',
+  },
 };
 
 const getTimeInput = () => screen.getByLabelText('test-time-input');
@@ -202,5 +213,41 @@ describe('@mantine/dates/DateTimePicker', () => {
     await userEvent.click(getClearButton());
     expectValue(container, '11/04/2022 00:00');
     expect(spy).toHaveBeenCalledWith(null);
+  });
+
+  it('does not open popover if readOnly prop is set', async () => {
+    const { container } = render(<DateTimePicker {...defaultProps} readOnly />);
+    expectNoPopover(container);
+    await clickInput(container);
+    expectNoPopover(container);
+  });
+
+  it('allows changing levels in popover', async () => {
+    const { container } = render(
+      <DateTimePicker {...defaultProps} defaultValue={new Date(2022, 3, 11)} />
+    );
+    await clickInput(container);
+    await userEvent.click(screen.getByLabelText('level-control'));
+    await userEvent.click(screen.getByLabelText('level-control'));
+    await userEvent.click(screen.getByLabelText('previous'));
+    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelector('table button'));
+    await userEvent.click(container.querySelectorAll('table button')[4]);
+    expectValue(container, '01/01/2010 00:00');
+  });
+
+  it('render hidden input with given value', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        value={new Date(2022, 3, 11, 14, 56, 45)}
+        name="hidden-name"
+        form="hidden-form"
+      />
+    );
+    const input = container.querySelector('input[type="hidden"]');
+    expect(input).toHaveValue(new Date(2022, 3, 11, 14, 56, 45).toISOString());
+    expect(input).toHaveAttribute('name', 'hidden-name');
+    expect(input).toHaveAttribute('form', 'hidden-form');
   });
 });
