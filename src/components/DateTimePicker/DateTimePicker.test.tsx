@@ -250,4 +250,53 @@ describe('@mantine/dates/DateTimePicker', () => {
     expect(input).toHaveAttribute('name', 'hidden-name');
     expect(input).toHaveAttribute('form', 'hidden-form');
   });
+
+  it('has correct default __staticSelector', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+      />
+    );
+    expect(container.firstChild).toHaveClass('mantine-DateTimePicker-root');
+    expect(container.querySelector('[data-dates-input]')).toHaveClass(
+      'mantine-DateTimePicker-input'
+    );
+
+    expect(container.querySelector('table button')).toHaveClass('mantine-DateTimePicker-day');
+  });
+
+  it('supports styles api (classNames)', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        classNames={{
+          root: 'test-root',
+          input: 'test-input',
+          day: 'test-control',
+        }}
+      />
+    );
+    expect(container.firstChild).toHaveClass('test-root');
+    expect(container.querySelector('[data-dates-input]')).toHaveClass('test-input');
+    expect(container.querySelector('table button')).toHaveClass('test-control');
+  });
+
+  it('supports styles api (styles)', () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        popoverProps={{ opened: true, withinPortal: false, transitionDuration: 0 }}
+        styles={{
+          root: { borderColor: '#CCEE45' },
+          input: { borderColor: '#EB4522' },
+          day: { borderColor: '#EE4533' },
+        }}
+      />
+    );
+    expect(container.firstChild).toHaveStyle({ borderColor: '#CCEE45' });
+    expect(container.querySelector('[data-dates-input]')).toHaveStyle({ borderColor: '#EB4522' });
+    expect(container.querySelector('table button')).toHaveStyle({ borderColor: '#EE4533' });
+  });
 });
