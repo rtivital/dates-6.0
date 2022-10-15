@@ -10,3 +10,11 @@ export function Usage() {
     </div>
   );
 }
+
+export function WithSeconds() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateTimePicker placeholder="Date time picker" withSeconds />
+    </div>
+  );
+}

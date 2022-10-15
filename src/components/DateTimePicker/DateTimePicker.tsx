@@ -51,10 +51,12 @@ export interface DateTimePickerProps
 
   /** Props added to submit button */
   submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
+
+  /** Determines whether seconds input should be rendered */
+  withSeconds?: boolean;
 }
 
 const defaultProps: Partial<DateTimePickerProps> = {
-  valueFormat: 'DD/MM/YYYY HH:mm',
   closeOnChange: true,
 };
 
@@ -71,8 +73,11 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
     closeOnChange,
     timeInputProps,
     submitButtonProps,
+    withSeconds,
     ...rest
   } = useComponentDefaultProps('DateTimePicker', defaultProps, props);
+
+  const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
   const { classes, cx } = useStyles(null, { name: 'DateTimePicker', classNames, styles, unstyled });
 
@@ -93,7 +98,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
   const formattedValue = _value
-    ? dayjs(_value).locale(ctx.getLocale(locale)).format(valueFormat)
+    ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
     : '';
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,7 +153,7 @@ export const DateTimePicker = forwardRef<HTMLButtonElement, DateTimePickerProps>
           className={cx(classes.timeInput, timeInputProps?.className)}
           value={timeValue}
           onChange={handleTimeChange}
-          withSeconds
+          withSeconds={withSeconds}
           {...timeInputProps}
         />
         <ActionIcon<'button'>
