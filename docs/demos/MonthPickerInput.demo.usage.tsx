@@ -66,7 +66,11 @@ function Demo() {
           Pick one value, current value:{' '}
           <b>{singleValue ? `${singleValue.getMonth()}/${singleValue.getFullYear()}` : 'null'}</b>
         </Text>
-        <MonthPickerInput value={singleValue} onChange={setSingleValue} />
+        <MonthPickerInput
+          value={singleValue}
+          onChange={setSingleValue}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
 
       <div>
@@ -78,7 +82,12 @@ function Demo() {
               : 'empty array'}
           </b>
         </Text>
-        <MonthPickerInput type="multiple" value={multipleDates} onChange={setMultipleDates} />
+        <MonthPickerInput
+          type="multiple"
+          value={multipleDates}
+          onChange={setMultipleDates}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
 
       <div>
@@ -93,7 +102,12 @@ function Demo() {
               : 'empty array'}
           </b>
         </Text>
-        <MonthPickerInput type="range" value={rangeValue} onChange={setRangeValue} />
+        <MonthPickerInput
+          type="range"
+          value={rangeValue}
+          onChange={setRangeValue}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
     </Stack>
   );

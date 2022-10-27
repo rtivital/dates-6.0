@@ -64,7 +64,11 @@ function Demo() {
         <Text mb="sm">
           Pick one value, current value: <b>{singleValue ? singleValue.getFullYear() : 'null'}</b>
         </Text>
-        <YearPickerInput value={singleValue} onChange={setSingleValue} />
+        <YearPickerInput
+          value={singleValue}
+          onChange={setSingleValue}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
 
       <div>
@@ -76,7 +80,12 @@ function Demo() {
               : 'empty array'}
           </b>
         </Text>
-        <YearPickerInput type="multiple" value={multipleDates} onChange={setMultipleDates} />
+        <YearPickerInput
+          type="multiple"
+          value={multipleDates}
+          onChange={setMultipleDates}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
 
       <div>
@@ -91,7 +100,12 @@ function Demo() {
               : 'empty array'}
           </b>
         </Text>
-        <YearPickerInput type="range" value={rangeValue} onChange={setRangeValue} />
+        <YearPickerInput
+          type="range"
+          value={rangeValue}
+          onChange={setRangeValue}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
     </Stack>
   );

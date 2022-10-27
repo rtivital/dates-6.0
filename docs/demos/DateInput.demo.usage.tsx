@@ -17,7 +17,7 @@ function Demo() {
 function Demo() {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <DateInput placeholder="Free date input" />
+      <DateInput placeholder="Free date input" popoverProps={{ withinPortal: true }} />
     </div>
   );
 }

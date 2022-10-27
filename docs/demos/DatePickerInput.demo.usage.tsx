@@ -70,7 +70,11 @@ function Demo() {
               : 'null'}
           </b>
         </Text>
-        <DatePickerInput value={singleValue} onChange={setSingleValue} />
+        <DatePickerInput
+          value={singleValue}
+          onChange={setSingleValue}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
 
       <div>
@@ -84,7 +88,12 @@ function Demo() {
               : 'empty array'}
           </b>
         </Text>
-        <DatePickerInput type="multiple" value={multipleDates} onChange={setMultipleDates} />
+        <DatePickerInput
+          type="multiple"
+          value={multipleDates}
+          onChange={setMultipleDates}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
 
       <div>
@@ -99,7 +108,12 @@ function Demo() {
               : 'empty array'}
           </b>
         </Text>
-        <DatePickerInput type="range" value={rangeValue} onChange={setRangeValue} />
+        <DatePickerInput
+          type="range"
+          value={rangeValue}
+          onChange={setRangeValue}
+          popoverProps={{ withinPortal: true }}
+        />
       </div>
     </Stack>
   );

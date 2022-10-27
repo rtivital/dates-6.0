@@ -17,7 +17,7 @@ function Demo() {
 function Demo() {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <DateTimePicker placeholder="Pick date and time" />
+      <DateTimePicker placeholder="Pick date and time" popoverProps={{ withinPortal: true }} />
     </div>
   );
 }
