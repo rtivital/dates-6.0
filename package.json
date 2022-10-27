@@ -4,10 +4,6 @@
   "description": "Template for Mantine extensions",
   "types": "./declarations/index.d.ts",
   "main": "./dist/index.js",
-  "exports": {
-    "types": "./declarations/index.d.ts",
-    "default": "./dist/index.js"
-  },
   "scripts": {
     "prepare": "npm run docgen && cd docs && yarn",
     "docgen": "esno scripts/docgen/docgen",
