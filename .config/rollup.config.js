@@ -15,6 +15,7 @@ export default {
     dir: path.join(__dirname, '../dist'),
     sourcemap: 'inline',
   },
+  external: ['dayjs'],
   plugins: [
     commonjs(),
     nodeExternals(),
