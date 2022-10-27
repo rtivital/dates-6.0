@@ -11,7 +11,7 @@ const withMDX = require('@next/mdx')({
 module.exports = withMDX({
   reactStrictMode: false,
   swcMinify: true,
-  basePath: process.env.NODE_ENV === 'production' ? '/mantine-extension-template' : undefined,
+  basePath: process.env.NODE_ENV === 'production' ? '/dates-6.0' : undefined,
   experimental: {
     externalDir: true,
   },
@@ -19,4 +19,7 @@ module.exports = withMDX({
     ignoreDuringBuilds: true,
   },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 });
