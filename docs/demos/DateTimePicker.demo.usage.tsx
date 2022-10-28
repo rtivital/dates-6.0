@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { DateTimePicker } from '@/extension';
+import { DateTimePicker } from 'mantine-dates-6';
 
 const code = `
 import { DateTimePicker } from 'mantine-dates-6';

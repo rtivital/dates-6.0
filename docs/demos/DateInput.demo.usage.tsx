@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineDemo } from '@mantine/ds';
-import { DateInput } from '@/extension';
+import { DateInput } from 'mantine-dates-6';
 
 const code = `
 import { DateInput } from 'mantine-dates-6';

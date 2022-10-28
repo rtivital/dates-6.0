@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MantineDemo } from '@mantine/ds';
 import { Stack, Text } from '@mantine/core';
-import { DatesRangeValue, DateValue, YearPicker } from '@/extension';
+import { DatesRangeValue, DateValue, YearPicker } from 'mantine-dates-6';
 
 const code = `
 import { useState } from 'react';
