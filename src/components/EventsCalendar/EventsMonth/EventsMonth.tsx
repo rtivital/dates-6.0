@@ -11,6 +11,8 @@ import { DayOfWeek } from '../../../types';
 import useStyles from './EventsMonth.styles';
 import { useDatesContext } from '../../DatesProvider';
 import { getWeekdayNames } from '../../WeekdaysRow';
+import { EventsCalendarEvent } from '../types';
+import { getMonthEvents } from './get-month-events';
 
 export type EventsMonthStylesNames = Selectors<typeof useStyles>;
 
@@ -30,11 +32,15 @@ export interface EventsMonthProps
 
   /** dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
+
+  /** List of events that should be displayed */
+  events?: EventsCalendarEvent[];
 }
 
 const defaultProps: Partial<EventsMonthProps> = {
   __staticSelector: 'EventsMonth',
   weekdayFormat: 'dd',
+  events: [],
 };
 
 export const EventsMonth = forwardRef<HTMLDivElement, EventsMonthProps>((props, ref) => {
@@ -48,6 +54,7 @@ export const EventsMonth = forwardRef<HTMLDivElement, EventsMonthProps>((props, 
     firstDayOfWeek,
     weekdayFormat,
     locale,
+    events,
     ...others
   } = useComponentDefaultProps('EventsMonth', defaultProps, props);
 
@@ -61,6 +68,8 @@ export const EventsMonth = forwardRef<HTMLDivElement, EventsMonthProps>((props, 
   const { cx, classes } = useStyles(null, { ...stylesApi, name: __staticSelector });
   const ctx = useDatesContext();
   const monthDays = getMonthDays(month, ctx.getFirstDayOfWeek(firstDayOfWeek));
+  const parsedEvents = getMonthEvents({ events, monthDays });
+  console.log(parsedEvents);
 
   const rows = monthDays.map((row, rowIndex) => {
     const days = row.map((day, dayIndex) => (
