@@ -14,6 +14,7 @@ export default createStyles((theme) => ({
   },
 
   eventsMonthDay: {
+    cursor: 'default',
     flex: 1,
     height: 100,
     textAlign: 'right',
@@ -28,5 +29,19 @@ export default createStyles((theme) => ({
     '&[data-outside]': {
       color: theme.colors.gray[4],
     },
+  },
+
+  eventsMonthWeekday: {
+    cursor: 'default',
+    flex: 1,
+    textAlign: 'right',
+    padding: theme.spacing.xs,
+    lineHeight: 1,
+    fontWeight: 500,
+    fontSize: theme.fontSizes.sm,
+  },
+
+  eventsMonthWeekdaysRow: {
+    display: 'flex',
   },
 }));

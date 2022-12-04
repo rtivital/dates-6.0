@@ -10,6 +10,7 @@ import { getMonthDays, isSameMonth } from '../../Month';
 import { DayOfWeek } from '../../../types';
 import useStyles from './EventsMonth.styles';
 import { useDatesContext } from '../../DatesProvider';
+import { getWeekdayNames } from '../../WeekdaysRow';
 
 export type EventsMonthStylesNames = Selectors<typeof useStyles>;
 
@@ -18,15 +19,22 @@ export interface EventsMonthProps
     React.ComponentPropsWithoutRef<'div'> {
   __staticSelector?: string;
 
+  /** Month that should be displayed */
+  month: Date;
+
+  /** dayjs format for weekdays names, defaults to "dd" */
+  weekdayFormat?: string;
+
   /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** Month that should be displayed */
-  month: Date;
+  /** dayjs locale, defaults to value defined in DatesProvider */
+  locale?: string;
 }
 
 const defaultProps: Partial<EventsMonthProps> = {
   __staticSelector: 'EventsMonth',
+  weekdayFormat: 'dd',
 };
 
 export const EventsMonth = forwardRef<HTMLDivElement, EventsMonthProps>((props, ref) => {
@@ -38,6 +46,8 @@ export const EventsMonth = forwardRef<HTMLDivElement, EventsMonthProps>((props, 
     __staticSelector,
     month,
     firstDayOfWeek,
+    weekdayFormat,
+    locale,
     ...others
   } = useComponentDefaultProps('EventsMonth', defaultProps, props);
 
@@ -71,8 +81,19 @@ export const EventsMonth = forwardRef<HTMLDivElement, EventsMonthProps>((props, 
     );
   });
 
+  const weekdays = getWeekdayNames({
+    locale: ctx.getLocale(locale),
+    format: weekdayFormat,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  }).map((weekday) => (
+    <div key={weekday} className={classes.eventsMonthWeekday}>
+      {weekday}
+    </div>
+  ));
+
   return (
     <Box ref={ref} className={cx(classes.eventsMonth, className)} {...others}>
+      <div className={classes.eventsMonthWeekdaysRow}>{weekdays}</div>
       {rows}
     </Box>
   );
